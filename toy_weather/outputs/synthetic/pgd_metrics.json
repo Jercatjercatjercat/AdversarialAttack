@@ -1,0 +1,23 @@
+{
+  "source": "synthetic",
+  "results": [
+    {
+      "epsilon_k": 0.1,
+      "clean_rmse_k": 0.11397413198804254,
+      "attacked_rmse_k": 0.1749058226052082,
+      "max_input_change_k": 0.10000059299913445
+    },
+    {
+      "epsilon_k": 0.5,
+      "clean_rmse_k": 0.11397413198804254,
+      "attacked_rmse_k": 0.47876817565964364,
+      "max_input_change_k": 0.5000008295085066
+    },
+    {
+      "epsilon_k": 1.0,
+      "clean_rmse_k": 0.11397413198804254,
+      "attacked_rmse_k": 0.8793900266057849,
+      "max_input_change_k": 1.0000005912734302
+    }
+  ]
+}

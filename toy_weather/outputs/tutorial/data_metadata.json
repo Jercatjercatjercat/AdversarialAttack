@@ -1,0 +1,31 @@
+{
+  "source": "NCEP tutorial air temperature (NOT ERA5 T2m)",
+  "variable": "air",
+  "lead_hours": 6,
+  "units": "K",
+  "grid_size": 16,
+  "split_counts": {
+    "train": 2042,
+    "validation": 438,
+    "test": 437
+  },
+  "latitudes": [
+    30.0,
+    31.333333333333332,
+    32.666666666666664,
+    34.0,
+    35.333333333333336,
+    36.666666666666664,
+    38.0,
+    39.33333333333333,
+    40.666666666666664,
+    42.0,
+    43.33333333333333,
+    44.666666666666664,
+    46.0,
+    47.33333333333333,
+    48.666666666666664,
+    50.0
+  ],
+  "prepared_path": "/Users/jerrymeng/Library/Mobile Documents/com~apple~CloudDocs/CodeAndStudy/AdversarialAttack/toy_weather/outputs/tutorial/prepared.npz"
+}

@@ -1,0 +1,8 @@
+{
+  "mse_normalized": 0.11089049487692268,
+  "rmse_normalized": 0.33300224455237937,
+  "mse_k2": 16.941552590736556,
+  "rmse_k": 4.116011733551856,
+  "persistence_rmse_k": 4.257857354821541,
+  "latitude_weighted_rmse_k": 4.142692940055145
+}

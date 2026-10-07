@@ -1,0 +1,23 @@
+{
+  "source": "NCEP tutorial air temperature (NOT ERA5 T2m)",
+  "results": [
+    {
+      "epsilon_k": 0.1,
+      "clean_rmse_k": 4.116011733551856,
+      "attacked_rmse_k": 4.192871819483288,
+      "max_input_change_k": 0.10000105786458673
+    },
+    {
+      "epsilon_k": 0.5,
+      "clean_rmse_k": 4.116011733551856,
+      "attacked_rmse_k": 4.504485878704765,
+      "max_input_change_k": 0.5000008689307961
+    },
+    {
+      "epsilon_k": 1.0,
+      "clean_rmse_k": 4.116011733551856,
+      "attacked_rmse_k": 4.90112535322682,
+      "max_input_change_k": 1.0000002643975463
+    }
+  ]
+}
