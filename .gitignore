@@ -1,0 +1,15 @@
+# Local environments and generated caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.matplotlib/
+.DS_Store
+.idea/
+.vscode/
+
+# Preserved copies of the old workspace stay local.
+.workspace-backup-*/
+
+# Project weather files, checkpoints, plots and results are intentionally tracked.

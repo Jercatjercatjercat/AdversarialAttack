@@ -1,0 +1,17 @@
+{
+  "source": "ERA5 local file (user-supplied)",
+  "results": [
+    {
+      "epsilon_k": 0.1,
+      "clean_rmse_k": 1.4337407538898188,
+      "attacked_rmse_k": 1.4886636477970299,
+      "max_input_change_k": 0.1000000186345024
+    },
+    {
+      "epsilon_k": 0.5,
+      "clean_rmse_k": 1.4337407538898188,
+      "attacked_rmse_k": 1.7245851575389044,
+      "max_input_change_k": 0.500000093172512
+    }
+  ]
+}
