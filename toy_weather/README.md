@@ -136,6 +136,35 @@ input gradient divided by training standard deviation. Both are plotted.
 
 Goal: use the same pipeline on real atmospheric data.
 
+### Existing local ERA5 subset
+
+Real ERA5 temperature maps for January 2020 over a small European region are
+already saved in `local_data/era5_t2m_2020_01.nc`. The one-off download script has
+been removed. These are six-hourly, regridded ERA5 maps from the public WeatherBench
+archive used by Otter, not original full-resolution data or NCEP tutorial data.
+
+Prepared 16×16 pairs are already available in `outputs/era5/prepared.npz`.
+Run from `toy_weather/` with the environment activated:
+
+```bash
+python train.py --dataset era5
+python evaluate.py --dataset era5 --latitude-weighted
+python check_input_gradient.py --dataset era5
+python attack.py --dataset era5 --method pgd --epsilon-k 0.5
+```
+
+To recreate the prepared pairs from the saved weather maps:
+
+```bash
+python -m data.preprocessing --input local_data/era5_t2m_2020_01.nc \
+  --bounds 45 60 -10 10 --output outputs/era5/prepared.npz
+```
+
+One month is a small pipeline demonstration; use longer periods for meaningful
+weather experiments. The saved file and training work offline. See the
+[WeatherBench data guide](https://weatherbench2.readthedocs.io/en/latest/data-guide.html)
+for the source description. The manual local-file route below works for new data.
+
 ERA5 is a historical weather reconstruction combining observations with a weather
 model. A downloaded subset might look like:
 
