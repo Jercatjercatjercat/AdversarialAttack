@@ -42,7 +42,7 @@ averaged within each model first. Each random condition used three trials.
 | Clean CNN | 2.494 K | 2.494 K |
 | Random changes | 2.510 K | 2.509 K |
 | One-step gradient attack | 2.783 K | 2.862 K |
-| PGD | 2.785 K | 2.869 K |
+| PGD | 2.784 K | 2.868 K |
 
 Predicting no change gives 2.624 K on this same 2022 test set. All three CNNs
 beat that baseline, though only modestly. Random changes have much less effect
@@ -60,6 +60,11 @@ Saved in `outputs/experiments/era5_2020_2022/`: `summary.csv`, `all_results.csv`
 a descriptive comparison, not a statistical significance claim. Test weather
 differs from the January-only experiment, so their absolute RMSE values should
 not be used as a controlled comparison of training-data quantity.
+
+Table values are rounded directly from the saved summary to three decimal places.
+See [EXPERIMENTS.md](EXPERIMENTS.md) for worked norm-budget examples and result
+interpretation, and [OUTPUTS.md](OUTPUTS.md) for a guide to the saved folders and
+the reason for repeating training with three seeds.
 
 Verification: 20 tests passed; zero-budget legacy FGSM and PGD commands reproduced
 the clean synthetic RMSE exactly. Tests cover sample-wise L2 projection, full-budget

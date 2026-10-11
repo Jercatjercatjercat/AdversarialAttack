@@ -304,6 +304,9 @@ For the tutorial, add `--checkpoint-dir outputs/tutorial` to the new command.
 
 The three-layer CNN is unchanged; the focus is on attacks rather than complexity.
 Read [EXPERIMENTS.md](EXPERIMENTS.md) for the comparison definitions and new structure.
+It includes worked examples explaining why L2 radius is 16 times the input RMS
+bound on a 16×16 map, and what the current attack results support.
+Read [OUTPUTS.md](OUTPUTS.md) for a folder-by-folder walkthrough of saved results.
 
 ```bash
 # Prepare 2020 training, 2021 validation, 2022 testing (internet needed on first run).
@@ -318,6 +321,14 @@ python run_experiments.py --dataset era5 \
 That output folder already contains the completed example runs in this workspace.
 Use a fresh `--output-root` when repeating them. The prepared dataset is cached;
 subsequent training and attacks work offline.
+
+The three models are separately trained copies of the same CNN, using seeds 42,
+43 and 44. They share the same weather but start with different random weights and
+shuffled training orders. We compare their scores to check consistency; we do not
+combine their predictions or assign a different model to each attack. The clean
+mean RMSE is 2.494 K versus 2.624 K for predicting no change, a modest improvement
+of about 5%. Three random-noise trials per condition are separate from these three
+training runs.
 
 ## Connection to larger weather models
 
@@ -339,6 +350,7 @@ data/synthetic.py        Make smooth toy maps and their future states
 data/era5.py             Normalization and prepared-file loading
 data/preprocessing.py    Xarray crop, six-hour pairing and chronological split
 models/simple_cnn.py     Three convolution layers
+inspect_weights.py      Print saved synthetic weights and one learned filter
 config.py                Defaults and output paths
 runtime.py               Shared data/checkpoint setup
 metrics.py               MSE, RMSE, persistence and area weighting
@@ -368,6 +380,8 @@ References: [ECMWF ERA5 overview](https://www.ecmwf.int/en/forecasts/dataset/ecm
 and [Xarray tutorial](https://tutorial.xarray.dev/overview/xarray-in-45-min).
 
 See [VALIDATION.md](VALIDATION.md) for the completed example runs and their results.
+See [../OTTER_PREPARATION.md](../OTTER_PREPARATION.md) for moving to Otter, and
+[../PaperReadings/README.md](../PaperReadings/README.md) for the research reading guide.
 `requirements-tested.txt` records the exact environment used for those runs; it can
 be installed instead of `requirements.txt` when reproducing them on a compatible
 Python/platform. The main requirements file permits compatible version ranges.

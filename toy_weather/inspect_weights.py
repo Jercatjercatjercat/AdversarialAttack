@@ -1,3 +1,4 @@
+"""Print saved synthetic CNN parameters and one learned 3×3 filter."""
 from pathlib import Path
 import torch
 
