@@ -90,7 +90,7 @@ def compare(model, test_data, stats, device, budgets, norms, methods,
 def write_csv(path, rows):
     """Results dictionaries -> a plain comparison table, readable without Python."""
     with Path(path).open("w", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
