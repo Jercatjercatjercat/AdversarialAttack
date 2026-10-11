@@ -51,6 +51,82 @@ one complete input is `[1, 121, 240, 4, 87]`. The history is stored latest first
 One-step output has shape `[1, 121, 240, 1, 82]`. We must match the checkpoint's
 field ordering, normalization and configuration, not just its tensor dimensions.
 
+## Why predict a change? Evidence versus inference
+
+The confirmed design is `predicted future = latest state + learned correction`.
+Section 2 of the saved paper describes predicting a difference from the latest
+state. In [single_time_forward](otter-main/otter/models/forecasting_model.py), the
+code takes the latest state's corresponding fields and adds them to the network's
+output. The calculation uses normalized fields internally before converting the
+forecast back to physical units.
+
+My interpretation is that this gives learning a useful starting structure: carry
+the current map forward and learn the adjustments. For example, if temperature is
+280 K now and 282 K six hours later, the correction is +2 K. A direct-output model
+must also learn how to preserve parts of the input that barely change. With an
+explicit addition, that copying route already exists. If the learned correction
+is zero, the forecast is persistence, or “predict no change.” This does not mean
+Otter actually initializes its correction at zero; I have not established that.
+
+Evidence supporting this interpretation, rather than proving it:
+
+- The paper and code establish that Otter uses the addition described above.
+- In our ERA5 test set, carrying the current temperature forward gives RMSE
+  2.624 K without learning, compared with clean CNN mean RMSE 2.494 K. Persistence
+  is therefore an important reference that the learned corrections should improve
+  on; these toy scores do not measure Otter's benefit from predicting changes.
+- The identity `future - current = change` makes the two forecasting targets
+  mathematically related. Choosing the correction changes how the model represents
+  the task; it does not add information or guarantee better optimization.
+
+I did not find a controlled comparison in the saved Otter paper that changes ONLY
+direct-output prediction versus correction prediction. Such a comparison, with
+matched data and training settings, would be needed to establish its causal benefit.
+Normalization already removes the large Kelvin offset, so “2 is smaller than 282”
+alone is not evidence that the correction will be easier to learn. The more useful
+intuition is the explicit route for carrying the current state forward.
+
+## What specifically addresses repeated-forecast errors?
+
+This is explicitly discussed and trained, not left unmentioned. A model trained
+only on clean observed inputs later receives its own imperfect predictions when
+forecasting repeatedly. That change in inputs can make errors accumulate.
+
+Otter uses **rollout fine-tuning**, continued weight training on a chain of its
+own predictions:
+
+```text
+Real input history → prediction at +6h
+Updated history including that prediction → prediction at +12h
+Updated history including those predictions → prediction at +18h → ...
+
+Compare predictions at the included times with true future states.
+Use that combined error to update the model weights.
+```
+
+The earlier predictions are used as later inputs rather than being replaced by
+the true future states. The real future states still provide the targets for
+calculating error. The code averages the per-time losses across included times
+and backpropagates through the forecast calculation.
+
+Appendix B.3 reports a **curriculum**, meaning the training task becomes harder
+gradually: start at 24 hours, or four six-hour steps, and extend to 72 hours, or
+twelve steps. It reports one further training epoch using data from 2007 onward
+for the base model. The saved configuration likewise sets the initial horizon to
+four steps and the maximum to twelve, with a small learning rate of 0.000002.
+The model weights are updated in this stage; it is not an input attack.
+
+The purpose is to reduce accumulated error, not guarantee that it disappears.
+The paper also notes that this training can make long-range forecasts overly
+smooth, so it limits the training horizon to three days. The rollout training
+configuration and the final checkpoint must be recorded when comparing attacks.
+
+Evidence: the saved [paper](PaperReadings/Otter.pdf), Section 3's Rollout
+Fine-tuning paragraph and Appendix B.3;
+[rollout training settings](otter-main/otter/experiment/config/rollout_finetuning.yaml);
+[history update loop](otter-main/otter/models/forecasting_model.py);
+and [loss averaging](otter-main/otter/models/losses/loss_fn.py).
+
 ## Can we reproduce full training on this Mac?
 
 The machine checked on 11 October 2026 has an **Apple M4 Max with 36 GiB of shared

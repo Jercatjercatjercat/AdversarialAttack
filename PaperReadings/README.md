@@ -1,7 +1,8 @@
 # Reading guide for the weather-input attack project
 
-Inventory checked on 11 October 2026 by reading the PDFs' text and titles, not
-just their filenames. Existing PDFs include personal annotations; they are preserved.
+Inventory updated on 11 October 2026 after checking the three newly downloaded
+PDFs' text, titles and article identifiers, not just their filenames. All five
+distinct suggested works are now saved. Existing personal annotations are preserved.
 The six suggested links describe **five distinct works**: the first two are
 the preprint and journal publication of the same predictability study.
 
@@ -12,14 +13,40 @@ the preprint and journal publication of the same predictability study.
 | [arXiv:2504.20238 — Atmospheric Predictability Beyond 30 Days with Machine Learning](https://arxiv.org/abs/2504.20238) | Present: [PredictabilityBeyond30Days.pdf](PredictabilityBeyond30Days.pdf), annotated arXiv v2, dated May/June 2026 |
 | [AMS: AIES-D-26-0009.1 — Atmospheric Predictability beyond 30 Days with Machine Learning](https://journals.ametsoc.org/view/journals/aies/aop/AIES-D-26-0009.1/AIES-D-26-0009.1.xml) | Same study is present as the preprint above; a separate journal-version PDF is not saved |
 | [Nature: s41586-025-08897-0 — End-to-end data-driven weather prediction](https://www.nature.com/articles/s41586-025-08897-0) | Present: [AardvarkWeather.pdf](AardvarkWeather.pdf), previously named `ML_WP.pdf` |
-| [Nature: s41586-025-09005-y — A foundation model for the Earth system](https://www.nature.com/articles/s41586-025-09005-y) | Missing local PDF; this is the Aurora paper |
-| [arXiv:1810.00069 — Adversarial Attacks and Defences: A Survey](https://arxiv.org/abs/1810.00069) | Missing local PDF |
-| [arXiv:2305.10862 — How Deep Learning Sees the World: A Survey on Adversarial Attacks & Defenses](https://arxiv.org/abs/2305.10862) | Missing local PDF |
+| [Nature: s41586-025-09005-y — A foundation model for the Earth system](https://www.nature.com/articles/s41586-025-09005-y) | Present: [Aurora paper](<A foundation model for the Earth system.pdf>), published Nature version, May 2025 |
+| [arXiv:1810.00069 — Adversarial Attacks and Defences: A Survey](https://arxiv.org/abs/1810.00069) | Present: [2018 survey](<Adversarial Attacks and Defences- A Survey.pdf>), arXiv v1 |
+| [arXiv:2305.10862 — How Deep Learning Sees the World: A Survey on Adversarial Attacks & Defenses](https://arxiv.org/abs/2305.10862) | Present: [newer survey](<How Deep Learning Sees the World- A Survey on Adversarial Attacks & Defenses.pdf>), arXiv v1, May 2023 |
 
 Other saved material: [Otter.pdf](Otter.pdf), the deterministic ICLR 2026 Otter
 paper, and [WeatherVariablesAndMetrics.pdf](WeatherVariablesAndMetrics.pdf), our
 existing reference sheet moved here from the workspace root. The reference sheet
-is not one of the six requested articles. Missing PDFs have not been downloaded.
+is not one of the six requested articles. A separate AMS journal-version PDF of
+the predictability study is still not saved; the annotated preprint covers that work.
+
+## Start here: one short reading session
+
+Start with [How Deep Learning Sees the World](<How Deep Learning Sees the World- A Survey on Adversarial Attacks & Defenses.pdf>).
+Read **Section II, Background for Adversarial Attacks**, then the FGSM, iterative
+attack and PGD passages in **Section IV.A, White-box Settings**. Aim for a first
+30–45 minute pass, not the whole survey. Skip the long method catalogue and defenses
+until the basic input-change idea is clear. The 2018 survey can be a second
+explanation of unfamiliar terms rather than another complete reading assignment.
+
+Connect the reading to our code with four questions:
+
+1. What stays fixed? The trained weights and the true future temperature.
+2. What changes? The input temperature map, within a stated limit.
+3. What does the gradient tell us? Which small input changes increase forecast loss.
+4. What does projection do? Bring each attempted change back inside its budget.
+
+The survey mostly predicts image labels. Our model predicts temperatures, so a
+wrong-class objective becomes increased numerical forecast error. Our random-noise
+comparison asks whether choosing the direction using the gradient matters.
+
+Next read **Otter Sections 2 and 3, the Rollout Fine-tuning paragraph, and Appendix
+B.3** alongside [the preparation note](../OTTER_PREPARATION.md). Then read the
+predictability study's **Section 2, Data and Methods**, focusing on what is fixed,
+what is optimized and how future error enters the calculation.
 
 ## Why each work matters
 
@@ -110,11 +137,12 @@ definition of plausible atmospheric uncertainty.
 
 ## Suggested order and an achievable reading goal
 
-1. Skim the 2018 survey for vocabulary; consult the newer survey for broader methods.
-2. Read the predictability study's methods carefully: it is closest to differentiating
-   with respect to weather inputs. Treat the two links as versions of one study.
-3. Read the saved Otter paper's setup, training method and Appendix B.3 alongside
+1. Read the newer survey's background and selected white-box methods as described
+   above. Use the 2018 survey to clarify terminology when needed.
+2. Read the saved Otter paper's setup, training method and Appendix B.3 alongside
    [OTTER_PREPARATION.md](../OTTER_PREPARATION.md).
+3. Read the predictability study's methods carefully: it is closest to differentiating
+   with respect to weather inputs. Treat the two links as versions of one study.
 4. Read Aurora's overview and evaluation for multi-variable/extreme-weather ideas.
 5. Read Aardvark's pipeline figure to place our state-input experiment in the wider
    observation-to-forecast process.
