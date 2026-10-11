@@ -28,6 +28,8 @@ def main():
     parser.add_argument("--size", type=int, default=16,
                         help="Synthetic grid size")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--data-seed", type=int, default=42,
+                        help="Keep synthetic examples fixed while changing model --seed")
     parser.add_argument("--device", default="cpu", help="cpu, cuda, or mps")
     args = parser.parse_args()  # read and interpret the command line arguments
     if args.epochs < 1 or args.batch_size < 1 or args.size < 2 or args.lr <= 0:
@@ -36,7 +38,7 @@ def main():
     device = configure(args.seed, args.device)
     # generate or load the dataset based on command line arguments
     datasets, stats, metadata = get_data(
-        args.dataset, args.data, args.size, args.seed)
+        args.dataset, args.data, args.size, args.data_seed)
     # Example contents below use the default synthetic setup (size=16, seed=42).
     # datasets is a dictionary of PyTorch datasets, not one big tensor:
     # {"train": 4,000 pairs, "validation": 500 pairs, "test": 500 pairs}.
@@ -68,11 +70,13 @@ def main():
     save_json(output / "normalization.json", stats)
     # Record the source and settings, e.g. synthetic, size=16, seed=42.
     save_json(output / "data_metadata.json", metadata)
+    # Record settings so comparisons can identify exactly how this model was trained.
+    save_json(output / "training_config.json", vars(args))
 
     # Generic ML: shuffle training examples, but keep validation ordering stable.
     # DataLoader groups individual [1,16,16] maps into [B,1,16,16] batches.
     # With batch size 64, B=64 except for the last training batch, where B=32.
-    # Split the 4000 training pairs into 63 batches of 64 and 1 batch of 32.
+    # Split the 4000 training pairs into 62 batches of 64 and 1 batch of 32.
     train_loader = DataLoader(
         datasets["train"], batch_size=args.batch_size, shuffle=True)
     # Split the 500 validation pairs into 7 batches of 64 and 1 batch of 52.

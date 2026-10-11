@@ -66,34 +66,69 @@ def prepare_fields(ds, variable="t2m", time="time", latitude="latitude",
     return values, times, latitudes, longitudes
 
 
-def chronological_pairs(values, times):
+def chronological_pairs(values, times, validation_start=None, test_start=None,
+                        train_start=None, train_end=None):
     """[T,1,H,W] maps -> disjoint time splits of exact six-hour pairs.
 
     Split raw timestamps first. Neighbouring pairs may share states WITHIN a split,
     but never across splits. Missing six-hour targets are skipped, not interpolated.
     """
-    n = len(times)
-    boundaries = (0, int(0.70 * n), int(0.85 * n), n)
+    # Explicit calendar boundaries keep evaluation dates fixed when training grows.
+    # train_start is inclusive; train_end is exclusive. Neither selects evaluation data.
+    if (validation_start is None) != (test_start is None):
+        raise ValueError("Supply both validation_start and test_start.")
+    if len(times) != len(values) or np.any(np.diff(times) <= np.timedelta64(0, "h")):
+        raise ValueError("Maps need matching, unique, increasing timestamps.")
+    if validation_start is not None:
+        validation_date = np.datetime64(validation_start, "ns")
+        test_date = np.datetime64(test_start, "ns")
+        if not times[0] < validation_date < test_date <= times[-1]:
+            raise ValueError("Split dates must lie inside the timeline in chronological order.")
+        masks = {"train": times < validation_date,
+                 "validation": (times >= validation_date) & (times < test_date),
+                 "test": times >= test_date}
+        if train_start is not None:
+            masks["train"] &= times >= np.datetime64(train_start, "ns")
+        if train_end is not None:
+            if np.datetime64(train_end, "ns") > validation_date:
+                raise ValueError("train_end cannot extend into validation.")
+            masks["train"] &= times < np.datetime64(train_end, "ns")
+    else:
+        if train_start is not None or train_end is not None:
+            raise ValueError("Training windows require explicit validation/test boundaries.")
+        n = len(times)
+        indices = np.arange(n)
+        masks = {"train": indices < int(.70 * n),
+                 "validation": (indices >= int(.70 * n)) & (indices < int(.85 * n)),
+                 "test": indices >= int(.85 * n)}
     pairs, pair_times = {}, {}
-    for name, start, stop in zip(("train", "validation", "test"), boundaries, boundaries[1:]):
-        split_times = times[start:stop]
+    for name, mask in masks.items():
+        split_times = times[mask]
         valid = np.flatnonzero(np.diff(split_times) == np.timedelta64(6, "h"))
         if len(valid) == 0:
             raise ValueError(f"No six-hour pairs in {name}; supply a longer timeline.")
-        maps = values[start:stop]
+        maps = values[mask]
         pairs[name] = (maps[valid], maps[valid + 1])
         pair_times[name] = (split_times[valid], split_times[valid + 1])
     return pairs, pair_times
 
 
-def save_prepared(ds, output, source="era5", **options):
+def save_prepared(ds, output, source="era5", validation_start=None, test_start=None,
+                  train_start=None, train_end=None, **options):
     """xarray dataset -> normalized on-disk [N,1,H,W] pairs and train-only statistics."""
     values, times, latitudes, longitudes = prepare_fields(ds, **options)
-    pairs, pair_times = chronological_pairs(values, times)
+    pairs, pair_times = chronological_pairs(values, times, validation_start, test_start,
+                                            train_start, train_end)
     stats = training_statistics(pairs["train"][0])
     metadata = {"source": source, "variable": options.get("variable", "t2m"),
                 "lead_hours": 6, "units": "K", "grid_size": len(latitudes),
-                "split_counts": {name: len(x) for name, (x, _) in pairs.items()}}
+                "split_counts": {name: len(x) for name, (x, _) in pairs.items()},
+                "split_dates": {name: {"first_input": str(t[0][0]), "last_target": str(t[1][-1])}
+                                for name, t in pair_times.items()},
+                "validation_start": validation_start, "test_start": test_start,
+                "train_start": train_start, "train_end": train_end}
+    if "source_url" in ds.attrs:
+        metadata["source_url"] = ds.attrs["source_url"]
     saved = {"stats": json.dumps(stats), "metadata": json.dumps(metadata),
              "latitudes": latitudes, "longitudes": longitudes}
     for name, (x, y) in pairs.items():
@@ -120,6 +155,10 @@ def main():
     parser.add_argument("--longitude", default="longitude")
     parser.add_argument("--bounds", nargs=4, type=float, metavar=("S", "N", "W", "E"))
     parser.add_argument("--size", type=int, default=16)
+    parser.add_argument("--validation-start", help="Inclusive start date; requires --test-start")
+    parser.add_argument("--test-start", help="Inclusive start date of the fixed test period")
+    parser.add_argument("--train-start", help="Optional inclusive start of training window")
+    parser.add_argument("--train-end", help="Optional EXCLUSIVE end of training window")
     args = parser.parse_args()
     if not args.output.endswith(".npz"):
         parser.error("--output must end in .npz")
@@ -134,9 +173,11 @@ def main():
         ds = xr.open_zarr(args.input, chunks=None) if args.input.rstrip("/").endswith(".zarr") else xr.open_dataset(args.input)
         options = dict(variable=args.variable, time=args.time, latitude=args.latitude,
                        longitude=args.longitude, bounds=args.bounds or (45, 60, -10, 10), size=args.size)
-        label = "ERA5 local file (user-supplied)"
+        label = ds.attrs.get("source", "ERA5 local file (user-supplied)")
     try:
-        save_prepared(ds, args.output, source=label, **options)
+        save_prepared(ds, args.output, source=label, validation_start=args.validation_start,
+                      test_start=args.test_start, train_start=args.train_start,
+                      train_end=args.train_end, **options)
     finally:
         ds.close()
 

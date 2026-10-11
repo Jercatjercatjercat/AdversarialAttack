@@ -57,3 +57,36 @@ def training_plot(history, path):
     fig.tight_layout()
     fig.savefig(path, dpi=140)
     plt.close(fig)
+
+
+def comparison_plot(rows, path):
+    """Comparison rows -> one error-versus-budget panel per norm.
+
+    Average random repetitions; shading shows their standard deviation, not a
+    confidence interval. Each norm has its own allowed set of input changes.
+    """
+    norms = list(dict.fromkeys(row["norm"] for row in rows))
+    fig, axes = plt.subplots(1, len(norms), figsize=(6 * len(norms), 4), squeeze=False)
+    for ax, norm in zip(axes[0], norms):
+        subset = [r for r in rows if r["norm"] == norm]
+        for method in dict.fromkeys(r["method"] for r in subset):
+            budgets = sorted({r["budget_k"] for r in subset if r["method"] == method})
+            means, deviations = [], []
+            for budget in budgets:
+                errors = [r["changed_rmse_k"] for r in subset
+                          if r["method"] == method and r["budget_k"] == budget]
+                means.append(np.mean(errors))
+                deviations.append(np.std(errors))
+            line, = ax.plot(budgets, means, marker="o", label=method)
+            ax.fill_between(budgets, np.array(means) - deviations,
+                            np.array(means) + deviations, alpha=.15, color=line.get_color())
+        ax.axhline(subset[0]["clean_rmse_k"], color="black", linestyle="--", label="clean CNN")
+        ax.axhline(subset[0]["persistence_rmse_k"], color="gray", linestyle=":", label="predict no change")
+        ax.set_title("L∞: limit at each cell" if norm == "linf" else "L2: shared map budget")
+        ax.set_xlabel("Maximum cell change (K)" if norm == "linf" else "RMS input-change bound (K)")
+        ax.set_ylabel("Forecast RMSE (K)")
+        ax.grid(alpha=.3)
+        ax.legend()
+    fig.tight_layout()
+    fig.savefig(path, dpi=140)
+    plt.close(fig)

@@ -1,0 +1,17 @@
+[
+  {
+    "method": "fgsm",
+    "norm": "linf",
+    "budget_k": 0.0,
+    "constraint_radius_k": 0.0,
+    "random_trial": -1,
+    "test_pairs": 500,
+    "clean_rmse_k": 0.11397413198804254,
+    "changed_rmse_k": 0.11397413198804254,
+    "rmse_increase_k": 0.0,
+    "persistence_rmse_k": 1.6051796705080115,
+    "max_cell_change_k": 0.0,
+    "rms_input_change_k": 0.0,
+    "max_sample_l2_k": 0.0
+  }
+]

@@ -1,5 +1,6 @@
 """A few shared setup functions so every script uses the same data and checkpoint."""
 import json
+import hashlib
 from pathlib import Path
 import numpy as np
 import torch
@@ -31,6 +32,7 @@ def get_data(dataset, data_path=None, size=16, seed=42, stats=None):
     if stats is not None and stats != prepared_stats:
         raise ValueError("Prepared data statistics differ from the checkpoint. Use its original prepared file.")
     metadata["prepared_path"] = str(path.resolve())
+    metadata["prepared_sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
     return datasets, prepared_stats, metadata
 
 
@@ -46,8 +48,14 @@ def load_run(dataset, directory, data_path, device):
     for parameter in model.parameters():
         parameter.requires_grad_(False)
     meta = checkpoint["metadata"]
+    # A copied repository may have a different absolute path from the training machine.
+    recorded_path = meta.get("prepared_path")
+    if recorded_path and not Path(recorded_path).exists() and data_path is None:
+        raise FileNotFoundError("Original prepared file path is unavailable; pass --data FILE.npz.")
     datasets, stats, metadata = get_data(dataset, data_path or meta.get("prepared_path"),
         meta.get("size", 16), meta.get("seed", 42), checkpoint["stats"])
+    if meta.get("prepared_sha256") and metadata.get("prepared_sha256") != meta["prepared_sha256"]:
+        raise ValueError("Prepared file contents differ from the checkpoint's training data.")
     return model, datasets, stats, metadata
 
 

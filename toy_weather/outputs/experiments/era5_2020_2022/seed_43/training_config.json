@@ -1,0 +1,12 @@
+{
+  "dataset": "era5",
+  "data": "/Users/jerrymeng/Library/Mobile Documents/com~apple~CloudDocs/CodeAndStudy/AdversarialAttack/toy_weather/local_data/era5_2020_2022/prepared.npz",
+  "output_dir": "/Users/jerrymeng/Library/Mobile Documents/com~apple~CloudDocs/CodeAndStudy/AdversarialAttack/toy_weather/outputs/experiments/era5_2020_2022/seed_43",
+  "epochs": 15,
+  "batch_size": 64,
+  "lr": 0.001,
+  "size": 16,
+  "seed": 43,
+  "data_seed": 42,
+  "device": "cpu"
+}

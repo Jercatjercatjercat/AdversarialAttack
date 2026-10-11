@@ -255,38 +255,69 @@ The model has the same architecture, but is trained separately for each dataset.
 The script reads the same normalization statistics and prepared data used in training.
 Do not overwrite a prepared file with a different dataset after training a checkpoint.
 
-## Experiment 5: actual FGSM and PGD attacks
+## Experiment 5: compare random noise, FGSM and PGD
 
-Only start this after the preceding forecasts and gradient checks work.
+Keep one trained model fixed and change only test inputs. Use the new entry point:
 
 ```bash
-python attack.py --dataset synthetic --method fgsm --epsilon-k 0.1 0.5 1.0
-python attack.py --dataset synthetic --method pgd --epsilon-k 0.1 0.5 1.0 --steps 10
-python attack.py --dataset era5 --method fgsm --epsilon-k 0.1 0.5 1.0
-python attack.py --dataset era5 --method pgd --epsilon-k 0.1 0.5 1.0 --steps 10
+python compare_attacks.py --dataset synthetic --budget-k 0.1 0.5
+python compare_attacks.py --dataset era5 --budget-k 0.1 0.5
 ```
 
-For the tutorial, add `--output-dir outputs/tutorial` to the real-data commands.
+It compares clean inputs with random changes, FGSM (or the L2 single-step version),
+and PGD. Both Linf and L2 constraints are tested. Random changes use the full budget,
+are repeated three times, and are not chosen based on which trial caused most damage.
+This asks whether directed attacks do more damage than equally sized random changes.
 
-FGSM makes one change in the gradient's uphill direction. PGD makes repeated small
-changes and clips them so each pixel remains within its limit of the original input.
-PGD starts from the clean input and retains the strongest candidate per sample,
-including the clean input. Random restarts are left for later. An attack is an attempt
-to increase loss; a single FGSM step is not guaranteed to succeed on every example.
+- Linf: `--budget-k 0.5` limits EACH input cell to a 0.5 K change.
+- L2: `--budget-k 0.5` limits input RMS to 0.5 K. For 256 cells this means a
+  flattened L2 radius of 8 K. An individual cell may change by more than 0.5 K.
+- These are different allowed sets of changes, not identical threat models. Compare
+  both the measured largest cell change and RMS change rather than equal raw radii.
 
-`--epsilon-k 0.1` means every input cell may change by at most 0.1 K. It does not
-mean the forecast error must increase by 0.1 K. The scripts convert this limit to
-normalized units by dividing by training standard deviation. These are L-infinity
-limits: they bound the largest absolute pixel change. There is no extra global
-Kelvin clamp. We keep the real future target and model weights fixed.
+Results are saved in `<checkpoint folder>/attack_comparison/`: `results.csv`,
+`results.json`, `comparison.png`, example maps and a recorded configuration with
+checkpoint/data identity. Choose another `--results-dir` for different settings so
+experiments are not silently mixed. Each norm has its own plot panel.
 
-Each run prints clean RMSE, attacked RMSE and maximum actual input change. PNGs show
-the original/changed inputs, perturbation, true future and both forecasts. JSON files
-record results for all test pairs. Use epsilon 0 to check that clean and attacked
-results agree. We use real targets to construct these attacks, an idealized evaluation
-setting; operational attackers may not know the future target. These pixel changes
-need not be physically consistent weather states. This is an educational vulnerability
-check, not a realistic atmospheric intervention.
+FGSM uses the gradient sign for Linf. The L2 version uses a unit-length gradient
+and is labelled `one_step_l2` in results. PGD takes repeated gradient steps and projects
+back inside the original input's budget after each step. It retains the strongest
+candidate per sample, including clean and single-step candidates. There are no random
+PGD restarts yet. There is no extra physical Kelvin clamp. Targets and model weights
+stay fixed. These attacks assume access to true future targets during evaluation;
+changed inputs need not form physically consistent weather states.
+
+Old commands still run through small compatibility files:
+
+```bash
+python attack.py --dataset era5 --method fgsm --epsilon-k 0.5
+python attack.py --dataset era5 --method pgd --epsilon-k 0.5
+```
+
+They default to Linf and write separate `legacy_<method>_comparison/` folders. The
+old `attacks.py` is an import bridge, not the random baseline. The actual methods
+are now in `perturbations.py`; random noise is explicitly called `random_noise`.
+For the tutorial, add `--checkpoint-dir outputs/tutorial` to the new command.
+
+## Larger ERA5 experiment with fixed evaluation dates
+
+The three-layer CNN is unchanged; the focus is on attacks rather than complexity.
+Read [EXPERIMENTS.md](EXPERIMENTS.md) for the comparison definitions and new structure.
+
+```bash
+# Prepare 2020 training, 2021 validation, 2022 testing (internet needed on first run).
+python -m data.prepare_era5_experiment
+
+# Train three models on the same weather and compare all attack conditions.
+python run_experiments.py --dataset era5 \
+  --data local_data/era5_2020_2022/prepared.npz \
+  --output-root outputs/experiments/era5_2020_2022
+```
+
+That output folder already contains the completed example runs in this workspace.
+Use a fresh `--output-root` when repeating them. The prepared dataset is cached;
+subsequent training and attacks work offline.
 
 ## Connection to larger weather models
 
@@ -315,8 +346,11 @@ plotting.py              Fields, curves and gradients
 train.py                 Learn model weights
 evaluate.py              Measure untouched test performance
 check_input_gradient.py  Verify input differentiation
-attacks.py               FGSM and PGD functions
-attack.py                Run attacks and compare forecasts
+perturbations.py         Random noise, FGSM/L2 single step and PGD
+compare_attacks.py        Compare methods and constraints on a frozen model
+run_experiments.py        Repeat comparisons for different model seeds
+attacks.py / attack.py    Compatibility bridges for earlier commands
+data/prepare_era5_experiment.py  Larger ERA5 preparation with fixed dates
 tests/test_pipeline.py   Leakage, exact leads, file formats and attack limits
 ```
 

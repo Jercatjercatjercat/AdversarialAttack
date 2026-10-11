@@ -1,0 +1,24 @@
+{
+  "dataset": "synthetic",
+  "source": "synthetic",
+  "data_metadata": {
+    "source": "synthetic",
+    "size": 16,
+    "seed": 42
+  },
+  "checkpoint": "/Users/jerrymeng/Library/Mobile Documents/com~apple~CloudDocs/CodeAndStudy/AdversarialAttack/toy_weather/outputs/synthetic/best_model.pt",
+  "checkpoint_sha256": "89b8ef3d52540a36e516ee08470e4a5a400d7c981a83d38b6a6179303f5e34ae",
+  "budgets_k": [
+    0.0
+  ],
+  "norms": [
+    "linf"
+  ],
+  "methods": [
+    "pgd"
+  ],
+  "steps": 10,
+  "random_repeats": 3,
+  "noise_seed": 42,
+  "l2_budget_definition": "RMS bound in K; L2 radius = budget * sqrt(cells)"
+}

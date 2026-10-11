@@ -1,0 +1,18 @@
+{
+  "dataset": "era5",
+  "data": "local_data/era5_2020_2022/prepared.npz",
+  "output_root": "outputs/experiments/era5_2020_2022",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "epochs": 15,
+  "budget_k": [
+    0.1,
+    0.5
+  ],
+  "steps": 10,
+  "random_repeats": 3,
+  "device": "cpu"
+}

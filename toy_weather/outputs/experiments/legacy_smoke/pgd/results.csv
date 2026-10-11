@@ -1,0 +1,2 @@
+method,norm,budget_k,constraint_radius_k,random_trial,test_pairs,clean_rmse_k,changed_rmse_k,rmse_increase_k,persistence_rmse_k,max_cell_change_k,rms_input_change_k,max_sample_l2_k
+pgd,linf,0.0,0.0,-1,500,0.11397413198804254,0.11397413198804254,0.0,1.6051796705080115,0.0,0.0,0.0
