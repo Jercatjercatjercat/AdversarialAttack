@@ -1,0 +1,2 @@
+# Keep downloaded papers byte-for-byte and avoid treating PDF contents as code diffs.
+*.pdf binary
