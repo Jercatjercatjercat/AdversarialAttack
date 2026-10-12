@@ -48,6 +48,34 @@ B.3** alongside [the preparation note](../OTTER_PREPARATION.md). Then read the
 predictability study's **Section 2, Data and Methods**, focusing on what is fixed,
 what is optimized and how future error enters the calculation.
 
+## Reading log: notes and questions as we go
+
+Use this README as the index; keep detailed, corrected notes with each paper.
+Each update distinguishes the user's interpretation, checked claims, proposed
+weather applications and questions still open. Existing PDF annotations remain intact.
+
+| Date | Paper | Progress and next step |
+|---|---|---|
+| 12 October 2026 | How Deep Learning Sees the World | First selections/questions reviewed; [corrected notes and complete attack catalogue](notes/HowDeepLearningSeesTheWorld.md). Read Otter's setup/training next. |
+
+Main conclusions from the first notes:
+
+- Weather attacks need explicit physical limits and an error/target objective;
+  visual invisibility and high-confidence wrong classes are not universal requirements.
+- L0 counts changed entries, L2 shares a magnitude budget and Linf caps each entry.
+  A norm alone does not determine visibility, spatial smoothness or physical consistency.
+- Untargeted and targeted objectives apply to numerical forecasts; class-confidence
+  reduction needs probabilities/uncertainty, which the current CNN does not output.
+- FGSM/PGD can attack differentiable Transformers directly. Reusing a CNN's chosen
+  changes on Otter is a separate transfer experiment and may fail.
+- Bookmark Section V's defenses and Section VI's attention/patch studies for later.
+- Adapt Section VIII's evaluation questions to RMSE and clearly defined success
+  thresholds. Destruction rate concerns attacks losing effectiveness after a
+  transformation; it is not an input-disturbance-size measure.
+
+The detailed notes list the general, universal, black-box and Transformer-oriented
+attacks by section, with acronyms explained and defenses kept out of the attack list.
+
 ## Why each work matters
 
 ### 1–2. Predictability beyond 30 days: the closest methodological connection

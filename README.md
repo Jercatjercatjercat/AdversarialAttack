@@ -53,3 +53,8 @@ training description and Appendix B.3, followed by the predictability study's me
 The [reading guide](PaperReadings/README.md) links each local PDF and gives a short
 first-session plan. [OTTER_PREPARATION.md](OTTER_PREPARATION.md) separates evidence
 from inference about predicting changes and explains Otter's repeated-forecast training.
+
+The [reading log](PaperReadings/README.md#reading-log-notes-and-questions-as-we-go)
+now records the first survey questions, corrections and next reading. Its
+[survey notes](PaperReadings/notes/HowDeepLearningSeesTheWorld.md) include weather
+definitions, proposed metrics, defense bookmarks and the paper's attack catalogue.
