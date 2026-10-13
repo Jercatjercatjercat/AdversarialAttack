@@ -61,6 +61,7 @@ weather applications and questions still open. Existing PDF annotations remain i
 | 13 October 2026 | Otter Weather, Section 2 finished | [Related-work checkpoint](notes/Otter.md#section-2-checkpoint-related-work): model families, training versus inference cost, controlled component comparisons, and what this section does not establish about attacks. Next: Section 3.1. |
 | 13 October 2026 | Otter evaluation protocol | [Evaluation notes](notes/Otter.md#evaluation-protocol-benchmark-forecast-type-and-forecast-time): benchmark versus baseline, deterministic versus probabilistic outputs, RMSE/CRPS, RFT and matching forecast times. |
 | 13 October 2026 | Otter forecast maps and uncertainty | [One map versus possible maps](notes/Otter.md#follow-up-i-thought-i-just-output-a-map): ensemble members share a future timestamp; MC dropout generates variation; RMSE and CRPS use the same realized future map differently. |
+| 13 October 2026 | Otter expectation and implementation | [Expectation versus distribution output](notes/Otter.md#follow-up-expectation-crps-and-what-is-built-into-otter): deterministic outputs need not average samples; CRPS is a scoring rule; the saved default is deterministic despite some probabilistic building blocks. |
 
 Main conclusions from the first notes:
 

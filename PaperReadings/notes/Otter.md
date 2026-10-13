@@ -187,6 +187,60 @@ assess the ensemble mean, but removes the spread information needed for a
 probabilistic assessment. Generating uncertainty within the trained forecaster is
 also different from an adversarial attack that deliberately corrupts weather inputs.
 
+### Follow-up: expectation, CRPS and what is built into Otter
+
+The probabilistic interpretation is close: at a given location and for a given
+variable, values across possible forecast maps represent a predicted distribution.
+One ordinary numeric map contains one value per location/variable; it does not
+automatically contain a full nontrivial probability distribution at every cell.
+In the sampled representation, the distribution is represented across ensemble
+members. The model generates complete fields; this does not mean drawing unrelated
+values independently for every cell.
+
+Two corrections:
+
+1. **A deterministic model does not necessarily generate a distribution and then
+   average it.** It can directly learn one output value per cell. For an ideal
+   predictor trained to minimize expected MSE, that value is the expected future
+   given the input. Our learned toy CNN is an estimate, not a guarantee of this
+   exact optimum. This MSE result is not a blanket guarantee for every loss or
+   deterministic model. Otter's deterministic training uses weighted RMSE.
+2. **CRPS is a scoring/training rule, not the forecast output.** The probabilistic
+   model generates forecast samples. Training/evaluation compares their distribution
+   with the known future using CRPS. At forecast time the actual future is not yet
+   known, so that forecast's observed CRPS cannot be calculated yet. An ensemble
+   mean map can also be scored with RMSE, but that score ignores uncertainty.
+
+The expanded Otter paper includes CRPS-trained probabilistic variants that reuse
+the backbone, with MC dropout or tested alternatives for generating different
+members. That is an implemented research variant described in the paper, not an
+automatic distribution calculation performed by every deterministic checkpoint.
+Source: [expanded paper, Section 4.2](https://arxiv.org/html/2606.26421v1#S4.SS2).
+
+The LOCAL saved code has a more limited default setup:
+
+- [base.yaml](../../otter-main/otter/experiment/config/base.yaml) selects `Delta`:
+  one forecast value per entry. Here `Delta` means a point distribution, not the
+  six-hour weather correction. Its `sample()` returns the same stored prediction.
+- [distributions.py](../../otter-main/otter/models/distributions.py) also has a
+  Gaussian option that predicts a mean and standard deviation, a spread parameter.
+  This alternative is not the same representation as the paper's MC-dropout ensemble.
+- [weatherbench_probabilistic.py](../../otter-main/otter/evaluate/weatherbench_probabilistic.py)
+  includes an ensemble CRPS evaluator and an ensemble-mean RMSE evaluator. It
+  expects predictions with an ensemble dimension called `realization`.
+- The default [save_forecasts.py](../../otter-main/otter/evaluate/save_forecasts.py)
+  disables dropout through `model.eval()` and saves `prd_dist.mean`, without an
+  ensemble axis. The `.mean` field name is a shared interface; with `Delta` it is
+  simply the deterministic prediction, not an average computed from multiple maps.
+- I did not find the paper's complete MC-dropout/CRPS training recipe in the
+  saved configurations or training-loss module. It would need a compatible
+  checkpoint/code path before we could run that published probabilistic variant.
+
+Thus: probabilistic functionality is described in the expanded Otter paper, and
+some probability/evaluation building blocks exist locally, but our saved default
+configuration is deterministic. A CRPS evaluation script alone does not turn
+single-map output into a useful forecast distribution.
+
 ### Rollout fine-tuning is another, independent distinction
 
 **RFT**, rollout fine-tuning, continues training while feeding earlier predictions
