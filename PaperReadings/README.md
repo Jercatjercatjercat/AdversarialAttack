@@ -70,7 +70,6 @@ weather applications and questions still open. Existing PDF annotations remain i
 | 13 October 2026 | Otter forecast maps and uncertainty | [One map versus possible maps](notes/Otter.md#follow-up-i-thought-i-just-output-a-map): ensemble members share a future timestamp; MC dropout generates variation; RMSE and CRPS use the same realized future map differently. |
 | 13 October 2026 | Otter expectation and implementation | [Expectation versus distribution output](notes/Otter.md#follow-up-expectation-crps-and-what-is-built-into-otter): deterministic outputs need not average samples; CRPS is a scoring rule; the saved default is deterministic despite some probabilistic building blocks. |
 | 13 October 2026 | Otter paper versions and training relationship | [Version and pipeline comparison](notes/Otter.md#follow-up-output-representation-training-relationship-and-paper-versions): the saved deterministic paper versus the later preprint; full-field ensemble output; fine-tuning and from-scratch probabilistic routes. |
-
 | 13 October 2026 | New Otter preprint saved | Main PDF replaced; older annotated copy archived. [Monte Carlo clarification](notes/Otter.md#follow-up-does-monte-carlo-sample-the-deterministic-output): reuse and fine-tune model weights, then generate multiple maps with random internal dropout masks. |
 
 Main conclusions from the first notes:

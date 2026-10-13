@@ -516,3 +516,18 @@ Otter code. See the implementation distinction above before running experiments.
 
 Evidence: [new local preprint](../Otter.pdf), Section 4.2 and Appendix B.3.5;
 [online version](https://arxiv.org/html/2606.26421v1#S4.SS2).
+
+### Small distinction to remember
+
+- **Observation:** the weather that actually happened; this is the reference used
+  to score forecasts.
+- **Deterministic prediction:** one model-generated future map.
+- **Probabilistic prediction:** several model-generated maps for the same future
+  time, representing possible outcomes.
+- **Perturbed input:** the starting weather we deliberately change in an attack.
+
+MC dropout's random internal masks generate possible forecasts. They are not
+adversarial changes to the input. In a later attack experiment, we would keep the
+trained weights fixed and deliberately change the input to worsen a clearly
+defined forecast score. How to handle randomness in that attack is still an
+experimental choice; it has not been implemented for Otter here.

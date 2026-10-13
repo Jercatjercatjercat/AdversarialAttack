@@ -58,3 +58,19 @@ The [reading log](PaperReadings/README.md#reading-log-notes-and-questions-as-we-
 now records the first survey questions, corrections and next reading. Its
 [survey notes](PaperReadings/notes/HowDeepLearningSeesTheWorld.md) include weather
 definitions, proposed metrics, defense bookmarks and the paper's attack catalogue.
+
+The main [Otter PDF](PaperReadings/Otter.pdf) is now the June 2026 preprint
+(arXiv:2606.26421v1), covering deterministic and probabilistic forecasting. The
+older annotated ICLR paper is kept in [the archive](PaperReadings/archive/Otter_ICLR2026.pdf).
+Our [Otter reading notes](PaperReadings/notes/Otter.md) explain the architecture,
+evaluation and differences between the two versions.
+
+For probabilistic forecasting, one route starts from a deterministic model's trained
+weights and continues training using CRPS, a score for possible forecasts against
+the observed future. Monte Carlo dropout then runs the resulting model repeatedly
+on the same weather input, with different random masks on internal features. Each
+run produces a new forecast map; the collection represents possible futures. The
+weights stay fixed during these runs. The paper also trains probabilistic models
+from scratch. Read [the sampling clarification](PaperReadings/notes/Otter.md#follow-up-does-monte-carlo-sample-the-deterministic-output)
+before Section 4.2. Replacing the PDF has not changed the saved Otter source code
+or made its newer probabilistic experiments ready to run locally.
