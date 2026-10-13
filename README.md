@@ -7,15 +7,15 @@ learned weights fixed.
 
 | Location | What to read or run |
 |---|---|
-| [toy_weather/README.md](toy_weather/README.md) | Setup and the learning sequence |
-| [toy_weather/EXPERIMENTS.md](toy_weather/EXPERIMENTS.md) | Completed experiment setup, explained terms, numerical findings and limits |
-| [toy_weather/OUTPUTS.md](toy_weather/OUTPUTS.md) | Guide to models, plots and result tables |
+| [toy_weather/archive/first_iteration/README.md](toy_weather/archive/first_iteration/README.md) | Setup and the learning sequence |
+| [toy_weather/archive/first_iteration/EXPERIMENTS.md](toy_weather/archive/first_iteration/EXPERIMENTS.md) | Completed experiment setup, explained terms, numerical findings and limits |
+| [toy_weather/archive/first_iteration/OUTPUTS.md](toy_weather/archive/first_iteration/OUTPUTS.md) | Guide to models, plots and result tables |
 | [OTTER_PREPARATION.md](OTTER_PREPARATION.md) | Otter's training approach, local hardware assessment and first practical milestone |
 | [PaperReadings/README.md](PaperReadings/README.md) | Which suggested papers are present and how each relates to this project |
 | [otter-main/README.md](otter-main/README.md) | Original Otter source instructions |
 
 The current larger toy ERA5 results are in
-`toy_weather/outputs/experiments/era5_2020_2022/`. They use the same three-layer CNN
+`toy_weather/archive/first_iteration/outputs/experiments/era5_2020_2022/`. They use the same three-layer CNN
 trained three times, not three different architectures. The clean mean RMSE is
 2.494 K versus 2.624 K for predicting no change. Directed input attacks cause more
 error than random changes in these runs; this has not yet been demonstrated on Otter.
@@ -26,7 +26,7 @@ error than random changes in these runs; this has not yet been demonstrated on O
   to the extracted source. The source itself remains in `otter-main/`.
 - Removed generated Python bytecode and plotting/test caches. The existing ignore
   rules prevent these temporary files from being added to future commits.
-- Renamed `toy_weather/irrelevant_testings.py` to `toy_weather/inspect_weights.py`;
+- Renamed `toy_weather/archive/first_iteration/irrelevant_testings.py` to `toy_weather/archive/first_iteration/inspect_weights.py`;
   its useful learned-weight inspection remains available.
 - Renamed `PaperReadings/ML_WP.pdf` to `PaperReadings/AardvarkWeather.pdf` without
   modifying its content, and moved the existing variable/metric reference sheet to
@@ -40,7 +40,7 @@ error than random changes in these runs; this has not yet been demonstrated on O
 documents; it is not part of the active project or GitHub checkout. GitHub contains
 the meaningful source, documentation, saved small weather subsets and results.
 
-The compatibility files `toy_weather/attack.py` and `toy_weather/attacks.py` remain
+The compatibility files `toy_weather/archive/first_iteration/attack.py` and `toy_weather/archive/first_iteration/attacks.py` remain
 because older documented commands/imports use them. New comparisons start from
 `compare_attacks.py`; the input-changing functions are in `perturbations.py`.
 
@@ -80,3 +80,10 @@ explains how stacked weather inputs become patch features and move through a Swi
 U-Net. It also distinguishes dropout inside the network from changes to observed
 inputs, and random sampling from CRPS training. Next read Section 4.1's controlled
 design comparisons.
+
+## Toy-weather iterations
+
+On 14 October 2026, the completed toy-weather project was moved into
+[toy_weather/archive/first_iteration/](toy_weather/archive/first_iteration/),
+including its data, outputs and local environment. The top level of `toy_weather/`
+is reserved for a second iteration, pending your suggestions.

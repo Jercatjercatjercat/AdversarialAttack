@@ -478,7 +478,7 @@ define a separate architecture or guarantee forecasting performance.
 
 Further sources: [GraphCast](https://arxiv.org/abs/2212.12794),
 [Fourier neural operator](https://arxiv.org/abs/2010.08895).
-Our [toy CNN](../../toy_weather/models/simple_cnn.py) is the local small example.
+Our [toy CNN](../../toy_weather/archive/first_iteration/models/simple_cnn.py) is the local small example.
 
 Next reading goal: follow Figure 2 and identify input, patch features, encoder,
 bottleneck, decoder and the final forecast. Leave attention equations and optimizer

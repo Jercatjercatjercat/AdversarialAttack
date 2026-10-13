@@ -98,7 +98,7 @@ and plausible uncertainty matter more than a colour plot's appearance.
 Our current `--budget-k r` caps each cell by r for Linf, but caps input RMS by r
 for L2. On 256 cells, the L2 radius is 16r. Those allowed sets differ. Continue
 reporting BOTH largest cell change and input RMS. See the worked examples in
-[EXPERIMENTS.md](../../toy_weather/EXPERIMENTS.md).
+[EXPERIMENTS.md](../../toy_weather/archive/first_iteration/EXPERIMENTS.md).
 
 ## 3. The goals carry over, but class labels do not
 

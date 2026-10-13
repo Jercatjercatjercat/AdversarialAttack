@@ -308,7 +308,7 @@ it refuses to replace an existing prepared file. Shorter training windows can us
 
 Moving to Otter is reasonable now that the input-gradient and comparison pipeline
 works. First obtain trained weights, prepare one complete input, run a clean forecast,
-and verify a temperature-input gradient. See [OTTER_PREPARATION.md](../OTTER_PREPARATION.md)
+and verify a temperature-input gradient. See [OTTER_PREPARATION.md](../../../OTTER_PREPARATION.md)
 for the training approach and local hardware limits.
 
 Optional improvements to the toy forecaster should be changed one at a time:
