@@ -5,6 +5,73 @@ Architecture questions recorded on 13 October 2026. These notes refer to the sav
 and the [local model configuration](../../otter-main/otter/experiment/config/base.yaml).
 Later Otter publications also discuss probabilistic variants; keep the version explicit.
 
+## Section 2 checkpoint: Related Work
+
+Reviewed on 13 October 2026. Section 2 explains how Otter fits into existing
+research, rather than giving its complete input/output or training procedure.
+Correction to earlier guidance: the saved paper's forecasting task is in Section
+3.1, and its architecture is in Section 3.2. An earlier preparation note incorrectly
+attributed the correction-prediction description to Section 2; that reference is fixed.
+
+### What to take away from Section 2.1
+
+1. **Several different designs can forecast weather.** Pangu-Weather uses
+   Transformers adapted to Earth's spatial structure; GraphCast uses connected
+   points and learned information passing; FourCastNet uses wave/frequency-based
+   processing; ClimaX and Aurora are broadly pretrained models adapted to tasks.
+   Memorizing every cited model is unnecessary. Recognize the families and the
+   different ways they represent spatial information.
+2. **Otter's central question concerns forecasting quality versus training cost.**
+   The authors argue that standard components, efficiently implemented on GPUs,
+   can compete with more specialized designs at lower cost. This is their research
+   argument, not proof that specialized architectures never help or that physics
+   is irrelevant. Their experiments later in the paper supply the evidence.
+3. **Training, running and adapting a model have different costs.** Training learns
+   weights; inference runs a trained model to produce a forecast; fine-tuning
+   continues learning from existing weights for another task or training stage.
+   A model can run forecasts quickly yet remain expensive to train or adapt.
+   Efficiency claims need their hardware, data, resolution and forecast task stated.
+
+An **inductive bias** is a design assumption that makes some patterns easier for a
+model to learn. For example, building Earth's geometry into its connections tells
+it something about space before training. “Fewer weather-specific assumptions” does
+not mean Otter receives no location information or can ignore the structure of weather.
+
+### What to take away from Section 2.2
+
+The authors investigate techniques developed in image and language modelling.
+At this stage, recognize their roles rather than memorizing equations:
+
+- RoPE supplies position-related information inside attention calculations.
+- Muon is an optimizer, the rule that updates learned weights.
+- Regularization includes methods such as dropout and weight decay intended to
+  reduce overfitting, where training improves more than performance on unseen data.
+- Other candidates change the processing blocks, connections or initial training.
+
+The key word is **ablation**: compare controlled variants, often removing or replacing
+one component, to estimate whether that choice helps under matched conditions.
+Being listed as an investigated technique does not mean it is used in the final
+model or improved performance. Look for those results later. Also, lower forecast
+error does not automatically imply lower input-attack sensitivity.
+
+### Relevance to our attack project
+
+Section 2 gives model context and the reason Otter is attractive to smaller research
+groups. It does not establish resistance to FGSM/PGD. We would still have to load
+trained weights, verify clean forecasts and input gradients, and measure attacks
+with explicit budgets. Fast inference alone does not determine how affordable
+backpropagation or repeated attack steps will be.
+
+A sufficient first-pass summary is: “Otter asks whether a relatively standard
+spatial Transformer, combined with carefully tested training choices, can produce
+competitive forecasts at lower training cost. Other forecasters use different
+spatial designs. This section motivates that comparison; it does not establish
+adversarial robustness.”
+
+Next read Section 3.1 to record the actual inputs, forecast lead time, variables,
+training/test dates, resolution and evaluation measures. Then use Figure 2 and
+Section 3.2 to follow how those inputs become the predicted future.
+
 ## What is the underlying architecture?
 
 Otter uses a **2D Swin Transformer arranged as a U-Net**. This describes two

@@ -54,7 +54,7 @@ field ordering, normalization and configuration, not just its tensor dimensions.
 ## Why predict a change? Evidence versus inference
 
 The confirmed design is `predicted future = latest state + learned correction`.
-Section 2 of the saved paper describes predicting a difference from the latest
+Section 3.1 of the saved paper describes predicting a difference from the latest
 state. In [single_time_forward](otter-main/otter/models/forecasting_model.py), the
 code takes the latest state's corresponding fields and adds them to the network's
 output. The calculation uses normalized fields internally before converting the
