@@ -72,6 +72,7 @@ weather applications and questions still open. Existing PDF annotations remain i
 | 13 October 2026 | Otter paper versions and training relationship | [Version and pipeline comparison](notes/Otter.md#follow-up-output-representation-training-relationship-and-paper-versions): the saved deterministic paper versus the later preprint; full-field ensemble output; fine-tuning and from-scratch probabilistic routes. |
 | 13 October 2026 | New Otter preprint saved | Main PDF replaced; older annotated copy archived. [Monte Carlo clarification](notes/Otter.md#follow-up-does-monte-carlo-sample-the-deterministic-output): reuse and fine-tune model weights, then generate multiple maps with random internal dropout masks. |
 | 13 October 2026 | Otter Section 3.2 | [Base-architecture checkpoint](notes/Otter.md#section-32-checkpoint-the-otter-base-architecture): channel stacking, patch features, Swin U-Net, position/boundaries, weighted loss and training regularisation. CRPS versus randomness clarified. Next: Section 4.1. |
+| 13 October 2026 | Predictability beyond 30 days | [Epoch clarification](notes/PredictabilityBeyond30Days.md): one forecast/loss/gradient/input-update cycle, with GraphCast weights fixed; unlike a CNN training epoch. |
 
 Main conclusions from the first notes:
 
