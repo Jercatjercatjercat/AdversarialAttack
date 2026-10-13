@@ -7,10 +7,12 @@ Otter has not been trained or run in this workspace.
 
 ## How Otter learns
 
-The local [Otter paper](PaperReadings/Otter.pdf) is the deterministic ICLR 2026
+The local [archived Otter paper](PaperReadings/archive/Otter_ICLR2026.pdf) is the deterministic ICLR 2026
 paper, “Otter Weather: Highly Skillful Medium-Range Weather Forecasting on a
 Single GPU.” These details refer to that paper and the saved `otter-main/` code,
-not automatically to every later Otter model variant.
+not automatically to every later Otter model variant. The main reading copy,
+[PaperReadings/Otter.pdf](PaperReadings/Otter.pdf), is now the June 2026 preprint
+with probabilistic variants; replacing the PDF has not changed the local code.
 
 1. **Give it four recent global weather states.** Each state is six hours apart:
    current weather and weather 6, 12 and 18 hours earlier. The grid has 121 latitude
@@ -121,7 +123,7 @@ The paper also notes that this training can make long-range forecasts overly
 smooth, so it limits the training horizon to three days. The rollout training
 configuration and the final checkpoint must be recorded when comparing attacks.
 
-Evidence: the saved [paper](PaperReadings/Otter.pdf), Section 3's Rollout
+Evidence: the saved [paper](PaperReadings/archive/Otter_ICLR2026.pdf), Section 3's Rollout
 Fine-tuning paragraph and Appendix B.3;
 [rollout training settings](otter-main/otter/experiment/config/rollout_finetuning.yaml);
 [history update loop](otter-main/otter/models/forecasting_model.py);

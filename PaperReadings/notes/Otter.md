@@ -1,9 +1,11 @@
 # Reading notes: Otter Weather
 
 Architecture questions recorded on 13 October 2026. These notes refer to the saved
-[deterministic ICLR 2026 paper](../Otter.pdf), especially Figure 2 and Section 3.2,
+[deterministic ICLR 2026 paper](../archive/Otter_ICLR2026.pdf), especially Figure 2 and Section 3.2,
 and the [local model configuration](../../otter-main/otter/experiment/config/base.yaml).
-Later Otter publications also discuss probabilistic variants; keep the version explicit.
+On 13 October 2026, the [June 2026 preprint](../Otter.pdf) replaced the main reading
+PDF. It includes probabilistic variants. Earlier architecture notes used the
+archived ICLR paper; the local source code remains unchanged.
 
 ## Section 2 checkpoint: Related Work
 
@@ -77,7 +79,7 @@ Section 3.2 to follow how those inputs become the predicted future.
 Question recorded on 13 October 2026. The quoted passage covers deterministic and
 probabilistic Otter variants. For the latter, these notes use the
 [expanded Otter paper, Section 3.1](https://arxiv.org/html/2606.26421v1#S3.SS1).
-The saved local ICLR PDF focuses on deterministic Otter; do not assume the versions
+The archived ICLR PDF focuses on deterministic Otter; do not assume the versions
 have identical evaluation windows or every extension is in the local code.
 
 ### Benchmark versus baseline versus metric
@@ -245,17 +247,18 @@ single-map output into a useful forecast distribution.
 
 “Expanded paper” in earlier answers meant the separate later preprint
 [Otter Weather: Skillful and Computationally Efficient Medium-Range Weather Forecasting](https://arxiv.org/abs/2606.26421),
-submitted on 24 June 2026. It is not the local file named `Otter.pdf`. Those answers
-should have named the source explicitly before introducing its additional variants.
+submitted on 24 June 2026. At the time of those answers it was an online reference.
+It is now the local [Otter.pdf](../Otter.pdf), replaced on 13 October 2026. Earlier
+answers should have named the source explicitly before introducing its additional variants.
 
 | Work | What it covers |
 |---|---|
-| Local `Otter.pdf`: **Otter Weather: Highly Skillful Medium-Range Weather Forecasting on a Single GPU**, ICLR 2026 | Deterministic Otter, Swin U-Net architecture, training/component comparisons, rollout fine-tuning and a larger patch-size-one variant called Otter-PS1 |
-| Later **arXiv:2606.26421v1**, June 2026 | The same core Swin U-Net approach, updated deterministic results, probabilistic CRPS variants, checkpoint ensembles, scaled Otter-XL variants and an additional acoustic-wave experiment |
+| Archived [ICLR paper](../archive/Otter_ICLR2026.pdf): **Otter Weather: Highly Skillful Medium-Range Weather Forecasting on a Single GPU**, ICLR 2026 | Deterministic Otter, Swin U-Net architecture, training/component comparisons, rollout fine-tuning and a larger patch-size-one variant called Otter-PS1 |
+| Main [Otter.pdf](../Otter.pdf): **arXiv:2606.26421v1**, June 2026 | The same core Swin U-Net approach, updated deterministic results, probabilistic CRPS variants, checkpoint ensembles, scaled Otter-XL variants and an additional acoustic-wave experiment |
 
 The older paper cites probabilistic research but does not present the later paper's
-Otter CRPS experiments. The later preprint is linked online; a separate copy is
-not currently saved in `PaperReadings/`. The original PDF and annotations are preserved.
+Otter CRPS experiments. Both versions are now saved, with the newer preprint as
+the main reading copy and the original annotated PDF in the archive.
 
 #### What a probabilistic output looks like
 
@@ -453,9 +456,9 @@ weight identifies a physical cause. Source:
   Swin is a related hierarchical vision-Transformer design. Source:
   [original ViT paper](https://arxiv.org/abs/2010.11929).
 
-I did not find the name U-Cast in the saved Otter PDF. A newer Otter paper discusses
-it as another weather model. If a particular passage says something different,
-check which paper version and exact term are being read.
+U-Cast is absent from the archived ICLR paper but discussed in the new main
+Otter preprint, Sections 2 and 4.2, as a separate weather model. It is not the
+name of Otter’s architecture.
 
 ## Common designs for maps and weather
 
@@ -481,3 +484,35 @@ Next reading goal: follow Figure 2 and identify input, patch features, encoder,
 bottleneck, decoder and the final forecast. Leave attention equations and optimizer
 details for later questions. The [preparation note](../../OTTER_PREPARATION.md)
 already records the correction-prediction and repeated-forecast training explanations.
+
+## Follow-up: does Monte Carlo sample the deterministic output?
+
+Question recorded on 13 October 2026, after replacing the main PDF.
+
+**Close, but the starting point is the trained model, not its finished forecast map.**
+Section 4.2 and Appendix B.3.5 describe this route:
+
+1. Train a deterministic model to produce one forecast.
+2. Continue training its weights using CRPS, which scores a collection of possible
+   forecasts against the observed future. This is called fine-tuning.
+3. At forecast time, run the resulting probabilistic model repeatedly on the same
+   input weather. MC (Monte Carlo) dropout uses different random masks to switch
+   off some internal features on each run. Each run produces a complete new map.
+
+For example, three maps might predict 21, 22 and 24 °C at one location and the same
+future time. These are illustrative values, not results from our model. The spread
+represents the model's uncertainty; their average is an ensemble-mean forecast.
+A single deterministic prediction of 22 °C does not tell us how wide that spread
+should be, so sampling cannot be defined from that value alone.
+
+Weights change during fine-tuning, but stay fixed while generating the repeated
+forecasts. The randomness comes from the internal dropout masks. The paper also
+trains probabilistic models directly from scratch using CRPS, so deterministic
+pretraining is one route, not a requirement. Its deep-ensemble variant additionally
+combines several trained checkpoints.
+
+Replacing the paper does not install this training/sampling procedure in our saved
+Otter code. See the implementation distinction above before running experiments.
+
+Evidence: [new local preprint](../Otter.pdf), Section 4.2 and Appendix B.3.5;
+[online version](https://arxiv.org/html/2606.26421v1#S4.SS2).

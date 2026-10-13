@@ -1,7 +1,7 @@
 # Reading guide for the weather-input attack project
 
-Inventory updated on 11 October 2026 after checking the three newly downloaded
-PDFs' text, titles and article identifiers, not just their filenames. All five
+Inventory updated on 13 October 2026. PDF titles and article identifiers have
+been checked, including the newly added Otter preprint. All five
 distinct suggested works are now saved. Existing personal annotations are preserved.
 The six suggested links describe **five distinct works**: the first two are
 the preprint and journal publication of the same predictability study.
@@ -17,17 +17,18 @@ the preprint and journal publication of the same predictability study.
 | [arXiv:1810.00069 — Adversarial Attacks and Defences: A Survey](https://arxiv.org/abs/1810.00069) | Present: [2018 survey](<Adversarial Attacks and Defences- A Survey.pdf>), arXiv v1 |
 | [arXiv:2305.10862 — How Deep Learning Sees the World: A Survey on Adversarial Attacks & Defenses](https://arxiv.org/abs/2305.10862) | Present: [newer survey](<How Deep Learning Sees the World- A Survey on Adversarial Attacks & Defenses.pdf>), arXiv v1, May 2023 |
 
-Other saved material: [Otter.pdf](Otter.pdf), the deterministic ICLR 2026 Otter
-paper, and [WeatherVariablesAndMetrics.pdf](WeatherVariablesAndMetrics.pdf), our
-existing reference sheet moved here from the workspace root. The reference sheet
-is not one of the six requested articles. A separate AMS journal-version PDF of
-the predictability study is still not saved; the annotated preprint covers that work.
+Other saved material: [Otter.pdf](Otter.pdf), now the June 2026 preprint
+**Otter Weather: Skillful and Computationally Efficient Medium-Range Weather
+Forecasting** (arXiv:2606.26421v1), and
+[WeatherVariablesAndMetrics.pdf](WeatherVariablesAndMetrics.pdf), our reference
+sheet. Neither is one of the six originally requested articles.
 
-Otter version note: the saved `Otter.pdf` is **Highly Skillful Medium-Range Weather
-Forecasting on a Single GPU** (ICLR 2026), focused on deterministic forecasting.
-The later [Skillful and Computationally Efficient Medium-Range Weather Forecasting](https://arxiv.org/abs/2606.26421)
-preprint (June 2026) adds probabilistic and scaled variants; it is currently an
-online reference, not another saved PDF. See the [version comparison](notes/Otter.md#follow-up-output-representation-training-relationship-and-paper-versions).
+The new Otter PDF replaced the main reading copy on 13 October 2026. The older
+**Highly Skillful Medium-Range Weather Forecasting on a Single GPU** (ICLR 2026)
+paper is preserved, including its annotations, in
+[archive/Otter_ICLR2026.pdf](archive/Otter_ICLR2026.pdf). The new preprint adds
+probabilistic and scaled variants. Our saved source code has not been updated
+by replacing the PDF. See the [version comparison](notes/Otter.md#follow-up-output-representation-training-relationship-and-paper-versions).
 
 ## Start here: one short reading session
 
@@ -69,6 +70,8 @@ weather applications and questions still open. Existing PDF annotations remain i
 | 13 October 2026 | Otter forecast maps and uncertainty | [One map versus possible maps](notes/Otter.md#follow-up-i-thought-i-just-output-a-map): ensemble members share a future timestamp; MC dropout generates variation; RMSE and CRPS use the same realized future map differently. |
 | 13 October 2026 | Otter expectation and implementation | [Expectation versus distribution output](notes/Otter.md#follow-up-expectation-crps-and-what-is-built-into-otter): deterministic outputs need not average samples; CRPS is a scoring rule; the saved default is deterministic despite some probabilistic building blocks. |
 | 13 October 2026 | Otter paper versions and training relationship | [Version and pipeline comparison](notes/Otter.md#follow-up-output-representation-training-relationship-and-paper-versions): the saved deterministic paper versus the later preprint; full-field ensemble output; fine-tuning and from-scratch probabilistic routes. |
+
+| 13 October 2026 | New Otter preprint saved | Main PDF replaced; older annotated copy archived. [Monte Carlo clarification](notes/Otter.md#follow-up-does-monte-carlo-sample-the-deterministic-output): reuse and fine-tune model weights, then generate multiple maps with random internal dropout masks. |
 
 Main conclusions from the first notes:
 
