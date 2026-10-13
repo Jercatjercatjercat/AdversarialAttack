@@ -57,6 +57,7 @@ weather applications and questions still open. Existing PDF annotations remain i
 | Date | Paper | Progress and next step |
 |---|---|---|
 | 12 October 2026 | How Deep Learning Sees the World | First selections/questions reviewed; [corrected notes and complete attack catalogue](notes/HowDeepLearningSeesTheWorld.md). Read Otter's setup/training next. |
+| 13 October 2026 | Otter Weather | [Architecture notes](notes/Otter.md): Swin blocks inside a U-Net layout; U-Cast versus U-Net versus ViT; common spatial-model designs. Follow Figure 2 and Section 3.2. |
 
 Main conclusions from the first notes:
 
