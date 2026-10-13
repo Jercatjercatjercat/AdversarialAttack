@@ -531,3 +531,56 @@ adversarial changes to the input. In a later attack experiment, we would keep th
 trained weights fixed and deliberately change the input to worsen a clearly
 defined forecast score. How to handle randomness in that attack is still an
 experimental choice; it has not been implemented for Otter here.
+
+## Section 3.2 checkpoint: the Otter base architecture
+
+Checked against the new main PDF on 13 October 2026, Section 3.2 and Figure 2.
+
+1. **Stack the input information.** Weather variables and recent history are
+   combined as channels on the same spatial grid. Time embeddings are extra
+   numerical features telling the model about time. They are not measured weather.
+2. **Convert patches into learned features.** A convolution turns small spatial
+   patches into tokens, meaning vectors of learned numbers. The base width
+   D = 1536 counts internal features per token, not weather variables.
+3. **Use Swin attention inside a U-Net.** Attention lets nearby patch features
+   exchange information. Shifted windows change the neighbourhoods between blocks.
+   The encoder reduces spatial resolution, the bottleneck processes broad patterns,
+   and the decoder restores resolution using earlier detail through skip connections.
+4. **Keep the design fairly general.** Otter stacks variables rather than building
+   separate specialised encoders for surface and pressure-level data. It keeps the
+   same feature width across U-Net stages. This is a deliberate efficiency choice.
+5. **Supply position information and simplify boundary handling.** RoPE encodes
+   relative spatial position in attention. Removing attention masks permits
+   communication across wrapped grid boundaries, including the latitude edges.
+   The paper calls this a torus topology: a computational choice, not a claim that
+   the Earth is doughnut-shaped. Positional information helps the network distinguish
+   locations. Section 4.1 tests the skill/compute trade-off.
+6. **Train and regularise the deterministic backbone.** The loss is latitude- and
+   pressure-weighted RMSE. Latitude weighting accounts for differing grid-cell
+   area; pressure weighting sets the importance of atmospheric levels. Muon is the
+   optimiser used to update weights. Gradient accumulation combines gradients from
+   several smaller batches before one update. Weight decay discourages large
+   weights; dropout zeros selected internal features; stochastic depth skips whole
+   residual blocks during training. These aim to reduce over-reliance and improve
+   training behaviour, rather than generate adversarial examples.
+
+Terms to recognise without memorising their formulas: RoPE (position encoding),
+SwiGLU (the nonlinear feature-processing component), attention heads (parallel
+attention calculations), and Muon (the optimiser). The stated base settings include
+D = 1536, 16 attention heads, blocks per stage [2, 8, 4], dropout 0.1 and weight
+decay 0.15. These are settings of this model, not universal rules.
+
+**CRPS clarification from the preceding questions:** Randomness makes repeated
+forecasts differ; CRPS trains the collection to be useful against observations.
+CRPS alone does not make a model random. Identical ensemble members reduce the
+fair CRPS formula to absolute error at each evaluated value. Random dropout alone
+is likewise not evidence of well-calibrated uncertainty. Section 3.2 describes
+the deterministic backbone; the probabilistic training is explained in Section 4.2.
+
+For our attack project, identify the observed input, the internal features and the
+forecast output. An attack deliberately changes the input with fixed trained
+weights. Dropout changes internal activity; it does not replace input temperature
+readings. The next reading step is Section 4.1: compare which design changes
+improve forecast skill and how much computation they cost.
+
+Source: [main Otter PDF](../Otter.pdf), Section 3.2, Figure 2 and Section 4.2.

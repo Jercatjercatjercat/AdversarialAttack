@@ -74,3 +74,9 @@ weights stay fixed during these runs. The paper also trains probabilistic models
 from scratch. Read [the sampling clarification](PaperReadings/notes/Otter.md#follow-up-does-monte-carlo-sample-the-deterministic-output)
 before Section 4.2. Replacing the PDF has not changed the saved Otter source code
 or made its newer probabilistic experiments ready to run locally.
+
+Latest reading checkpoint: [Otter Section 3.2](PaperReadings/notes/Otter.md#section-32-checkpoint-the-otter-base-architecture)
+explains how stacked weather inputs become patch features and move through a Swin
+U-Net. It also distinguishes dropout inside the network from changes to observed
+inputs, and random sampling from CRPS training. Next read Section 4.1's controlled
+design comparisons.
