@@ -241,6 +241,90 @@ some probability/evaluation building blocks exist locally, but our saved default
 configuration is deterministic. A CRPS evaluation script alone does not turn
 single-map output into a useful forecast distribution.
 
+### Follow-up: output representation, training relationship and paper versions
+
+“Expanded paper” in earlier answers meant the separate later preprint
+[Otter Weather: Skillful and Computationally Efficient Medium-Range Weather Forecasting](https://arxiv.org/abs/2606.26421),
+submitted on 24 June 2026. It is not the local file named `Otter.pdf`. Those answers
+should have named the source explicitly before introducing its additional variants.
+
+| Work | What it covers |
+|---|---|
+| Local `Otter.pdf`: **Otter Weather: Highly Skillful Medium-Range Weather Forecasting on a Single GPU**, ICLR 2026 | Deterministic Otter, Swin U-Net architecture, training/component comparisons, rollout fine-tuning and a larger patch-size-one variant called Otter-PS1 |
+| Later **arXiv:2606.26421v1**, June 2026 | The same core Swin U-Net approach, updated deterministic results, probabilistic CRPS variants, checkpoint ensembles, scaled Otter-XL variants and an additional acoustic-wave experiment |
+
+The older paper cites probabilistic research but does not present the later paper's
+Otter CRPS experiments. The later preprint is linked online; a separate copy is
+not currently saved in `PaperReadings/`. The original PDF and annotations are preserved.
+
+#### What a probabilistic output looks like
+
+For one input case and one future time, it is a collection of complete predicted
+weather states. A teaching layout is `[M,121,240,82]`: M ensemble members, 121
+latitude rows, 240 longitude columns and 82 changing weather fields. This omits
+batch/time axes and is not a promise about exact package dimension order.
+Each member contains temperature, wind, humidity and other predicted maps.
+
+Looking at one location's T2m across members could give the following hypothetical
+values, not extracted paper results:
+
+| Ensemble member | Temperature at the same location and future time |
+|---|---:|
+| 1 | 21.4°C |
+| 2 | 22.0°C |
+| 3 | 23.1°C |
+| 4 | 22.6°C |
+| 5 | 24.0°C |
+
+Each number above belongs to a different full weather prediction. Collectively
+they represent sampled uncertainty at that location. They are not five different
+forecast times or five known future outcomes. One can summarize them with a mean,
+spread or fraction exceeding a selected temperature threshold.
+
+The later paper's Appendix C.4 uses five ensemble members for its main comparisons,
+ten for model selection, and nine in a deep-ensemble setup consisting of three
+models generating three members each. Member count is an evaluation/sampling choice,
+not the number of weather variables or a universal fixed output-channel count.
+Source: [expanded paper, Appendix C.4](https://arxiv.org/html/2606.26421v1).
+
+#### Conversion means additional training, not converting a map
+
+The paper's fine-tuned probabilistic route starts with its deterministic pretrained
+backbone. It preserves the main network layout, generates varied predictions through
+internal randomness such as MC dropout, and continues updating weights using CRPS.
+It then performs rollout fine-tuning. Figure 7 and Appendix B.3.5 describe five
+epochs of one-step CRPS fine-tuning after deterministic pretraining.
+
+```text
+Deterministic pretraining: learn one-step forecast weights
+  ├─ Rollout fine-tuning → deterministic forecasting model
+  └─ CRPS fine-tuning with random sampling
+       → Rollout fine-tuning → probabilistic forecasting model
+
+Alternative also tested:
+Random starting weights → CRPS training → Rollout fine-tuning → probabilistic model
+```
+
+The preferred MC-dropout approach can keep the same learned-layer layout and
+per-sample map dimensions while producing varied outputs. The paper also tests
+another noise-injection mechanism with additional parameters. Continued training
+changes weights, so the probabilistic ensemble mean need not equal the original
+deterministic forecast. Merely changing the evaluation metric or enabling random
+dropout on an unchanged deterministic checkpoint is not the trained conversion.
+Source: [Section 4.2 and training details](https://arxiv.org/html/2606.26421v1#S4.SS2).
+
+Thus “same model” needs qualification: same architectural family/backbone idea,
+but separate trained weight sets and inference procedures. The original and later
+papers also have configuration differences; for example, the saved original base
+uses absolute spatial embeddings, while the later base table lists spherical
+embeddings alongside RoPE. These are different ways to supply location information.
+Do not assume that a checkpoint from one version can be loaded with another
+version's configuration, or that Otter-PS1 and Otter-XL are identical trained models.
+
+For our first attack milestone, the original deterministic model remains sufficient:
+one trained checkpoint, one verified forecast and one input gradient. Probabilistic
+variants add sampling and uncertainty evaluation and can be a separate later study.
+
 ### Rollout fine-tuning is another, independent distinction
 
 **RFT**, rollout fine-tuning, continues training while feeding earlier predictions
