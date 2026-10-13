@@ -133,6 +133,60 @@ Our toy CNN is deterministic. Its three training seeds are evaluated separately
 and their scores averaged; we have not used them to produce and score a probabilistic
 forecast distribution.
 
+### Follow-up: “I thought I just output a map”
+
+Yes: one individual forecast is still a map. The distinction is one predicted
+map versus a collection of possible maps for the SAME starting case and SAME
+future time. It is not a distinction between a map and a single temperature number.
+
+```text
+Deterministic:
+one input history → one map for tomorrow at noon
+
+Probabilistic:
+one input history → possible map 1 for tomorrow at noon
+                  → possible map 2 for tomorrow at noon
+                  → possible map 3 for tomorrow at noon
+                  → ...
+```
+
+For one example and temperature only, a conceptual tensor layout is `[1,H,W]`
+for a deterministic forecast versus `[M,1,H,W]` for M probabilistic ensemble members.
+For a batch, those become `[B,1,H,W]` and `[B,M,1,H,W]`. These are teaching layouts,
+not the exact dimension order of the Otter package. Otter predicts many fields.
+
+Look at one grid cell across five possible maps: the predicted temperatures could
+be 21, 22, 23, 24 and 25°C. Those values describe uncertainty at that cell. Each
+map also predicts all the OTHER cells, forming a complete spatial forecast.
+By contrast, maps at +6h, +12h and +18h from one forecast trajectory are different
+times; having several time outputs does not itself make a model probabilistic.
+
+For the probabilistic Otter variant, random internal dropout masks generate different
+forecasts from the same supplied input history. **Dropout** temporarily sets
+selected internal feature values to zero. **Monte Carlo dropout** means making
+repeated predictions with independently drawn masks. The paper trains/fine-tunes
+this setup with CRPS; merely switching randomness on in our MSE-trained CNN would
+not establish that its spread is useful forecast uncertainty. Otter also combines
+different fine-tuned checkpoints in some deep-ensemble variants. Source:
+[expanded paper, Section 4.2](https://arxiv.org/html/2606.26421v1#S4.SS2).
+
+The two evaluation procedures can use the same actual future map y:
+
+1. **Deterministic:** compare the one predicted temperature with y at each cell,
+   combine squared errors and take the square root to obtain RMSE.
+2. **Probabilistic:** at each cell, collect the ensemble's predicted temperatures,
+   score that predicted distribution against the one realized value in y using
+   CRPS, then aggregate over cells, dates and the specified variables/lead times.
+   CRPS here is a per-variable, per-location distribution score; it does not on
+   its own evaluate every aspect of joint spatial consistency between cells.
+
+There is still only ONE realized future map per case. It is not necessary to know
+several true futures to score an ensemble; uncertainty quality is assessed over
+many forecast cases. Averaging the predicted maps first and calculating RMSE can
+assess the ensemble mean, but removes the spread information needed for a
+probabilistic assessment. Generating uncertainty within the trained forecaster is
+also different from an adversarial attack that deliberately corrupts weather inputs.
+
 ### Rollout fine-tuning is another, independent distinction
 
 **RFT**, rollout fine-tuning, continues training while feeding earlier predictions
