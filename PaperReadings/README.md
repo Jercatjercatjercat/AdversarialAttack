@@ -1,227 +1,230 @@
-# Reading guide for the weather-input attack project
+# Papers behind the weather-input attack project
 
-Inventory updated on 13 October 2026. PDF titles and article identifiers have
-been checked, including the newly added Otter preprint. All five
-distinct suggested works are now saved. Existing personal annotations are preserved.
-The six suggested links describe **five distinct works**: the first two are
-the preprint and journal publication of the same predictability study.
+This folder brings together two sides of the project: how AI models forecast
+weather, and how deliberate changes to their inputs can affect those forecasts.
+The toy experiments connect these ideas on a small temperature grid. The longer-term
+question is whether similar input changes affect a larger model such as Otter,
+including forecasts with several variables, repeated forecast steps and extreme events.
 
-## What is already saved?
+The collection contains the five distinct works originally recommended, plus
+Otter and a weather-variable reference sheet. The six original links represent
+five works because the predictability paper has both a preprint and a journal
+publication. The local PDFs include existing personal annotations. Detailed
+questions and corrections are stored in `notes/` and linked below.
 
-| Suggested reference | Local status |
-|---|---|
-| [arXiv:2504.20238 — Atmospheric Predictability Beyond 30 Days with Machine Learning](https://arxiv.org/abs/2504.20238) | Present: [PredictabilityBeyond30Days.pdf](PredictabilityBeyond30Days.pdf), annotated arXiv v2, dated May/June 2026 |
-| [AMS: AIES-D-26-0009.1 — Atmospheric Predictability beyond 30 Days with Machine Learning](https://journals.ametsoc.org/view/journals/aies/aop/AIES-D-26-0009.1/AIES-D-26-0009.1.xml) | Same study is present as the preprint above; a separate journal-version PDF is not saved |
-| [Nature: s41586-025-08897-0 — End-to-end data-driven weather prediction](https://www.nature.com/articles/s41586-025-08897-0) | Present: [AardvarkWeather.pdf](AardvarkWeather.pdf), previously named `ML_WP.pdf` |
-| [Nature: s41586-025-09005-y — A foundation model for the Earth system](https://www.nature.com/articles/s41586-025-09005-y) | Present: [Aurora paper](<A foundation model for the Earth system.pdf>), published Nature version, May 2025 |
-| [arXiv:1810.00069 — Adversarial Attacks and Defences: A Survey](https://arxiv.org/abs/1810.00069) | Present: [2018 survey](<Adversarial Attacks and Defences- A Survey.pdf>), arXiv v1 |
-| [arXiv:2305.10862 — How Deep Learning Sees the World: A Survey on Adversarial Attacks & Defenses](https://arxiv.org/abs/2305.10862) | Present: [newer survey](<How Deep Learning Sees the World- A Survey on Adversarial Attacks & Defenses.pdf>), arXiv v1, May 2023 |
+## How Deep Learning Sees the World: attacks and defenses
 
-Other saved material: [Otter.pdf](Otter.pdf), now the June 2026 preprint
-**Otter Weather: Skillful and Computationally Efficient Medium-Range Weather
-Forecasting** (arXiv:2606.26421v1), and
-[WeatherVariablesAndMetrics.pdf](WeatherVariablesAndMetrics.pdf), our reference
-sheet. Neither is one of the six originally requested articles.
+[Local PDF](<How Deep Learning Sees the World- A Survey on Adversarial Attacks & Defenses.pdf>) ·
+[2023 preprint](https://arxiv.org/abs/2305.10862) ·
+[Our reading notes](notes/HowDeepLearningSeesTheWorld.md)
 
-The new Otter PDF replaced the main reading copy on 13 October 2026. The older
-**Highly Skillful Medium-Range Weather Forecasting on a Single GPU** (ICLR 2026)
-paper is preserved, including its annotations, in
-[archive/Otter_ICLR2026.pdf](archive/Otter_ICLR2026.pdf). The new preprint adds
-probabilistic and scaled variants. Our saved source code has not been updated
-by replacing the PDF. See the [version comparison](notes/Otter.md#follow-up-output-representation-training-relationship-and-paper-versions).
+This survey explains how changes to an input can cause a neural network to make
+an unwanted prediction. It covers attacks with different levels of model access,
+ways to restrict the size of an input change, defenses, and attacks on Vision
+Transformers—networks that process spatial patches using attention. Much of the
+survey concerns images and classification, where the output is a label such as
+“cat” or “dog.” Our weather model instead predicts numerical temperatures, so an
+attack is judged by its effect on forecast error or a specified forecast outcome.
 
-## Start here: one short reading session
+Section II provides the background vocabulary. Section IV describes attack
+methods, including gradient-based methods related to our FGSM and PGD experiments.
+Section V covers defenses, Section VI discusses attention and patch-based models,
+and Section VIII addresses evaluation. These parts connect respectively to our
+input-change limits, attack comparisons, eventual Transformer experiments and
+questions about how to measure success.
 
-Start with [How Deep Learning Sees the World](<How Deep Learning Sees the World- A Survey on Adversarial Attacks & Defenses.pdf>).
-Read **Section II, Background for Adversarial Attacks**, then the FGSM, iterative
-attack and PGD passages in **Section IV.A, White-box Settings**. Aim for a first
-30–45 minute pass, not the whole survey. Skip the long method catalogue and defenses
-until the basic input-change idea is clear. The 2018 survey can be a second
-explanation of unfamiliar terms rather than another complete reading assignment.
+The connection to Otter does not depend on an attack being designed originally
+for a CNN. FGSM and PGD use gradients and can also be applied to a differentiable
+Transformer. A separate question is whether an input change chosen for one model
+also affects another model; this is called **transfer**. The survey provides
+possible methods and evaluation questions, rather than evidence that a particular
+weather model is vulnerable.
 
-Connect the reading to our code with four questions:
+Our notes also record important corrections to the image analogy. A weather
+attack does not have to be visually invisible, and an input-change limit alone
+does not guarantee physical plausibility. L0 counts changed entries, L2 limits
+the combined size of changes, and Linf limits each entry separately. Their effects
+need interpretation in weather units as well as numerical scores. The defense
+material remains useful for later work, when the attack itself is well understood.
 
-1. What stays fixed? The trained weights and the true future temperature.
-2. What changes? The input temperature map, within a stated limit.
-3. What does the gradient tell us? Which small input changes increase forecast loss.
-4. What does projection do? Bring each attempted change back inside its budget.
+## Otter Weather: the forecasting model we may eventually attack
 
-The survey mostly predicts image labels. Our model predicts temperatures, so a
-wrong-class objective becomes increased numerical forecast error. Our random-noise
-comparison asks whether choosing the direction using the gradient matters.
+[Main local PDF](Otter.pdf) ·
+[June 2026 preprint](https://arxiv.org/abs/2606.26421) ·
+[Our reading notes](notes/Otter.md) ·
+[Local preparation and code discussion](../OTTER_PREPARATION.md)
 
-Next read **Otter Sections 2 and 3, the Rollout Fine-tuning paragraph, and Appendix
-B.3** alongside [the preparation note](../OTTER_PREPARATION.md). Then read the
-predictability study's **Section 2, Data and Methods**, focusing on what is fixed,
-what is optimized and how future error enters the calculation.
+The main PDF is **Otter Weather: Skillful and Computationally Efficient
+Medium-Range Weather Forecasting**, arXiv:2606.26421v1. It describes a family of
+models intended to make strong weather forecasts with a comparatively small
+training budget. Otter receives recent global weather states containing several
+variables and atmospheric levels, then predicts the next state. Repeating this
+operation produces forecasts farther into the future.
+
+Section 3.1 describes the forecasting task and evaluation. Section 3.2 and
+Figure 2 explain the architecture: weather information is combined into channels,
+converted into patch features, and processed by a Swin Transformer in a U-Net
+layout. The network reduces spatial resolution to process broader patterns and
+then restores it, using earlier features to retain detail. Section 4.1 compares
+design choices and their forecast-skill and computational costs. These parts
+connect our temperature-only CNN to a larger system while preserving the same
+basic input-to-forecast relationship.
+
+Section 4.2 extends Otter to probabilistic forecasting, where the output is a
+collection of possible future maps. In one training route, a deterministic model
+is trained further using CRPS, a score that assesses possible forecasts against
+the observed future. Monte Carlo dropout creates different maps by running the
+model repeatedly with different random masks on internal features. Randomness
+creates variation; CRPS training helps make that variation useful. The paper
+also describes probabilistic training from scratch and combinations of trained
+checkpoints. A single finished deterministic map is not itself a distribution
+from which these possible futures can be sampled.
+
+For our project, the deterministic model offers the more direct first bridge:
+fixed trained weights, a weather input, a forecast loss and a gradient with respect
+to that input. Probabilistic forecasting adds a further question about how attacks
+should be evaluated when repeated predictions differ. Its random internal dropout
+is distinct from deliberately changing the observed input in an attack.
+
+The main PDF was replaced on 13 October 2026. The earlier **Otter Weather: Highly
+Skillful Medium-Range Weather Forecasting on a Single GPU**, the deterministic
+ICLR 2026 paper, is preserved with its annotations in
+[archive/Otter_ICLR2026.pdf](archive/Otter_ICLR2026.pdf). Our saved `otter-main/`
+source code has not been updated merely by replacing the paper. The
+[version comparison](notes/Otter.md#follow-up-output-representation-training-relationship-and-paper-versions)
+separates the papers' claims from what the local code currently supports.
+
+## Atmospheric Predictability Beyond 30 Days: changing the starting weather
+
+[Annotated local preprint](PredictabilityBeyond30Days.pdf) ·
+[Preprint reference](https://arxiv.org/abs/2504.20238) ·
+[Journal publication](https://journals.ametsoc.org/view/journals/aies/aop/AIES-D-26-0009.1/AIES-D-26-0009.1.xml) ·
+[Our reading notes](notes/PredictabilityBeyond30Days.md)
+
+This paper is the closest methodological connection to our input-gradient work.
+The authors keep a trained GraphCast model fixed and adjust its starting weather
+states to reduce future forecast error. Forecasts are fed back into the model
+repeatedly, and the error is differentiated through those forecast steps back to
+the initial inputs. The optimisation window begins short and gradually expands,
+using the previously improved inputs as the starting point for each longer window.
+The study also tests whether inputs chosen for GraphCast help Pangu-Weather.
+
+The Optimization subsection explains what is changed and how the gradient is
+used. Here, one “epoch” means one forecast, loss, gradient and input-update cycle.
+It does not mean a pass through a dataset to train GraphCast's weights. For a
+two-day window, eight six-hour forecast steps occur before one input update.
+
+Our attacks share the idea of differentiating with respect to inputs through a
+fixed forecaster, but aim to increase error. The paper's input optimisation is
+not automatically the same procedure as our constrained FGSM or PGD attacks. It
+motivates comparisons between error-reducing and error-increasing changes, effects
+across longer forecasts, and transfer between models. Because known future weather
+is used during optimisation, the improvements are retrospective; they do not
+show an operational method that knows the future in advance.
+
+The local file is the annotated arXiv v2 preprint from May/June 2026. A separate
+journal PDF is not saved. The two online references describe the same study,
+although version differences matter when quoting particular results.
+
+## Aurora: several variables, different tasks and extreme weather
+
+[Local PDF](<A foundation model for the Earth system.pdf>) ·
+[Nature publication](https://www.nature.com/articles/s41586-025-09005-y)
+
+**A foundation model for the Earth system** introduces Aurora, a model trained
+broadly on diverse Earth-system data and then adapted to particular tasks. This
+broad initial training followed by task-specific adaptation is what “foundation
+model” means here. Its applications include weather, tropical cyclone tracks,
+air quality and ocean waves. The model uses an encoder, a processor and a decoder
+to accommodate different variables and atmospheric levels.
+
+The section **“Aurora: an Earth system foundation model”** and Figure 1 describe
+this shared model and its task-specific adaptations. **“High-resolution weather
+forecasting”** and Figure 5 combine broad forecast comparisons with the Storm
+Ciarán example. **“Tropical cyclone tracking”** and Figure 4 show another way to
+judge a forecast: the error in a storm's predicted position. Position error,
+storm intensity error and temperature-map error answer different questions.
+
+The **Methods → “Verification metrics”** subsection is particularly relevant to
+our proposed extreme-weather experiments. Alongside general forecast scores, it
+describes thresholded RMSE: an error score calculated at grid locations meeting
+specified intensity thresholds. Those thresholds use ERA5 training-year means
+and standard deviations calculated separately at each location. This gives us
+an example of assessing unusually severe conditions instead of allowing ordinary
+conditions to dominate a whole-map average. A single storm case remains an
+illustration, rather than proof of performance on every extreme event.
+
+For our project, Aurora contributes ideas for multi-variable inputs and separate
+ordinary-weather and extreme-weather evaluations. A fair clean-versus-attacked
+comparison would use the same selected cases and locations. Multiple variables
+also need meaningful limits in their own units; Kelvin and metres per second
+cannot simply be combined into an unexplained physical budget. Aurora's paper
+reports forecast performance, not adversarial robustness, so its results do not
+establish resistance to our attacks.
+
+The Methods subsections on pretraining, short-lead-time fine-tuning and rollout
+fine-tuning also provide a comparison with Otter's training. Aurora's memory-saving
+rollout training does not differentiate through every step in the same way as
+the initial-condition optimisation in the predictability study.
+
+## Aardvark: the wider path from observations to forecasts
+
+[Local PDF](AardvarkWeather.pdf) ·
+[Nature publication](https://www.nature.com/articles/s41586-025-08897-0)
+
+**End-to-end data-driven weather prediction** describes Aardvark, a pipeline that
+starts with observations, estimates the current atmospheric state, forecasts
+future global states and produces local station forecasts. Its model overview
+and Figure 1 show these stages: an encoder estimates the state, a processor
+forecasts its evolution, and a decoder produces local outputs.
+
+This matters because an attack can enter the forecasting process at different
+places. Our ERA5 experiment changes an already reconstructed weather state at
+the forecaster's input. Changing a raw station or satellite observation before
+state estimation would be a different experiment. Aardvark makes that distinction
+visible and suggests later questions about whether state estimation reduces or
+amplifies an observation change, and whether effects at particular stations differ
+from the average effect across a map. It describes the wider forecasting pipeline,
+rather than supplying an FGSM or PGD implementation. The local PDF was previously
+named `ML_WP.pdf`.
+
+## Adversarial Attacks and Defences: the foundational vocabulary
+
+[Local PDF](<Adversarial Attacks and Defences- A Survey.pdf>) ·
+[2018 preprint](https://arxiv.org/abs/1810.00069)
+
+This earlier survey organises attacks by what the attacker knows, what can be
+changed and what outcome is intended. A white-box attacker can inspect model
+calculations and gradients; a black-box attacker has more limited access. An
+untargeted attack seeks an unwanted result without choosing one particular wrong
+output, while a targeted attack aims at a specified result. Evasion changes inputs
+to an already trained model; poisoning changes its training data.
+
+These distinctions describe our current experiments precisely: we inspect gradients,
+change test-time weather inputs and aim to increase forecast error. The model's
+weights and the true future remain fixed, with the future available as a reference
+during evaluation. The survey largely concerns classification, so our numerical
+forecast scores replace wrong-label counts. It complements the newer survey as a
+source of basic terminology, rather than a complete account of later methods.
 
 ## Reading log: notes and questions as we go
 
-Use this README as the index; keep detailed, corrected notes with each paper.
-Each update distinguishes the user's interpretation, checked claims, proposed
-weather applications and questions still open. Existing PDF annotations remain intact.
+The detailed notes preserve the explanations developed while reading, including
+corrections and distinctions between published experiments and our proposed work.
+The newer survey notes cover weather adaptations, attack limits, method families,
+evaluation and defenses. The Otter notes cover architecture, evaluation, paper
+versions, dropout and probabilistic forecasting through the Section 3.2 checkpoint.
+The predictability notes explain input optimisation and its use of “epoch.”
+Otter reading is currently paused; Aurora connects most directly to the proposed
+multi-variable and extreme-weather experiments.
 
-| Date | Paper | Progress and next step |
-|---|---|---|
-| 12 October 2026 | How Deep Learning Sees the World | First selections/questions reviewed; [corrected notes and complete attack catalogue](notes/HowDeepLearningSeesTheWorld.md). Read Otter's setup/training next. |
-| 13 October 2026 | Otter Weather | [Architecture notes](notes/Otter.md): Swin blocks inside a U-Net layout; U-Cast versus U-Net versus ViT; common spatial-model designs. Follow Figure 2 and Section 3.2. |
-| 13 October 2026 | Otter Weather, Section 2 finished | [Related-work checkpoint](notes/Otter.md#section-2-checkpoint-related-work): model families, training versus inference cost, controlled component comparisons, and what this section does not establish about attacks. Next: Section 3.1. |
-| 13 October 2026 | Otter evaluation protocol | [Evaluation notes](notes/Otter.md#evaluation-protocol-benchmark-forecast-type-and-forecast-time): benchmark versus baseline, deterministic versus probabilistic outputs, RMSE/CRPS, RFT and matching forecast times. |
-| 13 October 2026 | Otter forecast maps and uncertainty | [One map versus possible maps](notes/Otter.md#follow-up-i-thought-i-just-output-a-map): ensemble members share a future timestamp; MC dropout generates variation; RMSE and CRPS use the same realized future map differently. |
-| 13 October 2026 | Otter expectation and implementation | [Expectation versus distribution output](notes/Otter.md#follow-up-expectation-crps-and-what-is-built-into-otter): deterministic outputs need not average samples; CRPS is a scoring rule; the saved default is deterministic despite some probabilistic building blocks. |
-| 13 October 2026 | Otter paper versions and training relationship | [Version and pipeline comparison](notes/Otter.md#follow-up-output-representation-training-relationship-and-paper-versions): the saved deterministic paper versus the later preprint; full-field ensemble output; fine-tuning and from-scratch probabilistic routes. |
-| 13 October 2026 | New Otter preprint saved | Main PDF replaced; older annotated copy archived. [Monte Carlo clarification](notes/Otter.md#follow-up-does-monte-carlo-sample-the-deterministic-output): reuse and fine-tune model weights, then generate multiple maps with random internal dropout masks. |
-| 13 October 2026 | Otter Section 3.2 | [Base-architecture checkpoint](notes/Otter.md#section-32-checkpoint-the-otter-base-architecture): channel stacking, patch features, Swin U-Net, position/boundaries, weighted loss and training regularisation. CRPS versus randomness clarified. Next: Section 4.1. |
-| 13 October 2026 | Predictability beyond 30 days | [Epoch clarification](notes/PredictabilityBeyond30Days.md): one forecast/loss/gradient/input-update cycle, with GraphCast weights fixed; unlike a CNN training epoch. |
+| Paper | Detailed notes |
+|---|---|
+| How Deep Learning Sees the World | [Questions, corrections and attack catalogue](notes/HowDeepLearningSeesTheWorld.md) |
+| Otter Weather | [Architecture, evaluation, versions and probabilistic output](notes/Otter.md) |
+| Atmospheric Predictability Beyond 30 Days | [Input updates and optimisation epochs](notes/PredictabilityBeyond30Days.md) |
 
-Main conclusions from the first notes:
-
-- Weather attacks need explicit physical limits and an error/target objective;
-  visual invisibility and high-confidence wrong classes are not universal requirements.
-- L0 counts changed entries, L2 shares a magnitude budget and Linf caps each entry.
-  A norm alone does not determine visibility, spatial smoothness or physical consistency.
-- Untargeted and targeted objectives apply to numerical forecasts; class-confidence
-  reduction needs probabilities/uncertainty, which the current CNN does not output.
-- FGSM/PGD can attack differentiable Transformers directly. Reusing a CNN's chosen
-  changes on Otter is a separate transfer experiment and may fail.
-- Bookmark Section V's defenses and Section VI's attention/patch studies for later.
-- Adapt Section VIII's evaluation questions to RMSE and clearly defined success
-  thresholds. Destruction rate concerns attacks losing effectiveness after a
-  transformation; it is not an input-disturbance-size measure.
-
-The detailed notes list the general, universal, black-box and Transformer-oriented
-attacks by section, with acronyms explained and defenses kept out of the attack list.
-
-## Why each work matters
-
-### 1–2. Predictability beyond 30 days: the closest methodological connection
-
-The study freezes a trained GraphCast weather model and changes its initial weather
-state using gradients to REDUCE future forecast error. Our attacks change inputs
-to INCREASE error. Both differentiate through a fixed forecaster. The study also
-tests whether inputs optimized for GraphCast help a different model, Pangu-Weather.
-It uses known future weather during optimization, so its retrospective improvements
-are not evidence of an operational method that knows the future in advance.
-Sources: [preprint](https://arxiv.org/abs/2504.20238) and
-[journal publication](https://journals.ametsoc.org/view/journals/aies/aop/AIES-D-26-0009.1/AIES-D-26-0009.1.xml).
-
-For our project, read the methods with three questions: what stays fixed, what gets
-changed, and which future times contribute to the error? This suggests experiments
-comparing error-increasing and error-reducing input changes, then checking how their
-effects grow across repeated forecast steps. Later, **transfer** would mean applying
-changes chosen for one model to another model without choosing them again.
-Its input-optimization procedure is not automatically the same as our constrained
-FGSM/PGD attacks. Use the journal version for final citation when possible; retain
-the annotated preprint for study and check differences before quoting results.
-
-### 3. Aardvark: identify where an input attack enters the weather pipeline
-
-Aardvark takes observations, estimates the current atmospheric state, forecasts
-future global states, and produces local station forecasts. Its encoder turns
-observations into a state; its processor forecasts; its decoder produces local
-outputs. This is a broader pipeline than supplying an existing ERA5 state to Otter.
-Source: [End-to-end data-driven weather prediction](https://www.nature.com/articles/s41586-025-08897-0).
-
-This distinction helps us define our experiment precisely: we currently change a
-reconstructed temperature map at the forecasting model's input. We are not modifying
-raw satellite or station observations before state estimation. Read Figure 1 and
-the model overview first. Later, this paper can motivate studying whether state
-estimation reduces or amplifies an observation change, and measuring effects at
-particular stations rather than only across a map. It is useful context, not an
-FGSM/PGD implementation guide.
-
-### 4. Aurora: move toward several variables and extreme-event evaluation
-
-A **foundation model** is pretrained broadly and then adapted to more specific
-tasks. Aurora learns from diverse Earth-system data and uses an encoder, processor
-and decoder to handle different variables and atmospheric levels. The paper includes
-weather, tropical-cyclone, air-quality and wave applications. Source:
-[A foundation model for the Earth system](https://www.nature.com/articles/s41586-025-09005-y).
-
-For our project, focus on the input/output structure and evaluation, rather than
-trying to reproduce its large training setup. It suggests investigating which input
-variable matters most and whether attacks affect severe conditions more than ordinary
-weather. Each variable needs its own units and attack limits: a temperature change
-in Kelvin cannot be added directly to a wind change in metres per second when defining
-a physical budget. This paper is a source of experiment ideas, not evidence that
-Aurora or Otter has the vulnerabilities observed in our toy CNN.
-
-### 5. The 2018 survey: learn the attack vocabulary
-
-This survey organizes attack scenarios and defenses. Source:
-[Adversarial Attacks and Defences: A Survey](https://arxiv.org/abs/1810.00069).
-
-Use it to describe what the attacker knows and can change. A **white-box** attack
-can inspect model calculations and gradients; a **black-box** attack has more limited
-access. An **untargeted** attack increases error without demanding one particular
-wrong output; a **targeted** attack aims for a specified wrong result. An **evasion**
-attack changes inputs to an already trained model; **poisoning** changes its training
-data. Our current experiment is white-box, untargeted evasion with known future
-targets during evaluation.
-
-Read the attack definitions and FGSM/iterative-method discussion first. Much of
-the survey concerns classification, which chooses a label; our forecaster instead
-predicts numbers. We measure increased forecast RMSE, not classification accuracy.
-It is foundational background rather than a complete account of today's methods.
-
-### 6. The newer survey: broaden attack and evaluation choices
-
-This survey covers attacks grouped by attacker capabilities, defenses and attacks
-on Vision Transformers, models that process spatial patches using attention.
-Source: [How Deep Learning Sees the World](https://arxiv.org/abs/2305.10862).
-
-This helps when moving from a CNN to Otter's Transformer architecture. It can guide
-later comparisons of attacks with different access, disturbances that work across
-models, and defenses. A defense must be tested against attacks designed for that
-defended pipeline: a weak attack result alone does not show genuine resistance.
-Read the attacker-capability and evaluation sections selectively. Image examples
-are useful intuition, but weather limits should be stated in physical units and
-evaluated as forecast errors; an image's visually imperceptible change is not a
-definition of plausible atmospheric uncertainty.
-
-## Suggested order and an achievable reading goal
-
-1. Read the newer survey's background and selected white-box methods as described
-   above. Use the 2018 survey to clarify terminology when needed.
-2. Read the saved Otter paper's setup, training method and Appendix B.3 alongside
-   [OTTER_PREPARATION.md](../OTTER_PREPARATION.md).
-3. Read the predictability study's methods carefully: it is closest to differentiating
-   with respect to weather inputs. Treat the two links as versions of one study.
-4. Read Aurora's overview and evaluation for multi-variable/extreme-weather ideas.
-5. Read Aardvark's pipeline figure to place our state-input experiment in the wider
-   observation-to-forecast process.
-
-For each work, write five short notes: input, predicted output, fixed quantities,
-changed quantities, and how error is measured. Separate what the authors actually
-tested from experiments we propose. No paper needs to be completely mastered before
-we try one clean Otter forecast and one input-gradient check.
-
-## Next focused read: Aurora
-
-After Otter Section 3.2 and the predictability paper, read **A foundation model
-for the Earth system** for multi-variable and extreme-event experiment ideas.
-Use these exact headings in the saved Nature PDF:
-
-1. **Aurora: an Earth system foundation model**, with **Figure 1**: identify the
-   observed inputs, predicted outputs, encoder, processor and decoder. Learn the
-   distinction between broad pretraining and adaptation to a particular task.
-2. **High-resolution weather forecasting**, with **Figure 5**: compare map-wide
-   accuracy with the Storm Ciarán example. A case study does not establish
-   performance on all extremes.
-3. **Methods → Verification metrics**: focus on thresholded RMSE, which scores
-   selected grid locations at different intensity thresholds. The paper defines
-   thresholds using local ERA5 training-year means and standard deviations. This
-   motivates comparing ordinary and extreme conditions under the same attacks.
-   For our implementation we would specify the selection rule in advance and use
-   the same locations for clean and attacked forecasts, so the comparison stays fair.
-4. **Tropical cyclone tracking**, with **Figure 4**: optional event-focused reading.
-   Distinguish storm-location error from temperature-map RMSE and storm intensity.
-5. **Methods → Pretraining methods, Short-lead-time fine-tuning, and Roll-out
-   fine-tuning**: optional second pass to compare training with Otter. Aurora's
-   memory-saving rollout training does not differentiate through every step in
-   the same way as the initial-condition optimisation study.
-
-Skip detailed architecture formulas, air-pollution and wave tasks initially.
-Write down input variables/units, forecast horizon, extreme-event selection and
-error measure. This paper evaluates forecasting, not adversarial robustness; its
-results are not evidence that the model resists attacks.
+[WeatherVariablesAndMetrics.pdf](WeatherVariablesAndMetrics.pdf) is an additional
+reference sheet for weather-variable names and metrics, not a research paper.
+Together, the collection explains the attack methods, the forecasting models,
+the role of initial conditions and the evaluation choices behind our project.

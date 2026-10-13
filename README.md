@@ -50,8 +50,8 @@ All five distinct recommended works are now in `PaperReadings/`; the predictabil
 study's separate journal-version PDF is still absent. Start with the newer attack
 survey's Section II and selected methods in Section IV.A. Then read Otter's setup,
 training description and Appendix B.3, followed by the predictability study's methods.
-The [reading guide](PaperReadings/README.md) links each local PDF and gives a short
-first-session plan. [OTTER_PREPARATION.md](OTTER_PREPARATION.md) separates evidence
+The [paper overview](PaperReadings/README.md) links each local PDF and explains
+what each work covers and how it connects to our experiments. [OTTER_PREPARATION.md](OTTER_PREPARATION.md) separates evidence
 from inference about predicting changes and explains Otter's repeated-forecast training.
 
 The [reading log](PaperReadings/README.md#reading-log-notes-and-questions-as-we-go)
