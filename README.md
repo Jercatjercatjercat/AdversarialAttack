@@ -7,6 +7,8 @@ learned weights fixed.
 
 | Location | What to read or run |
 |---|---|
+| [toy_weather/README.md](toy_weather/README.md) | Second iteration: five variables, two input times and correction forecasting |
+| [toy_weather/EXPERIMENTS.md](toy_weather/EXPERIMENTS.md) | Second-iteration validation and measured findings |
 | [toy_weather/archive/first_iteration/README.md](toy_weather/archive/first_iteration/README.md) | Setup and the learning sequence |
 | [toy_weather/archive/first_iteration/EXPERIMENTS.md](toy_weather/archive/first_iteration/EXPERIMENTS.md) | Completed experiment setup, explained terms, numerical findings and limits |
 | [toy_weather/archive/first_iteration/OUTPUTS.md](toy_weather/archive/first_iteration/OUTPUTS.md) | Guide to models, plots and result tables |
@@ -14,7 +16,7 @@ learned weights fixed.
 | [PaperReadings/README.md](PaperReadings/README.md) | Which suggested papers are present and how each relates to this project |
 | [otter-main/README.md](otter-main/README.md) | Original Otter source instructions |
 
-The current larger toy ERA5 results are in
+The first iteration’s larger toy ERA5 results are preserved in
 `toy_weather/archive/first_iteration/outputs/experiments/era5_2020_2022/`. They use the same three-layer CNN
 trained three times, not three different architectures. The clean mean RMSE is
 2.494 K versus 2.624 K for predicting no change. Directed input attacks cause more
@@ -75,15 +77,22 @@ from scratch. Read [the sampling clarification](PaperReadings/notes/Otter.md#fol
 before Section 4.2. Replacing the PDF has not changed the saved Otter source code
 or made its newer probabilistic experiments ready to run locally.
 
-Latest reading checkpoint: [Otter Section 3.2](PaperReadings/notes/Otter.md#section-32-checkpoint-the-otter-base-architecture)
+An Otter reading checkpoint: [Otter Section 3.2](PaperReadings/notes/Otter.md#section-32-checkpoint-the-otter-base-architecture)
 explains how stacked weather inputs become patch features and move through a Swin
 U-Net. It also distinguishes dropout inside the network from changes to observed
 inputs, and random sampling from CRPS training. Next read Section 4.1's controlled
-design comparisons.
+design comparisons when returning to Otter. Reading is currently paused; the
+[paper overview](PaperReadings/README.md) also describes Aurora’s connection to
+multi-variable and extreme-weather experiments.
 
 ## Toy-weather iterations
 
 On 14 October 2026, the completed toy-weather project was moved into
 [toy_weather/archive/first_iteration/](toy_weather/archive/first_iteration/),
-including its data, outputs and local environment. The top level of `toy_weather/`
-is reserved for a second iteration, pending your suggestions.
+including its data, outputs and local environment. The top level now contains the
+second iteration: a five-layer residual CNN using weather now and six hours ago,
+plus clock features, to predict five variables six hours ahead. The variables are
+temperature, two wind components, sea-level pressure and humidity at 850 hPa.
+The proposed dew point was replaced because its sampled coarse-archive maps were
+missing. Separate per-variable training statistics and physical-unit scores keep
+the multi-variable experiment interpretable. The first-iteration archive is unchanged.
