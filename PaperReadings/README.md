@@ -195,3 +195,33 @@ For each work, write five short notes: input, predicted output, fixed quantities
 changed quantities, and how error is measured. Separate what the authors actually
 tested from experiments we propose. No paper needs to be completely mastered before
 we try one clean Otter forecast and one input-gradient check.
+
+## Next focused read: Aurora
+
+After Otter Section 3.2 and the predictability paper, read **A foundation model
+for the Earth system** for multi-variable and extreme-event experiment ideas.
+Use these exact headings in the saved Nature PDF:
+
+1. **Aurora: an Earth system foundation model**, with **Figure 1**: identify the
+   observed inputs, predicted outputs, encoder, processor and decoder. Learn the
+   distinction between broad pretraining and adaptation to a particular task.
+2. **High-resolution weather forecasting**, with **Figure 5**: compare map-wide
+   accuracy with the Storm Ciarán example. A case study does not establish
+   performance on all extremes.
+3. **Methods → Verification metrics**: focus on thresholded RMSE, which scores
+   selected grid locations at different intensity thresholds. The paper defines
+   thresholds using local ERA5 training-year means and standard deviations. This
+   motivates comparing ordinary and extreme conditions under the same attacks.
+   For our implementation we would specify the selection rule in advance and use
+   the same locations for clean and attacked forecasts, so the comparison stays fair.
+4. **Tropical cyclone tracking**, with **Figure 4**: optional event-focused reading.
+   Distinguish storm-location error from temperature-map RMSE and storm intensity.
+5. **Methods → Pretraining methods, Short-lead-time fine-tuning, and Roll-out
+   fine-tuning**: optional second pass to compare training with Otter. Aurora's
+   memory-saving rollout training does not differentiate through every step in
+   the same way as the initial-condition optimisation study.
+
+Skip detailed architecture formulas, air-pollution and wave tasks initially.
+Write down input variables/units, forecast horizon, extreme-event selection and
+error measure. This paper evaluates forecasting, not adversarial robustness; its
+results are not evidence that the model resists attacks.
