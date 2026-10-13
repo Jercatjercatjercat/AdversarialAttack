@@ -72,6 +72,125 @@ Next read Section 3.1 to record the actual inputs, forecast lead time, variables
 training/test dates, resolution and evaluation measures. Then use Figure 2 and
 Section 3.2 to follow how those inputs become the predicted future.
 
+## Evaluation protocol: benchmark, forecast type and forecast time
+
+Question recorded on 13 October 2026. The quoted passage covers deterministic and
+probabilistic Otter variants. For the latter, these notes use the
+[expanded Otter paper, Section 3.1](https://arxiv.org/html/2606.26421v1#S3.SS1).
+The saved local ICLR PDF focuses on deterministic Otter; do not assume the versions
+have identical evaluation windows or every extension is in the local code.
+
+### Benchmark versus baseline versus metric
+
+A **benchmark** is a shared test setup: the weather cases, reference future data,
+spatial grid, forecast times and rules for calculating scores. Like an exam, it
+provides common questions and marking rules so models can be compared. WeatherBench
+2 supplies weather data, reference forecasts and evaluation tools. The paper specifies
+which part of that setup it uses; the framework permits several configurations.
+Source: [WeatherBench evaluation guide](https://weatherbench2.readthedocs.io/en/latest/evaluation.html).
+
+- **Benchmark:** the test setup, such as a defined WeatherBench 2 comparison.
+- **Baseline:** a reference method/model, such as predicting no change or an
+  established physical weather forecasting system.
+- **Metric:** a numerical scoring rule, such as RMSE.
+
+The benchmark is not a single model, a single score, or a training algorithm.
+Here, **1.5°** describes latitude/longitude grid spacing for evaluation, not
+temperature accuracy. Models with finer native grids can have forecasts converted
+to the common grid for comparison. The true-future reference is usually ERA5,
+a reconstruction of weather rather than perfect direct observations everywhere.
+
+### Deterministic and probabilistic forecasts get separate grading rules
+
+| Type | What one input produces | Example at one location | What to score |
+|---|---|---|---|
+| Deterministic | One predicted weather state | “Tomorrow at noon: 23°C” | Point-forecast error, such as latitude-weighted RMSE |
+| Probabilistic | A predicted distribution, often represented by multiple possible weather states | Possible forecasts 21, 22, 23, 24 and 25°C | Distribution quality, such as CRPS |
+
+An **ensemble** is a collection of forecast outcomes. It represents the model's
+possible futures; it is not a collection of true futures. A probabilistic model may
+generate these outcomes using randomness without training a separate network for
+every outcome. Different trained networks can also be combined into an ensemble.
+
+Deterministic does not mean correct, certain, or trained without random choices.
+It describes the single forecast output under a fixed inference setup. Probabilistic
+does not mean adding arbitrary noise makes a forecast useful: its uncertainty must
+be evaluated against what actually occurs across many cases.
+
+**CRPS**, Continuous Ranked Probability Score, compares a forecast distribution
+with the realized future value. Lower is better. It evaluates where the outcomes
+are located and how spread out they are, rather than only the ensemble mean.
+Two ensembles with the same mean but different spreads can receive different scores.
+The underlying probability-scoring formula can wait until a later reading session.
+
+Otter's evaluation separates point-forecast models, scored using RMSE, from the
+probabilistic variants, scored using CRPS. The variants can share a backbone but
+use different training objectives and output-generation procedures. This is not
+another train/validation/test split. It is a separation by the kind of prediction
+being assessed. RMSE and CRPS values are not interchangeable scores.
+
+Our toy CNN is deterministic. Its three training seeds are evaluated separately
+and their scores averaged; we have not used them to produce and score a probabilistic
+forecast distribution.
+
+### Rollout fine-tuning is another, independent distinction
+
+**RFT**, rollout fine-tuning, continues training while feeding earlier predictions
+back as later inputs. It tries to reduce the difference between training on real
+inputs for one step and forecasting on one's own imperfect predictions repeatedly.
+Both deterministic and probabilistic models can undergo RFT. RFT does not by itself
+turn a deterministic forecast into a probabilistic one.
+
+The paper records RFT versus non-RFT because that training can affect scores.
+Architectural component comparisons without RFT and comparisons with external
+models after RFT answer different questions. In the expanded paper, non-RFT
+component comparisons average 6–24h RMSE; the main deterministic external-model
+comparison uses 24h, with longer results in appendices. The probabilistic evaluation
+uses CRPS up to ten days. Check each figure's caption rather than assuming every
+table uses identical horizons.
+
+### A 24-hour comparison is not a 24-hour Otter model step
+
+A **lead time** is how far ahead the forecast is made. A **horizon** is the maximum
+lead time being considered. Comparing at increments of 24h means comparing weather
+for +24h, +48h, +72h and so on where those leads are included in that experiment.
+
+| Future being compared | Otter with a 6h step | ArchesWeather with a 24h step |
+|---|---|---|
+| +24h | Four repeated model steps | One model step |
+| +48h | Eight repeated model steps | Two model steps |
+
+Both models must start from the same forecast initialization time and be checked
+against the same future timestamp. Daily comparison times do not change Otter's
+internal six-hour step or compare one model's six-hour score with another's daily score.
+
+### What are the headline variables?
+
+They are selected representative weather quantities used to summarize performance,
+not every input variable or learned feature channel. Pressure levels identify
+atmospheric layers using air pressure; hPa is the pressure unit hectopascal.
+
+| Label | Meaning |
+|---|---|
+| Z500 | Geopotential/height-related field at 500 hPa |
+| Q700 | Specific humidity, amount of water vapour per mass of moist air, at 700 hPa |
+| T850 | Temperature at 850 hPa |
+| U850 / V850 | Eastward / northward wind components at 850 hPa |
+| T2m | Temperature two metres above the surface |
+| SP | In the checked Otter evaluation code, the label for mean sea-level pressure |
+| U10m / V10m | Eastward / northward wind components ten metres above the surface |
+
+The SP mapping is confirmed in [parse_wb_data.py](../../otter-main/otter/eval_utils/parse_wb_data.py).
+Do not assume that label always denotes the same pressure quantity in every dataset.
+
+Different variables have different units. The paper's aggregate skill score first
+compares each variable's metric with the corresponding reference model's metric,
+then averages those relative improvements. It does not simply add Kelvin RMSE
+to wind-speed or pressure RMSE. See the expanded paper's Appendix C.1.
+
+Reading goal: for each results figure, identify forecast type, score, RFT status,
+lead times, variables and reference model before interpreting which model is better.
+
 ## What is the underlying architecture?
 
 Otter uses a **2D Swin Transformer arranged as a U-Net**. This describes two
