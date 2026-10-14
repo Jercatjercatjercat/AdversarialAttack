@@ -65,7 +65,7 @@ CHANGE delta, not to the original weather field or forecast error.
 | Limit | Everyday interpretation | Additional point |
 |---|---|---|
 | L0 | Count how many entries were changed | It does not limit the size of those changes. Add an amplitude cap separately if needed. |
-| L1 | Add the absolute changes | A shared absolute-change budget. Included here to illustrate p, not implemented in our toy comparisons. |
+| L1 | Add the absolute changes | A shared absolute-change budget. Now implemented in the second-iteration attack sweep. |
 | L2 | Square the changes, add them, take the square root | A shared budget that charges larger changes more strongly. |
 | Linf / L∞ | Take the largest absolute change | Caps every entry individually; does not require spatial smoothness. |
 

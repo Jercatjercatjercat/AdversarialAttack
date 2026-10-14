@@ -104,3 +104,9 @@ gradients and bounded random/one-step/PGD comparisons were checked on the frozen
 model. Results remain exploratory because 2022 was already inspected; the
 [second-iteration findings](toy_weather/EXPERIMENTS.md) explain the units, setup
 and limits.
+
+The [attack-settings extension](toy_weather/ATTACK_EXPERIMENTS.md) compares
+update counts, step sizes, restarts, momentum and sparse changes. It selects settings
+on validation before testing, and reports actual input-change sizes under L0, L1,
+L2 and Linf limits. Its temperature-only objective is distinct from the earlier
+five-output attack objective.

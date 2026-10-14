@@ -37,8 +37,9 @@ an L2 momentum extension, using a unit-L2 momentum direction rather than its sig
 For our forecast adaptation, the classification loss would be replaced by a stated
 forecast-error objective. Trained weights and true future maps stay fixed while
 inputs change. The first understandable comparison would alter current T2m only,
-with the same limits, test examples and forecast objective as FGSM/PGD. MI-FGSM
-has not yet been implemented in the second iteration.
+with the same limits, test examples and forecast objective as FGSM/PGD. MI-FGSM is now implemented in the second iteration, with the
+[attack-setting experiment](../../toy_weather/ATTACK_EXPERIMENTS.md) documenting
+its validation sweep and forecast-loss adaptation.
 
 ## Sparse attacks and thresholding: a separate proposed experiment
 
@@ -68,5 +69,6 @@ This is hard thresholding of the change map, distinct from selecting cells using
 the gradient. It provides a feasible sparse candidate, not a globally optimal attack.
 
 L1 projection can also zero small entries using soft thresholding; an L1 budget
-controls total absolute magnitude, not an exact number of changed cells. These
-L0/L1 methods remain proposals, not completed toy-weather experiments.
+controls total absolute magnitude, not an exact number of changed cells. These L0/L1 educational methods are now implemented; their
+[setup and exploratory evidence](../../toy_weather/ATTACK_EXPERIMENTS.md) distinguish
+our heuristics from the classification methods in the paper.

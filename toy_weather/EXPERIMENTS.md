@@ -164,3 +164,12 @@ physical plausibility, extreme events, multi-step error growth or Otter robustne
 A claim that the new model is more robust than the old model would also require
 matched attack objectives and access to the same input times/variables. Better
 clean accuracy alone does not establish adversarial robustness.
+
+## Attack settings extension
+
+The subsequent [step-count/norm experiment](ATTACK_EXPERIMENTS.md) adds MI-FGSM,
+L0 top-k and L1 projection, with validation-selected steps/sizes and restart counts.
+It targets temperature forecast error rather than the combined output loss above.
+The new results live in `attack_tuning_steps/` and `tuned_attacks_steps/`; they do
+not replace the older tables. Their interpretation includes the different norm
+budgets, the separate amplitude cap, validation subset and selection rule.

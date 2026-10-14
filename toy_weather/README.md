@@ -233,3 +233,14 @@ split isolation, training-only normalization, units, residual initialization,
 input gradients, pooled scores and bounded attacks. Scientific ERA5 findings live
 in [EXPERIMENTS.md](EXPERIMENTS.md), with published-paper context in
 [the reading collection](../PaperReadings/README.md).
+
+## Attack effort and additional norms
+
+The new [attack experiment guide](ATTACK_EXPERIMENTS.md) explains configurable
+PGD steps/sizes, random starts, MI-FGSM and sparse top-k changes. `tune_attacks.py`
+compares settings on validation and records a choice before `compare_attacks.py`
+applies it to test weather. L0 has a count plus amplitude cap; L1 uses mean-absolute
+change, L2 uses RMS and Linf uses the largest cell change. Actual changes and every
+variable's forecast error are saved separately. Equal numerical limits across
+these restrictions are not equal disturbance allowances. The older saved attack
+results remain intact with their original combined-output objective.

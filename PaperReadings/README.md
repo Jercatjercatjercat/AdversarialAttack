@@ -64,14 +64,16 @@ This connects to our proposed comparison of FGSM, PGD and momentum-based attacks
 on the frozen CNN. Forecast loss would replace the classification objective,
 with the same weather examples and physical budgets across methods. Momentum's
 gradient normalisation uses an L1 magnitude, but this is not an L1 restriction on
-the final disturbance. Whether it improves our weather attacks remains untested.
+the final disturbance. The [toy-weather attack sweep](../toy_weather/ATTACK_EXPERIMENTS.md) now tests
+these ideas on a small validation subset. It does not establish benefits for
+transfer to another model.
 
 The accompanying notes also distinguish momentum from a sparse attack, which
 changes only a few cells. Gradient thresholding or top-k selection can choose
 locations; an iterative method must constrain the accumulated change, not merely
 choose k new locations on each step. L0 count limits need a separate cell-amplitude
-cap. These sparse methods are proposed educational adaptations, rather than methods
-implemented or evaluated by this momentum paper.
+cap. These sparse methods are our educational adaptations, now implemented in the
+toy-weather code; they are not methods evaluated by this momentum paper.
 
 ## Otter Weather: the forecasting model we may eventually attack
 
