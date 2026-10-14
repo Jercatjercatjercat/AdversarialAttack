@@ -74,7 +74,7 @@ def main():
               random_trials=args.random_trials, steps=args.steps, budgets=args.budget, norms=args.norm,
               note='random rows are separate trials; persistence reference uses original inputs'))
     with (output/'results.csv').open('w', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=list(records[0]))
+        writer = csv.DictWriter(f, fieldnames=list(records[0]), lineterminator='\n')
         writer.writeheader()
         writer.writerows(records)
 
