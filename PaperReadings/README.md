@@ -7,7 +7,7 @@ question is whether similar input changes affect a larger model such as Otter,
 including forecasts with several variables, repeated forecast steps and extreme events.
 
 The collection contains the five distinct works originally recommended, plus
-Otter and a weather-variable reference sheet. The six original links represent
+Otter, the momentum-attack paper and a weather-variable reference sheet. The six original links represent
 five works because the predictability paper has both a preprint and a journal
 publication. The local PDFs include existing personal annotations. Detailed
 questions and corrections are stored in `notes/` and linked below.
@@ -46,6 +46,32 @@ does not guarantee physical plausibility. L0 counts changed entries, L2 limits
 the combined size of changes, and Linf limits each entry separately. Their effects
 need interpretation in weather units as well as numerical scores. The defense
 material remains useful for later work, when the attack itself is well understood.
+
+## Boosting Adversarial Attacks with Momentum: remembering earlier directions
+
+[Local PDF](BoostingAdversarialAttacksWithMomentum.pdf) ·
+[2018 preprint, v3](https://arxiv.org/abs/1710.06081) ·
+[Our reading notes](notes/BoostingAdversarialAttacksWithMomentum.md)
+
+Dong and colleagues introduce MI-FGSM, Momentum Iterative Fast Gradient Sign
+Method. Instead of using only the latest input gradient, the attack keeps a running
+memory of normalised gradient directions and takes steps using its sign. Section
+3.1 and Algorithm 1 describe this update; Section 3.3 extends the idea to L2 and
+targeted attacks. The paper examines image classification and reports improved
+transfer to other classifiers, not experiments on weather forecasts.
+
+This connects to our proposed comparison of FGSM, PGD and momentum-based attacks
+on the frozen CNN. Forecast loss would replace the classification objective,
+with the same weather examples and physical budgets across methods. Momentum's
+gradient normalisation uses an L1 magnitude, but this is not an L1 restriction on
+the final disturbance. Whether it improves our weather attacks remains untested.
+
+The accompanying notes also distinguish momentum from a sparse attack, which
+changes only a few cells. Gradient thresholding or top-k selection can choose
+locations; an iterative method must constrain the accumulated change, not merely
+choose k new locations on each step. L0 count limits need a separate cell-amplitude
+cap. These sparse methods are proposed educational adaptations, rather than methods
+implemented or evaluated by this momentum paper.
 
 ## Otter Weather: the forecasting model we may eventually attack
 
@@ -221,6 +247,7 @@ multi-variable and extreme-weather experiments.
 | Paper | Detailed notes |
 |---|---|
 | How Deep Learning Sees the World | [Questions, corrections and attack catalogue](notes/HowDeepLearningSeesTheWorld.md) |
+| Boosting Adversarial Attacks with Momentum | [Momentum updates and sparse-attack distinctions](notes/BoostingAdversarialAttacksWithMomentum.md) |
 | Otter Weather | [Architecture, evaluation, versions and probabilistic output](notes/Otter.md) |
 | Atmospheric Predictability Beyond 30 Days | [Input updates and optimisation epochs](notes/PredictabilityBeyond30Days.md) |
 
