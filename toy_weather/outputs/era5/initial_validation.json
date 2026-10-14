@@ -1,0 +1,40 @@
+{
+  "normalized_mse": 0.16701574561917695,
+  "variables": {
+    "t2m": {
+      "unit": "K",
+      "mse": 5.670476389121404,
+      "rmse": 2.3812762101699594,
+      "persistence_rmse": 2.3812762101699594,
+      "improvement_percent": 0.0
+    },
+    "u10": {
+      "unit": "m/s",
+      "mse": 3.8178567385836324,
+      "rmse": 1.953933657672039,
+      "persistence_rmse": 1.953933657672039,
+      "improvement_percent": 0.0
+    },
+    "v10": {
+      "unit": "m/s",
+      "mse": 4.614370845870942,
+      "rmse": 2.1481086671467398,
+      "persistence_rmse": 2.1481086671467398,
+      "improvement_percent": 0.0
+    },
+    "mslp": {
+      "unit": "hPa",
+      "mse": 5.5396823596399525,
+      "rmse": 2.3536529819920253,
+      "persistence_rmse": 2.3536529819920253,
+      "improvement_percent": 0.0
+    },
+    "q850": {
+      "unit": "g/kg",
+      "mse": 0.794272297043881,
+      "rmse": 0.891219556026393,
+      "persistence_rmse": 0.891219556026393,
+      "improvement_percent": 0.0
+    }
+  }
+}

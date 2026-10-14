@@ -1,0 +1,8 @@
+{
+  "test_cases": 1458,
+  "main_rmse_k": 0.7880871884956763,
+  "temperature_only_reference_rmse_k": 2.3769511809037756,
+  "persistence_rmse_k": 2.62519181662677,
+  "improvement_over_reference_percent": 66.84462033435511,
+  "interpretation": "Whole-system, one-seed exploratory comparison; multiple changes, not a depth-only ablation"
+}

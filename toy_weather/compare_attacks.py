@@ -46,16 +46,16 @@ def main():
             radius = budget*(len(lat)*len(lon))**.5 if norm=='l2' else budget
             for method in ('random', 'one_step', 'pgd'):
                 for trial in range(args.random_trials if method=='random' else 1):
-                    generator = torch.Generator(device=device).manual_seed(100+trial)
+                    generator = torch.Generator().manual_seed(100+trial)
                     totals = np.zeros(len(variables))
                     delta_squared, cells, max_change, count = 0.0, 0, 0.0, 0
                     for x, y in loader:
                         x, y = x.to(device), y.to(device)
                         changed = change_input(model, x, y, channel, radius/std[index], method, norm, args.steps, generator)
                         with torch.no_grad():
-                            totals += (model(changed)-y).double().square().sum((0, 2, 3)).cpu().numpy()
+                            totals += (model(changed)-y).cpu().double().square().sum((0, 2, 3)).numpy()
                             delta = (changed[:, channel]-x[:, channel])*std[index]
-                            delta_squared += delta.double().square().sum().item()
+                            delta_squared += delta.cpu().double().square().sum().item()
                             cells += delta.numel()
                             max_change = max(max_change, delta.abs().max().item())
                             count += y.shape[0]*y.shape[2]*y.shape[3]

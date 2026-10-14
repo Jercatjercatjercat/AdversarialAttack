@@ -1,0 +1,24 @@
+{
+  "dataset": "era5",
+  "data": "/Users/jerrymeng/Library/Mobile Documents/com~apple~CloudDocs/CodeAndStudy/AdversarialAttack/toy_weather/local_data/era5_five_variables.npz",
+  "output_dir": "/Users/jerrymeng/Library/Mobile Documents/com~apple~CloudDocs/CodeAndStudy/AdversarialAttack/toy_weather/outputs/era5",
+  "variables": [
+    "t2m",
+    "u10",
+    "v10",
+    "mslp",
+    "q850"
+  ],
+  "history": 2,
+  "no_time_features": false,
+  "direct_output": false,
+  "no_feature_skip": false,
+  "width": 64,
+  "depth": 5,
+  "epochs": 40,
+  "batch_size": 64,
+  "lr": 0.001,
+  "patience": 10,
+  "seed": 42,
+  "device": "cpu"
+}

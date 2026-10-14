@@ -1,0 +1,16 @@
+{
+  "shape": [
+    1,
+    14,
+    16,
+    16
+  ],
+  "minimum": -0.010738059878349304,
+  "maximum": 0.015622640959918499,
+  "mean": -5.38130734639708e-07,
+  "loss": 0.07223893702030182,
+  "finite": true,
+  "nonzero": true,
+  "sample": 0,
+  "units": "derivative of normalized MSE with respect to normalized input"
+}

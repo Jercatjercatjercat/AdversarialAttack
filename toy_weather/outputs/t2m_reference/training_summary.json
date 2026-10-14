@@ -1,0 +1,18 @@
+{
+  "best_epoch": 40,
+  "epochs_run": 40,
+  "seconds": 105.16019095800584,
+  "parameters": 9857,
+  "validation": {
+    "normalized_mse": 0.15386268521763172,
+    "variables": {
+      "t2m": {
+        "unit": "K",
+        "mse": 4.714268657233798,
+        "rmse": 2.1712366654130077,
+        "persistence_rmse": 2.3812763017699887,
+        "improvement_percent": 8.82046473149125
+      }
+    }
+  }
+}

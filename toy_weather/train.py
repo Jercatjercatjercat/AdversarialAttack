@@ -20,7 +20,8 @@ def main():
     parser.add_argument('--variables', nargs='+', choices=VARIABLES, default=list(VARIABLES))
     parser.add_argument('--history', type=int, choices=[1, 2], default=2)
     parser.add_argument('--no-time-features', action='store_true')
-    parser.add_argument('--direct-output', action='store_true', help='Disable correction and feature skip for comparison')
+    parser.add_argument('--direct-output', action='store_true', help='Predict future directly instead of adding a correction')
+    parser.add_argument('--no-feature-skip', action='store_true', help='Disable only the internal feature skip')
     parser.add_argument('--width', type=int, default=64)
     parser.add_argument('--depth', type=int, default=5)
     parser.add_argument('--epochs', type=int, default=40)
@@ -39,11 +40,11 @@ def main():
     device = configure(args.seed, args.device)
     datasets, stats, metadata, lat, lon = load_data(args.data, args.variables, args.history, not args.no_time_features)
     args.output_dir.mkdir(parents=True)
-    save_json(args.output_dir/'normalization.json', stats)
+    save_json(args.output_dir/'normalization.json', dict(variables=args.variables, units=metadata['units'], **stats))
     save_json(args.output_dir/'data_metadata.json', metadata)
     save_json(args.output_dir/'training_config.json', {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()})
     model = ResidualCNN(len(args.variables), args.history, not args.no_time_features,
-                        args.width, args.depth, not args.direct_output).to(device)
+                        args.width, args.depth, not args.direct_output, not args.no_feature_skip).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, factor=.5, min_lr=1e-5)
     criterion = torch.nn.MSELoss()  # Mean across batch, FIVE normalized variables and cells.
@@ -51,7 +52,14 @@ def main():
     validation_loader = DataLoader(datasets['validation'], batch_size=args.batch_size)
     print(f"Counts: {metadata['counts']}; input {tuple(datasets['train'][0][0].shape)}; output {tuple(datasets['train'][0][1].shape)}", flush=True)
     print(f"Trainable parameters: {sum(p.numel() for p in model.parameters()):,}", flush=True)
-    history, best, stale = [], float('inf'), 0
+    initial = evaluate_loader(model, validation_loader, stats, args.variables, metadata['units'], device)
+    save_json(args.output_dir/'initial_validation.json', initial)
+    print('Initial validation (exact no-change forecast when residual=True):', flush=True)
+    print_scores(initial)
+    history, best, stale = [], initial['normalized_mse'], 0
+    torch.save(dict(model_state=model.state_dict(), model_settings=model.settings,
+                    stats=stats, metadata=metadata, epoch=0, validation=initial, seed=args.seed),
+               args.output_dir/'best_model.pt')
     began = time.monotonic()
     for epoch in range(1, args.epochs+1):
         model.train()

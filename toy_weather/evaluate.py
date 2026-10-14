@@ -29,13 +29,17 @@ def main():
     # Evenly spaced examples, not cases selected for looking unusually successful.
     import numpy as np
     import torch
+    examples = []
     for number, index in enumerate(np.linspace(0, len(datasets['test'])-1, min(args.examples, len(datasets['test'])), dtype=int)):
         x, y = datasets['test'][int(index)]
         with torch.no_grad():
             prediction = model(x[None].to(device))[0].cpu().numpy()
             current = model.current_state(x[None].to(device))[0].cpu().numpy()
         forecast_plot(current, y.numpy(), prediction, stats, metadata['variables'],
-                      metadata['units'], args.checkpoint_dir/f'test_example_{number}.png')
+                      metadata['units'], args.checkpoint_dir/f'test_example_{number}.png',
+                      timestamp=str(datasets['test'].times[datasets['test'].triples[index, 1]]))
+        examples.append(dict(sample=int(index), current_time=str(datasets['test'].times[datasets['test'].triples[index, 1]])))
+    save_json(args.checkpoint_dir/'test_examples.json', examples)
 
 
 if __name__ == '__main__':

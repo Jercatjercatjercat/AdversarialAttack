@@ -1,0 +1,13 @@
+{
+  "normalized_mse": 0.18439939977247388,
+  "variables": {
+    "t2m": {
+      "unit": "K",
+      "mse": 5.649896916399853,
+      "rmse": 2.3769511809037756,
+      "persistence_rmse": 2.6251919154726253,
+      "improvement_percent": 9.456098546766926
+    }
+  },
+  "test_status": "exploratory: 2022 was inspected in the first iteration"
+}

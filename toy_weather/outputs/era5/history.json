@@ -1,0 +1,1802 @@
+[
+  {
+    "epoch": 1,
+    "train_mse": 0.10359393394064093,
+    "validation": {
+      "normalized_mse": 0.07139446966298797,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 1.4941614936804135,
+          "rmse": 1.222358987237552,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 48.66790412564915
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.8747105389553131,
+          "rmse": 1.3692006934541454,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 29.92593745043308
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 2.0908073881531672,
+          "rmse": 1.4459624435486444,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 32.686718057459004
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.8704790652299819,
+          "rmse": 1.3676545854966384,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 41.89225871610362
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.40618277334400527,
+          "rmse": 0.6373247000893699,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 28.48847449769203
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 2,
+    "train_mse": 0.07155957652122877,
+    "validation": {
+      "normalized_mse": 0.06088911238039539,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 1.1891394555304862,
+          "rmse": 1.0904767102191986,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 54.20620650548692
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.593988500580033,
+          "rmse": 1.262532574066916,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 35.38508489734877
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.8026494228604821,
+          "rmse": 1.3426278050377483,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 37.497212055798116
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.435057417136729,
+          "rmse": 1.1979388202812067,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 49.10299736423653
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.35897739472053786,
+          "rmse": 0.5991472229098102,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 32.77220872697426
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 3,
+    "train_mse": 0.0634169029303536,
+    "validation": {
+      "normalized_mse": 0.05710539614077674,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 1.0374789422260833,
+          "rmse": 1.0185671024660492,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 57.22599931431933
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.5165598246062317,
+          "rmse": 1.231486834930131,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 36.97396889117759
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.7048161714980596,
+          "rmse": 1.3056860922511428,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 39.21694408572721
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.6055413380271961,
+          "rmse": 1.2670995769974813,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 46.16455413384408
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.33228038677085203,
+          "rmse": 0.5764376694585912,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 35.32035225655211
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 4,
+    "train_mse": 0.05886198835927222,
+    "validation": {
+      "normalized_mse": 0.053546172952825974,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.9886255767052039,
+          "rmse": 0.9942965235306839,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 58.24522500648013
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.4226766526154626,
+          "rmse": 1.1927600985174942,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 38.95595718748324
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.5558930900614334,
+          "rmse": 1.2473544364219151,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 41.932433144607444
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.2305919297134398,
+          "rmse": 1.1093204810664228,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 52.86813776058253
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.3256885639591353,
+          "rmse": 0.570691303560108,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 35.96512781826712
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 5,
+    "train_mse": 0.05610732846905482,
+    "validation": {
+      "normalized_mse": 0.052193603203732605,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 1.0246154542235328,
+          "rmse": 1.0122329051278331,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 57.491999424309256
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.3616601878342993,
+          "rmse": 1.1669019615350293,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 40.279345874756935
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.4942736990753636,
+          "rmse": 1.2224048834471186,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 43.09389919874036
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.2629313105773616,
+          "rmse": 1.1238021670104406,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 52.252852242504105
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.3165227911875415,
+          "rmse": 0.5626035826294937,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 36.87261698588305
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 6,
+    "train_mse": 0.05408526847817679,
+    "validation": {
+      "normalized_mse": 0.050288232623344885,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.9144871165025109,
+          "rmse": 0.9562881974083498,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 59.84135761638098
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.3221268858323805,
+          "rmse": 1.1498377650052987,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 41.15267115183217
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.5030709269830076,
+          "rmse": 1.2259979310679965,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 42.92663356288915
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.1581549122690518,
+          "rmse": 1.0761760600705872,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 54.27634964438298
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.3020663142506973,
+          "rmse": 0.5496055988167309,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 38.331066110441746
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 7,
+    "train_mse": 0.0520822790226326,
+    "validation": {
+      "normalized_mse": 0.04863012425135255,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.8396653153384853,
+          "rmse": 0.9163325353486502,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 61.51926721330456
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.3172355206324502,
+          "rmse": 1.14770881352042,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 41.26162835600947
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.417738292326065,
+          "rmse": 1.1906881591441416,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 44.57039453568741
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.1282714257652686,
+          "rmse": 1.06220121717369,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 54.8701008474626
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2975018619691585,
+          "rmse": 0.5454373125934441,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 38.79877198550934
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 8,
+    "train_mse": 0.05042224125471285,
+    "validation": {
+      "normalized_mse": 0.047095932585869124,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.8381787903441448,
+          "rmse": 0.915521048553306,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 61.55334502384491
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.247755666981652,
+          "rmse": 1.1170298415806321,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 42.831741641039805
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.3812849783187964,
+          "rmse": 1.1752808082831931,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 45.287646465098106
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.059266412938308,
+          "rmse": 1.029206691067595,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 56.271944125062944
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.28925558078963,
+          "rmse": 0.5378248607024688,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 39.652933212055615
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 9,
+    "train_mse": 0.0497084811538927,
+    "validation": {
+      "normalized_mse": 0.0468859282442039,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.8304447795213338,
+          "rmse": 0.9112874296956661,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 61.73113283525288
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.2280232383950829,
+          "rmse": 1.108162099331629,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 43.285582139369126
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.3815334915853086,
+          "rmse": 1.1753865285876421,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 45.282724912195974
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.1662894991343256,
+          "rmse": 1.0799488409801297,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 54.11605494765376
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2864025417478033,
+          "rmse": 0.5351659011444986,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 39.95128388670031
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 10,
+    "train_mse": 0.0484650213234832,
+    "validation": {
+      "normalized_mse": 0.04640689493183825,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.8523405705357767,
+          "rmse": 0.9232229256987592,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 61.22991017355077
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.239743683612,
+          "rmse": 1.1134377771622446,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 43.015579224485045
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.342028275007248,
+          "rmse": 1.158459440380736,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 46.07072453557582
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.068864119887669,
+          "rmse": 1.033858849112232,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 56.07428720281353
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.28279736022346375,
+          "rmse": 0.531786950031179,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 40.330421787172895
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 11,
+    "train_mse": 0.04772308112013539,
+    "validation": {
+      "normalized_mse": 0.04550855898871076,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.7657363671749157,
+          "rmse": 0.8750636360716377,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 63.25232527270822
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.2223445657631191,
+          "rmse": 1.105596927348805,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 43.416864589658665
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.3303545982224174,
+          "rmse": 1.1534099870481516,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 46.30578961444315
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.032656469846212,
+          "rmse": 1.0161970625061914,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 56.82468612487946
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.28270789033982024,
+          "rmse": 0.5317028214518146,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 40.339861501415655
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 12,
+    "train_mse": 0.04710026565678256,
+    "validation": {
+      "normalized_mse": 0.0448357538437405,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.7536600131558724,
+          "rmse": 0.8681359416334935,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 63.543248871094555
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.1804230196351815,
+          "rmse": 1.086472742242152,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 44.39561763132734
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.3322325275763027,
+          "rmse": 1.1542237770797754,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 46.267905589111
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.0358300824256796,
+          "rmse": 1.0177573789590915,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 56.758392730532954
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2781401784471484,
+          "rmse": 0.5273899680949083,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 40.82378864683598
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 13,
+    "train_mse": 0.04622496338316819,
+    "validation": {
+      "normalized_mse": 0.044263923886373895,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.7451616704737405,
+          "rmse": 0.8632274731921711,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 63.74937651056617
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.184941007988599,
+          "rmse": 1.088549956588396,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 44.289308272353566
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.2792803383973117,
+          "rmse": 1.1310527566817172,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 47.34657636365964
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.0826304043034758,
+          "rmse": 1.0404952687559303,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 55.79232466651468
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.27607986915596033,
+          "rmse": 0.5254330301341555,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 41.043368429115226
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 14,
+    "train_mse": 0.04588868204073331,
+    "validation": {
+      "normalized_mse": 0.044408045312771184,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.7438758079646465,
+          "rmse": 0.8624823522627268,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 63.78066733379204
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.1893051304863869,
+          "rmse": 1.0905526720367003,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 44.186811678344824
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.299192501647102,
+          "rmse": 1.1398212586397491,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 46.93837997712959
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.0583478530765869,
+          "rmse": 1.028760347737308,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 56.29090797970515
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2752020131219156,
+          "rmse": 0.5245970006794889,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 41.13717577984193
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 15,
+    "train_mse": 0.04502645415236301,
+    "validation": {
+      "normalized_mse": 0.04429965298825176,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.7335454863858667,
+          "rmse": 0.8564727003155831,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 64.03303839102085
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.1464948902237333,
+          "rmse": 1.070745016436562,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 45.200543926743556
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.3443568434202975,
+          "rmse": 1.1594640328273653,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 46.0239581656061
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.1113801688065381,
+          "rmse": 1.0542201709351506,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 55.20919273142354
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2717326397644644,
+          "rmse": 0.5212798094732467,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 41.50938386075885
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 16,
+    "train_mse": 0.04468305436322712,
+    "validation": {
+      "normalized_mse": 0.04330255313391559,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.7596549892908189,
+          "rmse": 0.8715818890332788,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 63.39853876207534
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.1351346644371694,
+          "rmse": 1.0654269869104918,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 45.472714351015085
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.2317471064352183,
+          "rmse": 1.1098410275508912,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 48.33403707527256
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.0610579505983821,
+          "rmse": 1.0300766721940569,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 56.23498110914182
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2740955203045677,
+          "rmse": 0.523541326262376,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 41.25562856849254
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 17,
+    "train_mse": 0.04390960167086263,
+    "validation": {
+      "normalized_mse": 0.04336031496393794,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.7299868313977368,
+          "rmse": 0.8543926681554195,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 64.12038786149724
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.1228672561176463,
+          "rmse": 1.0596543097244715,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 45.768153101627426
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.2629823064719716,
+          "rmse": 1.1238248557813497,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 47.68305379661783
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.0214207717969441,
+          "rmse": 1.0106536359193214,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 57.06021050461101
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2763129809066749,
+          "rmse": 0.5256548115509596,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 41.01848326862875
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 18,
+    "train_mse": 0.04371546413354234,
+    "validation": {
+      "normalized_mse": 0.042308109316515574,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.7427242304836675,
+          "rmse": 0.8618144988822521,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 63.80871336128026
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.1165032978184182,
+          "rmse": 1.0566471964749722,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 45.9220535801668
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.197756182570801,
+          "rmse": 1.094420477956622,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 49.05190343976854
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.1136422266033974,
+          "rmse": 1.0552924839130606,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 55.16363321240718
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.265245718945626,
+          "rmse": 0.5150201150883584,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 42.21175785407627
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 19,
+    "train_mse": 0.04316696428151781,
+    "validation": {
+      "normalized_mse": 0.04260348458650344,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.7578904824665977,
+          "rmse": 0.8705690566902764,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 63.44107193561804
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.1153674710777064,
+          "rmse": 1.0561095923613735,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 45.94956751911186
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.229422717595289,
+          "rmse": 1.1087933610891116,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 48.382808651766936
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.0367682545550614,
+          "rmse": 1.018218176303616,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 56.73881476606452
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2654984551159881,
+          "rmse": 0.5152654220069381,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 42.18423299592869
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 20,
+    "train_mse": 0.04276204541471759,
+    "validation": {
+      "normalized_mse": 0.042829556170076756,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.771585465785167,
+          "rmse": 0.8783993771543597,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 63.11224319955452
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.120636930930637,
+          "rmse": 1.058601403234776,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 45.822039603124615
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.2358698950050677,
+          "rmse": 1.1116968539152512,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 48.24764357047725
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.0272661586203438,
+          "rmse": 1.013541394625964,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 56.93751787622709
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2662680010507376,
+          "rmse": 0.5160116287940976,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 42.10050426913925
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 21,
+    "train_mse": 0.042641461847471966,
+    "validation": {
+      "normalized_mse": 0.04106772498262466,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.6651023265209435,
+          "rmse": 0.8155380595171163,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 65.75205950346648
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.0909866143918845,
+          "rmse": 1.0445030466168514,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 46.543576721980614
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.1980912495615883,
+          "rmse": 1.0945735468946745,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 49.04477768582538
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 0.9708013877110646,
+          "rmse": 0.9852925391532531,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 58.13773114848282
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.25976857568853473,
+          "rmse": 0.5096749706318083,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 42.81151404438946
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 22,
+    "train_mse": 0.042328319031878635,
+    "validation": {
+      "normalized_mse": 0.042518410311598684,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.7319467441591699,
+          "rmse": 0.8555388618637787,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 64.0722542723124
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.1068261941350077,
+          "rmse": 1.0520580754573428,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 46.15691933416057
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.2226052791233193,
+          "rmse": 1.1057148272151005,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 48.526122345394
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.011138696682959,
+          "rmse": 1.0055539252983696,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 57.27688265891626
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.27064391713067604,
+          "rmse": 0.5202344828350732,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 41.6266755686332
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 23,
+    "train_mse": 0.04203839610200507,
+    "validation": {
+      "normalized_mse": 0.042164522827006064,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.7110218157273982,
+          "rmse": 0.8432210953998945,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 64.58953011000303
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.1303992261231348,
+          "rmse": 1.0632023448634482,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 45.586568884320684
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.220763423611271,
+          "rmse": 1.104881633303437,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 48.56490967139879
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 0.983244387996462,
+          "rmse": 0.9915868030568288,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 57.870305833377586
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2635620520032996,
+          "rmse": 0.5133829486877214,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 42.395457413805026
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 24,
+    "train_mse": 0.04163353046274419,
+    "validation": {
+      "normalized_mse": 0.04138302180967909,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.7087434579325123,
+          "rmse": 0.8418690265905454,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 64.64630927755927
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.1118911681110508,
+          "rmse": 1.0544625019938123,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 46.03386364457619
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.1751202879730231,
+          "rmse": 1.0840296527185145,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 49.53562316014513
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 0.9855109014555852,
+          "rmse": 0.9927290171318582,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 57.821776416179354
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.26063371485180714,
+          "rmse": 0.5105229817077848,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 42.71636228630222
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 25,
+    "train_mse": 0.04136858557117412,
+    "validation": {
+      "normalized_mse": 0.040838238271005065,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.6694580586612675,
+          "rmse": 0.818204166856456,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 65.64009822287444
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.0887648101341898,
+          "rmse": 1.0434389345496888,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 46.59803671160127
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.1656175643884448,
+          "rmse": 1.0796377005220061,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 49.740079864951504
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.0315780864953528,
+          "rmse": 1.0156663263569157,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 56.84723558961942
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.25954766446577343,
+          "rmse": 0.5094582067900894,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 42.835836203867814
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 26,
+    "train_mse": 0.04098278966405308,
+    "validation": {
+      "normalized_mse": 0.04135762645547607,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.6512997606677029,
+          "rmse": 0.8070314496150091,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 66.10928853325215
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.0664132733171872,
+          "rmse": 1.032672878174491,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 47.14903066848027
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.237624380069034,
+          "rmse": 1.112485676343311,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 48.21092185150073
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.0732046312805612,
+          "rmse": 1.0359559021891624,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 55.98518940067468
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.26081067162885035,
+          "rmse": 0.5106962616162863,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 42.69691927617864
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 27,
+    "train_mse": 0.04060743192005533,
+    "validation": {
+      "normalized_mse": 0.04098110868998406,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.6709389386263123,
+          "rmse": 0.8191086244365348,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 65.60211617038443
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.0789818034287766,
+          "rmse": 1.0387404889715124,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 46.838497566540134
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.1628907277552383,
+          "rmse": 1.078374113077293,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 49.79890312021966
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.0444399512348095,
+          "rmse": 1.0219784494962747,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 56.57905148653994
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2639336548195074,
+          "rmse": 0.5137447370236579,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 42.35486266546382
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 28,
+    "train_mse": 0.040601870423714485,
+    "validation": {
+      "normalized_mse": 0.04064493903470418,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.6418546359118366,
+          "rmse": 0.8011583088952124,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 66.35592689862587
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.084639529654057,
+          "rmse": 1.0414602871228729,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 46.69930153290402
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.162154831867771,
+          "rmse": 1.0780328528703431,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 49.814789663213
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.1057263259140608,
+          "rmse": 1.0515352233349395,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 55.32326849453534
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2584700288871805,
+          "rmse": 0.5083994776621831,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 42.9546317487756
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 29,
+    "train_mse": 0.040490860818538275,
+    "validation": {
+      "normalized_mse": 0.04161935512074248,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.7204768474561283,
+          "rmse": 0.8488090759741723,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 64.35486684202878
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.069107551482894,
+          "rmse": 1.0339765720183867,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 47.08230916855745
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.1549018960876294,
+          "rmse": 1.0746636199702815,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 49.97163614642825
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 0.9773665119167476,
+          "rmse": 0.9886184865339853,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 57.99642113353246
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.27518231978149643,
+          "rmse": 0.5245782303732175,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 41.1392819170047
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 30,
+    "train_mse": 0.04034388651882245,
+    "validation": {
+      "normalized_mse": 0.040867001134000304,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.6710074636299581,
+          "rmse": 0.819150452377314,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 65.60035963577495
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.112421883611798,
+          "rmse": 1.0547141241169562,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 46.02098592366915
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.1480593577396774,
+          "rmse": 1.0714753183063421,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 50.12005981384793
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 0.9748722673646616,
+          "rmse": 0.9873562008539074,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 58.05005205065303
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2608008547410283,
+          "rmse": 0.5106866502475156,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 42.697997727465506
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 31,
+    "train_mse": 0.04007240184656077,
+    "validation": {
+      "normalized_mse": 0.04136082290923511,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.6403308309889194,
+          "rmse": 0.8002067426539965,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 66.39588724581921
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.134942180363892,
+          "rmse": 1.0653366511877322,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 45.477337625833286
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.207176488996583,
+          "rmse": 1.0987158363273841,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 48.851943426736824
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.0071346103340182,
+          "rmse": 1.003560964931388,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 57.36155785879619
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2580712292110566,
+          "rmse": 0.5080071153153827,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 42.99865707835317
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 32,
+    "train_mse": 0.03992105088745544,
+    "validation": {
+      "normalized_mse": 0.04012611151664182,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.6222389371527899,
+          "rmse": 0.7888212326964772,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 66.87401363489133
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.090670463333896,
+          "rmse": 1.0443516952319731,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 46.55132270579558
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.1386805052869626,
+          "rmse": 1.0670897362860177,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 50.32421997051961
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.0130867097080423,
+          "rmse": 1.0065220860507944,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 57.23574827080415
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2571118051496416,
+          "rmse": 0.5070619342345091,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 43.10471187422051
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 33,
+    "train_mse": 0.03968507479328068,
+    "validation": {
+      "normalized_mse": 0.040048404916203345,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.7054463637169534,
+          "rmse": 0.8399085448529222,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 64.72863831310963
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.056982775225062,
+          "rmse": 1.0280966760110948,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 47.38323525088398
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.1200694859305567,
+          "rmse": 1.0583333529330712,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 50.731852204720184
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 0.9604039979418715,
+          "rmse": 0.9800020397641382,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 58.36250937320808
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.25612958888436227,
+          "rmse": 0.5060924706853108,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 43.21349130378338
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 34,
+    "train_mse": 0.03946316562985656,
+    "validation": {
+      "normalized_mse": 0.04031161764773302,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.6131437598341299,
+          "rmse": 0.7830349671848187,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 67.11700373771714
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.0775540404058808,
+          "rmse": 1.038053004622539,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 46.873682197618784
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.1858731417630854,
+          "rmse": 1.0889780262994684,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 49.30526360447485
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 0.949426224921585,
+          "rmse": 0.9743850496192894,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 58.601159258634034
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2570456959147738,
+          "rmse": 0.5069967415228365,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 43.11202687434947
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 35,
+    "train_mse": 0.039369453617611516,
+    "validation": {
+      "normalized_mse": 0.03941270866957368,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.6183256620869957,
+          "rmse": 0.7863368629836679,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 66.97834297317637
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.0357570491734724,
+          "rmse": 1.017721498826409,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 47.91422447582251
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.121579513248324,
+          "rmse": 1.0590465113715846,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 50.69865283964985
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.0231541874052006,
+          "rmse": 1.011510843938512,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 57.023790181574896
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2563815353206578,
+          "rmse": 0.506341322943978,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 43.18556863792798
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 36,
+    "train_mse": 0.03899726384586459,
+    "validation": {
+      "normalized_mse": 0.040040541218384886,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.7502363764203243,
+          "rmse": 0.866161865023117,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 63.62614881365248
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.038646987889265,
+          "rmse": 1.0191403180569716,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 47.841610995575024
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.1114239864602886,
+          "rmse": 1.0542409527524004,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 50.922363990425445
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 0.9400653350345288,
+          "rmse": 0.9695696648691773,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 58.805751217897146
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2557901612543539,
+          "rmse": 0.5057570179981232,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 43.251131039684516
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 37,
+    "train_mse": 0.03888834283833577,
+    "validation": {
+      "normalized_mse": 0.03958145874766951,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.6487148991856924,
+          "rmse": 0.8054283948220924,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 66.17660767859407
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.0458389638764183,
+          "rmse": 1.0226626833303434,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 47.661340531450435
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.108314703357119,
+          "rmse": 1.0527652650791244,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 50.991061058494914
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 0.9865865292444369,
+          "rmse": 0.9932706223605111,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 57.79876515526721
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.25765603165567985,
+          "rmse": 0.5075982975303205,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 43.04452880348507
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 38,
+    "train_mse": 0.038738365676708755,
+    "validation": {
+      "normalized_mse": 0.04249798288183085,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.6542686046341054,
+          "rmse": 0.8088687190354843,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 66.03213371128615
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.1216669294536468,
+          "rmse": 1.0590877817507134,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 45.797147329324645
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.3172978705205631,
+          "rmse": 1.1477359759633585,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 46.569929467867304
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.0469362018570758,
+          "rmse": 1.023199004034443,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 56.52719360657604
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.2584370629540093,
+          "rmse": 0.508367055338964,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 42.95826972137167
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 39,
+    "train_mse": 0.03890376959013906,
+    "validation": {
+      "normalized_mse": 0.03974483382365736,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.644515927847631,
+          "rmse": 0.8028174934863035,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 66.28625062234994
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 1.0315134771759524,
+          "rmse": 1.0156345194881633,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 48.02103359546949
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.123877294131644,
+          "rmse": 1.060130791049691,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 50.64817682348319
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 1.2664364548426668,
+          "rmse": 1.1253605888081681,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 52.186639346650246
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.25256860506694123,
+          "rmse": 0.50256204101279,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 43.60962597661997
+        }
+      }
+    },
+    "learning_rate": 0.001
+  },
+  {
+    "epoch": 40,
+    "train_mse": 0.03658948028207288,
+    "validation": {
+      "normalized_mse": 0.037879994919122306,
+      "variables": {
+        "t2m": {
+          "unit": "K",
+          "mse": 0.5878286229610624,
+          "rmse": 0.766699825851723,
+          "persistence_rmse": 2.3812762101699594,
+          "improvement_percent": 67.80298637439454
+        },
+        "u10": {
+          "unit": "m/s",
+          "mse": 0.9905388533841852,
+          "rmse": 0.9952581842839502,
+          "persistence_rmse": 1.953933657672039,
+          "improvement_percent": 49.063870189445254
+        },
+        "v10": {
+          "unit": "m/s",
+          "mse": 1.0813820643591123,
+          "rmse": 1.0398952179710763,
+          "persistence_rmse": 2.1481086671467398,
+          "improvement_percent": 51.59019495264483
+        },
+        "mslp": {
+          "unit": "hPa",
+          "mse": 0.9041399459763284,
+          "rmse": 0.9508627377157696,
+          "persistence_rmse": 2.3536529819920253,
+          "improvement_percent": 59.6005551799313
+        },
+        "q850": {
+          "unit": "g/kg",
+          "mse": 0.24977527110090617,
+          "rmse": 0.4997752205751163,
+          "persistence_rmse": 0.891219556026393,
+          "improvement_percent": 43.922323383092845
+        }
+      }
+    },
+    "learning_rate": 0.0005
+  }
+]

@@ -14,3 +14,6 @@ __pycache__/
 .workspace-backup-*/
 
 # Project weather files, checkpoints, plots and results are intentionally tracked.
+
+# Resumable public-data download blocks; prepared weather remains tracked.
+.era5_cache/

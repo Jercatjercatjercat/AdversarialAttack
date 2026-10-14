@@ -17,8 +17,8 @@ def evaluate_loader(model, loader, stats, variables, units, device='cpu'):
         for x, y in loader:
             x, y = x.to(device), y.to(device)
             prediction = model(x)
-            squared += (prediction-y).double().square().sum((0, 2, 3)).cpu().numpy()
-            persistence += (model.current_state(x)-y).double().square().sum((0, 2, 3)).cpu().numpy()
+            squared += (prediction-y).cpu().double().square().sum((0, 2, 3)).numpy()
+            persistence += (model.current_state(x)-y).cpu().double().square().sum((0, 2, 3)).numpy()
             count += y.shape[0]*y.shape[2]*y.shape[3]
     if not count:
         raise ValueError('Cannot evaluate an empty loader.')

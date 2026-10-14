@@ -5,7 +5,7 @@ from torch import nn
 
 class ResidualCNN(nn.Module):
     def __init__(self, variables=5, history=2, time_features=True, width=64,
-                 depth=5, residual=True):
+                 depth=5, residual=True, feature_skip=True):
         """Defaults: [B,14,H,W] -> [B,5,H,W], with five 3x3 convolutions.
 
         Each hidden channel is a LEARNED feature, not another measured variable.
@@ -16,8 +16,9 @@ class ResidualCNN(nn.Module):
         if variables < 1 or history not in (1, 2) or width < 1 or depth < 3:
             raise ValueError('Positive variables/width, history 1/2, depth >= 3 required.')
         self.settings = dict(variables=variables, history=history, time_features=time_features,
-                             width=width, depth=depth, residual=residual)
+                             width=width, depth=depth, residual=residual, feature_skip=feature_skip)
         self.variables, self.history, self.residual = variables, history, residual
+        self.feature_skip = feature_skip
         incoming = variables*history + (4 if time_features else 0)
         self.input_conv = nn.Conv2d(incoming, width, 3, padding=1, padding_mode='replicate')
         self.hidden = nn.ModuleList([nn.Conv2d(width, width, 3, padding=1,
@@ -44,7 +45,7 @@ class ResidualCNN(nn.Module):
         features = first
         for conv in self.hidden:
             features = torch.relu(conv(features))
-        if self.residual:
+        if self.feature_skip:
             features = features + first            # Internal feature skip connection.
         change = self.output_conv(features)          # [B,C,H,W], may be negative.
         return self.current_state(x)+change if self.residual else change

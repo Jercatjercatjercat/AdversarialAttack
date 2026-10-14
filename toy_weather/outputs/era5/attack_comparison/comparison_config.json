@@ -1,0 +1,18 @@
+{
+  "prepared_sha256": "7eebbe7ee8afc415b108550920d5f60db414b626e241dbd3bea6792e9202433e",
+  "checkpoint_sha256": "60f5f68dceb0592483a03783f4394126fe32c509e1560e41f1c1312b9430b53d",
+  "variable": "t2m",
+  "attack_time": "current only",
+  "objective": "mean normalized MSE over all output variables",
+  "random_trials": 3,
+  "steps": 10,
+  "budgets": [
+    0.1,
+    0.5
+  ],
+  "norms": [
+    "linf",
+    "l2"
+  ],
+  "note": "random rows are separate trials; persistence reference uses original inputs"
+}

@@ -10,7 +10,7 @@ import numpy as np
 from data.era5 import denormalize
 
 
-def forecast_plot(current, target, prediction, stats, variables, units, path):
+def forecast_plot(current, target, prediction, stats, variables, units, path, timestamp=None):
     """Three normalized [C,H,W] maps -> rows of physical-unit forecast panels.
 
     Every variable gets its own colour scale/units. Temperature displays Celsius;
@@ -21,7 +21,7 @@ def forecast_plot(current, target, prediction, stats, variables, units, path):
     for i, name in enumerate(variables):
         physical = [v[i].copy() for v in maps]
         display_unit = units[i]
-        if name in ('t2m', 'd2m'):
+        if name == 't2m':
             physical = [v-273.15 for v in physical]
             display_unit = '°C'
         low, high = min(v.min() for v in physical), max(v.max() for v in physical)
@@ -34,6 +34,8 @@ def forecast_plot(current, target, prediction, stats, variables, units, path):
             axes[i, j].set_xticks([])
             axes[i, j].set_yticks([])
             fig.colorbar(im, ax=axes[i, j], shrink=.8, label=display_unit)
+    if timestamp is not None:
+        fig.suptitle(f'ERA5 input {timestamp} UTC → forecast six hours ahead')
     fig.tight_layout()
     fig.savefig(path, dpi=130)
     plt.close(fig)
@@ -53,6 +55,8 @@ def training_plot(history, variables, units, path):
         ax.plot(epochs, [v['validation']['variables'][name]['persistence_rmse'] for v in history], '--', label='No change')
         ax.set_title(f'{name}: validation RMSE ({unit})')
         ax.legend()
+    for ax in list(axes.flat)[1+len(variables):]:
+        ax.set_visible(False)
     for ax in axes.flat:
         ax.set_xlabel('Epoch')
     fig.tight_layout()

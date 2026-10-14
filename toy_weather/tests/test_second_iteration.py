@@ -90,6 +90,10 @@ def test_preprocessing_coordinate_order_and_units():
     # This source NaN is inside the crop and must not be silently filled.
     with pytest.raises(ValueError, match='missing'):
         prepare_fields(ds, 4)
+    kept, kept_times, _, _ = prepare_fields(ds, 4, missing='skip')
+    assert kept.shape[0] == 3
+    assert kept_times[0] == np.datetime64('2020-01-01T06')
+    assert np.isfinite(kept).all()
 
 
 def test_clock_features_not_weather_and_leap_year():
@@ -149,3 +153,35 @@ def test_attacks_preserve_history_clocks_and_bounds(method, norm):
     assert torch.equal(change_input(model, x, y, 5, 0., method, norm), x)
     if method != 'random':
         assert torch.all((model(changed)-y).square().mean((1,2,3)) >= (model(x)-y).square().mean((1,2,3))-1e-6)
+
+
+def test_local_netcdf_and_zarr_agree(tmp_path):
+    """Both documented local file routes preserve the same weather values/units."""
+    times = np.arange(np.datetime64('2020-01-01T00'), np.datetime64('2020-01-02T00'), np.timedelta64(6, 'h'))
+    coords = dict(time=times, latitude=[42.,45.,60.,63.], longitude=[-12.,-10.,0.,10.,12.], level=[850])
+    fields = {}
+    for index, name in enumerate(SOURCE_NAMES):
+        values = np.arange(4*4*5, dtype='float32').reshape(4,4,5)+index+1
+        dims = ('time','latitude','longitude')
+        if name == 'specific_humidity':
+            values, dims = values[:,None]/100000., ('time','level','latitude','longitude')
+        fields[name] = xr.DataArray(values, dims=dims, attrs={'units': ('K','m/s','m/s','Pa','kg/kg')[index]})
+    ds = xr.Dataset(fields, coords=coords)
+    nc, zarr = tmp_path/'weather.nc', tmp_path/'weather.zarr'
+    ds.to_netcdf(nc)
+    ds.to_zarr(zarr, consolidated=True)
+    with xr.open_dataset(nc) as one, xr.open_zarr(zarr, consolidated=True, chunks=None) as two:
+        a, b = prepare_fields(one,4), prepare_fields(two,4)
+    for left, right in zip(a,b):
+        np.testing.assert_array_equal(left,right)
+
+
+def test_current_state_skip_is_separate_from_feature_skip():
+    """Disabling correction prediction must not quietly change internal architecture."""
+    residual = ResidualCNN(width=4, residual=True, feature_skip=True)
+    direct = ResidualCNN(width=4, residual=False, feature_skip=True)
+    with torch.no_grad():
+        residual.output_conv.weight.normal_(0, .01)
+    direct.load_state_dict(residual.state_dict())
+    x = torch.randn(2,14,4,4)
+    torch.testing.assert_close(residual(x)-direct(x), residual.current_state(x))

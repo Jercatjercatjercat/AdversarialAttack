@@ -71,7 +71,7 @@ def denormalize(values, stats):
     """Normalized [...,C,H,W] numpy/tensor -> physical maps with the SAME shape.
 
     Temperature is Kelvin, wind m/s, pressure hPa, humidity g/kg. Subtract 273.15 only when displaying
-    temperature/dew point in Celsius; never apply it to wind or pressure.
+    temperature in Celsius; never apply it to wind or pressure.
     """
     if isinstance(values, torch.Tensor):
         mean = values.new_tensor(stats['mean'])[:, None, None]

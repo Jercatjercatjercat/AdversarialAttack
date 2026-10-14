@@ -32,7 +32,8 @@ def change_input(model, x, y, channel, radius, method, norm='linf', steps=10, ge
         return original.clone()
     selected = original[:, channel:channel+1]
     if method == 'random':
-        noise = torch.randn(selected.shape, device=x.device, dtype=x.dtype, generator=generator)
+        # Seeded CPU draws also work when the forecasting device is Apple's MPS.
+        noise = torch.randn(selected.shape, dtype=x.dtype, generator=generator).to(x.device)
         delta = radius*(noise.sign() if norm=='linf' else direction(noise, norm))
         changed = original.clone()
         changed[:, channel:channel+1] += delta

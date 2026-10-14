@@ -96,3 +96,11 @@ temperature, two wind components, sea-level pressure and humidity at 850 hPa.
 The proposed dew point was replaced because its sampled coarse-archive maps were
 missing. Separate per-variable training statistics and physical-unit scores keep
 the multi-variable experiment interpretable. The first-iteration archive is unchanged.
+
+The completed second-iteration test gives temperature RMSE **0.788 K** versus
+**2.625 K** for no change and **2.377 K** for a temperature-only reference trained
+on the same dates. All five variables beat their no-change baselines. Input
+gradients and bounded random/one-step/PGD comparisons were checked on the frozen
+model. Results remain exploratory because 2022 was already inspected; the
+[second-iteration findings](toy_weather/EXPERIMENTS.md) explain the units, setup
+and limits.

@@ -1,0 +1,12 @@
+{
+  "normalized_mse": 1.10226518853684,
+  "variables": {
+    "t2m": {
+      "unit": "K",
+      "mse": 33.77280347687351,
+      "rmse": 5.8114372987130745,
+      "persistence_rmse": 2.3812763017699887,
+      "improvement_percent": -144.04716472395359
+    }
+  }
+}

@@ -4,6 +4,8 @@ Run from toy_weather: python -m data.prepare_era5
 A local NetCDF/Zarr with the documented ERA5 names works via --input.
 """
 import argparse
+from concurrent.futures import ThreadPoolExecutor
+import hashlib
 import json
 from pathlib import Path
 import numpy as np
@@ -11,12 +13,13 @@ import xarray as xr
 from config import DATA, SOURCE, SOURCE_NAMES, VARIABLES, UNITS
 
 
-def prepare_fields(ds, size=16):
+def prepare_fields(ds, size=16, missing='error'):
     """xarray [time,latitude,longitude] fields -> physical [T,5,H,W] and times.
 
     Weather-specific operations: crop Europe, retain six-hour UTC times, convert
     pressure Pa to hPa and humidity kg/kg to g/kg. Interpolation resizes a grid; it does not invent observations.
-    All channels share the same times/grid. Missing values are rejected, not filled.
+    All channels share the same times/grid. Missing maps are rejected or explicitly
+    dropped as whole states; individual missing pixels are never filled.
     """
     if size < 2:
         raise ValueError('Use size >= 2.')
@@ -58,12 +61,17 @@ def prepare_fields(ds, size=16):
         arrays.append(field.values.astype('float32'))
     values = np.stack(arrays, axis=1)  # [T,H,W] five times -> [T,5,H,W].
     times = fields.time.values.astype('datetime64[ns]')
-    if not len(times) or np.isnat(times).any() or not np.isfinite(values).all():
-        raise ValueError('No valid maps, or missing timestamps/field values.')
+    if np.isnat(times).any() or missing not in ('error', 'skip'):
+        raise ValueError('Invalid timestamps or missing-state policy.')
+    finite = np.isfinite(values).all(axis=(1, 2, 3))
+    if not finite.all() and missing == 'error':
+        raise ValueError('missing field values; use --missing skip to explicitly exclude whole states.')
+    if missing == 'skip':
+        values, times = values[finite], times[finite]
     return values, times, lat, lon
 
 
-def save_prepared(values, times, lat, lon, output, source, boundaries):
+def save_prepared(values, times, lat, lon, output, source, boundaries, notes=None):
     """Save physical fields once, rather than duplicate overlapping input histories.
 
     Statistical fitting happens later on training inputs only. Boundaries are saved
@@ -85,7 +93,8 @@ def save_prepared(values, times, lat, lon, output, source, boundaries):
                     test_status=('exploratory: 2022 was inspected in the first iteration'
                                  if boundaries[2].startswith('2022') else
                                  'custom split: independently establish whether this period is unseen'),
-                    size=values.shape[-1], interpolation='linear; source 1.5-degree grid')
+                    size=values.shape[-1], interpolation='linear; source 1.5-degree grid',
+                    preparation_notes=notes or {})
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = output.with_suffix('.partial.npz')
     np.savez_compressed(temporary, fields=values, times=np.asarray(times, dtype='datetime64[ns]').astype('int64'),
@@ -103,7 +112,12 @@ def main():
     parser.add_argument('--test-start', default='2022-01-01')
     parser.add_argument('--end', default='2023-01-01', help='Exclusive end')
     parser.add_argument('--size', type=int, default=16)
+    parser.add_argument('--workers', type=int, default=6, help='Concurrent public month downloads')
+    parser.add_argument('--missing', choices=['error', 'skip'], default='skip',
+                        help='Skip whole invalid states (logged), or reject any missing map')
     args = parser.parse_args()
+    if args.workers < 1:
+        parser.error('Workers must be positive.')
     if args.output.exists():
         parser.error('Output exists; choose a new --output.')
     bounds = [args.train_start, args.validation_start, args.test_start, args.end]
@@ -114,26 +128,58 @@ def main():
         ds = xr.open_zarr(path, consolidated=True, chunks=None) if path.is_dir() else xr.open_dataset(path)
     else:
         ds = xr.open_zarr(SOURCE, consolidated=True, chunks=None)
-    collected, collected_times = [], []
+    collected, collected_times, reports = [], [], []
     with ds:
         available = ds.time.values.astype('datetime64[ns]')
         requested_end = np.datetime64(args.end, 'ns')-np.timedelta64(6, 'h')
         if available.min() > np.datetime64(args.train_start) or available.max() < requested_end:
             raise ValueError('Source does not cover the requested dates; choose covered boundaries.')
-        # Work a year at a time so downloads/interpolation do not hold global years in RAM.
-        first, last = int(args.train_start[:4]), int(args.end[:4])
-        for year in range(first, last + 1):
-            start = max(np.datetime64(args.train_start), np.datetime64(f'{year}-01-01'))
-            end = min(np.datetime64(args.end), np.datetime64(f'{year+1}-01-01'))
-            if start >= end:
-                continue
-            print(f'Loading {start} to {end} (exclusive), five fields...', flush=True)
-            subset = ds.sel(time=slice(str(start), str(end - np.timedelta64(1, 'ns'))))
-            values, times, lat, lon = prepare_fields(subset, args.size)
-            collected.append(values)
-            collected_times.append(times)
+        # Month blocks keep humidity's global pressure-level chunks out of RAM together.
+        # Cache completed PUBLIC blocks so an interrupted download can resume.
+        periods = []
+        month = np.datetime64(args.train_start, 'M')
+        while month.astype('datetime64[D]') < np.datetime64(args.end):
+            start = max(np.datetime64(args.train_start), month.astype('datetime64[D]'))
+            end = min(np.datetime64(args.end), (month+np.timedelta64(1, 'M')).astype('datetime64[D]'))
+            periods.append((start, end))
+            month += np.timedelta64(1, 'M')
+        cache = args.output.parent/'.era5_cache'
+        if not args.input:
+            cache.mkdir(parents=True, exist_ok=True)
+
+        def load_month(period):
+            # Each independent worker reads a distinct time block; shared source is read-only.
+            start, end = period
+            identity = f'{SOURCE}|{start}|{end}|{args.size}|{args.missing}|q850-v1'
+            filename = cache/(hashlib.sha256(identity.encode()).hexdigest()[:20]+'.npz')
+            if not args.input and filename.exists():
+                with np.load(filename, allow_pickle=False) as cached:
+                    return (cached['values'], cached['times'].astype('datetime64[ns]'),
+                            cached['latitude'], cached['longitude'], json.loads(str(cached['report'])))
+            subset = ds.sel(time=slice(str(start), str(end-np.timedelta64(1, 'ns'))))
+            values, times, lat, lon = prepare_fields(subset, args.size, args.missing)
+            expected = int(((subset.time.dt.hour % 6)==0).sum())
+            report = dict(start=str(start), end=str(end), available_states=expected,
+                          kept_states=len(times), dropped_states=expected-len(times))
+            print(f'{start}..{end}: {len(times)} states kept, {report["dropped_states"]} dropped', flush=True)
+            if not args.input:
+                temporary = filename.with_suffix('.partial.npz')
+                np.savez_compressed(temporary, values=values, times=times.astype('int64'),
+                                    latitude=lat, longitude=lon, report=json.dumps(report))
+                temporary.replace(filename)
+            return values, times, lat, lon, report
+
+        # Independent month readers overlap network waits, not model training.
+        with ThreadPoolExecutor(max_workers=args.workers if not args.input else 1) as pool:
+            for values, times, lat, lon, report in pool.map(load_month, periods):
+                collected.append(values)
+                collected_times.append(times)
+                reports.append(report)
+    notes = dict(missing_policy=args.missing, blocks=reports,
+                 dropped_states=sum(r['dropped_states'] for r in reports))
     save_prepared(np.concatenate(collected), np.concatenate(collected_times), lat, lon,
-                  args.output, args.input or SOURCE, bounds)
+                  args.output, args.input or SOURCE, bounds, notes)
+
 
 
 if __name__ == '__main__':

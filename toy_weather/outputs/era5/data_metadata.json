@@ -1,0 +1,717 @@
+{
+  "source": "https://storage.googleapis.com/weatherbench2/datasets/era5/1959-2023_01_10-6h-240x121_equiangular_with_poles_conservative.zarr",
+  "variables": [
+    "t2m",
+    "u10",
+    "v10",
+    "mslp",
+    "q850"
+  ],
+  "units": [
+    "K",
+    "m/s",
+    "m/s",
+    "hPa",
+    "g/kg"
+  ],
+  "boundaries": [
+    "2015-01-01",
+    "2021-01-01",
+    "2022-01-01",
+    "2023-01-01"
+  ],
+  "history_hours": [
+    -6,
+    0
+  ],
+  "lead_hours": 6,
+  "test_status": "exploratory: 2022 was inspected in the first iteration",
+  "size": 16,
+  "interpolation": "linear; source 1.5-degree grid",
+  "preparation_notes": {
+    "missing_policy": "skip",
+    "blocks": [
+      {
+        "start": "2015-01-01",
+        "end": "2015-02-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2015-02-01",
+        "end": "2015-03-01",
+        "available_states": 112,
+        "kept_states": 112,
+        "dropped_states": 0
+      },
+      {
+        "start": "2015-03-01",
+        "end": "2015-04-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2015-04-01",
+        "end": "2015-05-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2015-05-01",
+        "end": "2015-06-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2015-06-01",
+        "end": "2015-07-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2015-07-01",
+        "end": "2015-08-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2015-08-01",
+        "end": "2015-09-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2015-09-01",
+        "end": "2015-10-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2015-10-01",
+        "end": "2015-11-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2015-11-01",
+        "end": "2015-12-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2015-12-01",
+        "end": "2016-01-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2016-01-01",
+        "end": "2016-02-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2016-02-01",
+        "end": "2016-03-01",
+        "available_states": 116,
+        "kept_states": 116,
+        "dropped_states": 0
+      },
+      {
+        "start": "2016-03-01",
+        "end": "2016-04-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2016-04-01",
+        "end": "2016-05-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2016-05-01",
+        "end": "2016-06-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2016-06-01",
+        "end": "2016-07-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2016-07-01",
+        "end": "2016-08-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2016-08-01",
+        "end": "2016-09-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2016-09-01",
+        "end": "2016-10-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2016-10-01",
+        "end": "2016-11-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2016-11-01",
+        "end": "2016-12-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2016-12-01",
+        "end": "2017-01-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2017-01-01",
+        "end": "2017-02-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2017-02-01",
+        "end": "2017-03-01",
+        "available_states": 112,
+        "kept_states": 112,
+        "dropped_states": 0
+      },
+      {
+        "start": "2017-03-01",
+        "end": "2017-04-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2017-04-01",
+        "end": "2017-05-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2017-05-01",
+        "end": "2017-06-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2017-06-01",
+        "end": "2017-07-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2017-07-01",
+        "end": "2017-08-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2017-08-01",
+        "end": "2017-09-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2017-09-01",
+        "end": "2017-10-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2017-10-01",
+        "end": "2017-11-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2017-11-01",
+        "end": "2017-12-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2017-12-01",
+        "end": "2018-01-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2018-01-01",
+        "end": "2018-02-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2018-02-01",
+        "end": "2018-03-01",
+        "available_states": 112,
+        "kept_states": 112,
+        "dropped_states": 0
+      },
+      {
+        "start": "2018-03-01",
+        "end": "2018-04-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2018-04-01",
+        "end": "2018-05-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2018-05-01",
+        "end": "2018-06-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2018-06-01",
+        "end": "2018-07-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2018-07-01",
+        "end": "2018-08-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2018-08-01",
+        "end": "2018-09-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2018-09-01",
+        "end": "2018-10-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2018-10-01",
+        "end": "2018-11-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2018-11-01",
+        "end": "2018-12-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2018-12-01",
+        "end": "2019-01-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2019-01-01",
+        "end": "2019-02-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2019-02-01",
+        "end": "2019-03-01",
+        "available_states": 112,
+        "kept_states": 112,
+        "dropped_states": 0
+      },
+      {
+        "start": "2019-03-01",
+        "end": "2019-04-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2019-04-01",
+        "end": "2019-05-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2019-05-01",
+        "end": "2019-06-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2019-06-01",
+        "end": "2019-07-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2019-07-01",
+        "end": "2019-08-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2019-08-01",
+        "end": "2019-09-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2019-09-01",
+        "end": "2019-10-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2019-10-01",
+        "end": "2019-11-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2019-11-01",
+        "end": "2019-12-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2019-12-01",
+        "end": "2020-01-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2020-01-01",
+        "end": "2020-02-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2020-02-01",
+        "end": "2020-03-01",
+        "available_states": 116,
+        "kept_states": 116,
+        "dropped_states": 0
+      },
+      {
+        "start": "2020-03-01",
+        "end": "2020-04-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2020-04-01",
+        "end": "2020-05-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2020-05-01",
+        "end": "2020-06-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2020-06-01",
+        "end": "2020-07-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2020-07-01",
+        "end": "2020-08-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2020-08-01",
+        "end": "2020-09-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2020-09-01",
+        "end": "2020-10-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2020-10-01",
+        "end": "2020-11-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2020-11-01",
+        "end": "2020-12-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2020-12-01",
+        "end": "2021-01-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2021-01-01",
+        "end": "2021-02-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2021-02-01",
+        "end": "2021-03-01",
+        "available_states": 112,
+        "kept_states": 112,
+        "dropped_states": 0
+      },
+      {
+        "start": "2021-03-01",
+        "end": "2021-04-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2021-04-01",
+        "end": "2021-05-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2021-05-01",
+        "end": "2021-06-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2021-06-01",
+        "end": "2021-07-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2021-07-01",
+        "end": "2021-08-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2021-08-01",
+        "end": "2021-09-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2021-09-01",
+        "end": "2021-10-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2021-10-01",
+        "end": "2021-11-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2021-11-01",
+        "end": "2021-12-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2021-12-01",
+        "end": "2022-01-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2022-01-01",
+        "end": "2022-02-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2022-02-01",
+        "end": "2022-03-01",
+        "available_states": 112,
+        "kept_states": 112,
+        "dropped_states": 0
+      },
+      {
+        "start": "2022-03-01",
+        "end": "2022-04-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2022-04-01",
+        "end": "2022-05-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2022-05-01",
+        "end": "2022-06-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2022-06-01",
+        "end": "2022-07-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2022-07-01",
+        "end": "2022-08-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2022-08-01",
+        "end": "2022-09-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2022-09-01",
+        "end": "2022-10-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2022-10-01",
+        "end": "2022-11-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      },
+      {
+        "start": "2022-11-01",
+        "end": "2022-12-01",
+        "available_states": 120,
+        "kept_states": 120,
+        "dropped_states": 0
+      },
+      {
+        "start": "2022-12-01",
+        "end": "2023-01-01",
+        "available_states": 124,
+        "kept_states": 124,
+        "dropped_states": 0
+      }
+    ],
+    "dropped_states": 0
+  },
+  "counts": {
+    "train": 8766,
+    "validation": 1458,
+    "test": 1458
+  },
+  "prepared_sha256": "7eebbe7ee8afc415b108550920d5f60db414b626e241dbd3bea6792e9202433e",
+  "history": 2,
+  "time_features": true
+}

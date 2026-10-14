@@ -1,0 +1,16 @@
+{
+  "variables": [
+    "t2m"
+  ],
+  "units": [
+    "K"
+  ],
+  "mean": [
+    283.85163086053717
+  ],
+  "std": [
+    5.535291676393588
+  ],
+  "fitted_on": "unique training input states only",
+  "input_state_count": 8766
+}

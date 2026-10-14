@@ -7,6 +7,13 @@ preserved. The purpose is to improve the clean forecasting baseline and keep the
 input-gradient/attack experiment understandable. More layers alone do not guarantee
 better forecasts; evaluation compares every output with predicting no change.
 
+
+The completed 14 October 2026 run gives temperature test RMSE **0.788 K**, versus
+**2.625 K** for predicting no change and **2.377 K** for the temperature-only
+reference trained on the same dates. All five variables beat their no-change
+baselines. These are one-seed exploratory results on 2022. The per-variable scores
+and attack findings are explained in [EXPERIMENTS.md](EXPERIMENTS.md).
+
 ## The weather represented by each channel
 
 | Short name | Variable | Stored physical units |
@@ -23,8 +30,9 @@ varies and it is not a measurement two metres above ground.
 
 The proposed dew-point field was checked in the public coarse ERA5 archive. Its
 metadata exists, but the sampled 2015 maps contain only missing values. This run
-uses populated humidity at 850 hPa instead. The preprocessing rejects missing
-maps rather than silently filling them. Pressure is converted from Pa to hPa and
+uses populated humidity at 850 hPa instead. Preparation omits whole states with missing crop values and records counts by
+month; `--missing error` instead rejects them. Missing values are never filled,
+and pairing skips gaps rather than treating them as six-hour steps. Pressure is converted from Pa to hPa and
 humidity from kg/kg to g/kg before preparation. Temperature pictures use Celsius;
 errors in Kelvin and Celsius have the same numerical size.
 
@@ -125,8 +133,14 @@ python evaluate.py --dataset era5
 python check_input_gradient.py
 ```
 
+The public download is processed in month blocks, with six readers (`--workers` can reduce memory/network use). Completed
+blocks are kept in the ignored `.era5_cache/` for resuming downloads; the final
+prepared dataset remains tracked. Metadata records every excluded-state count.
+
 Default prepared data is `local_data/era5_five_variables.npz`, saved once as physical
-maps rather than duplicated pairs. Default results are `outputs/era5/`. Training
+maps rather than duplicated pairs. Default results are `outputs/era5/`. The saved `outputs/t2m_reference/` is a
+temperature-only comparison with the original three-layer structure on the same
+date splits, not another proposed second-iteration architecture. Training
 uses up to 40 epochs, batch size 64, Adam with initial learning rate 0.001, seed 42,
 and CPU. Validation plateaus reduce the learning rate; ten consecutive epochs
 without improvement stop training. The best validation epoch is saved, which need
@@ -144,7 +158,7 @@ cannot silently be substituted. No test score chooses the learning rate or epoch
 `best_model.pt` contains learned weights, model settings, normalization and dataset
 identity. `normalization.json` records the per-variable scaling, `data_metadata.json`
 records dates/source/channels, and `training_config.json` records training choices.
-`history.json`, `training_summary.json` and `training_curves.png` show learning and
+`initial_validation.json` records the starting forecast. `history.json`, `training_summary.json` and `training_curves.png` show learning and
 checkpoint selection. `test_metrics.json` reports separate physical-unit scores.
 `test_example_*.png` shows current weather, true future, predicted future and error
 for each variable. Example dates are spaced across the test period rather than
@@ -164,10 +178,11 @@ For example, this temperature-only comparison has the original three-convolution
 
 ```bash
 python train.py --variables t2m --history 1 --no-time-features \
-  --direct-output --width 32 --depth 3 --output-dir outputs/t2m_reference
+  --direct-output --no-feature-skip --width 32 --depth 3 --output-dir outputs/t2m_reference
 ```
 
-`--history 1`, `--no-time-features`, `--direct-output`, `--depth` and `--width` expose
+`--history 1`, `--no-time-features`, `--direct-output`, `--no-feature-skip`,
+`--depth` and `--width` expose
 the proposed changes explicitly. Matching data/dates and changing one setting at
 a time is needed to attribute an improvement to a specific action. Comparing the
 final model with the archived run alone changes several factors simultaneously.
@@ -182,7 +197,10 @@ This compares random noise, a one-step gradient attack and ten-step PGD under Li
 and L2 rules. It changes only the named variable's CURRENT map. Earlier weather,
 other variables, clock features, targets and weights stay fixed. The objective is
 to increase the mean normalized loss over all five outputs; each output's physical
-RMSE is reported. Cross-variable effects can therefore be observed.
+RMSE is reported. Cross-variable effects can therefore be observed. These are retrospective
+white-box evaluations: model calculations and true future labels are available
+to choose input changes, rather than assuming future observations are known in
+real-time forecasting.
 
 `--budget` has the named variable's units: Linf caps every cell by that value; L2
 caps input RMS by that value. On 16×16 maps L2 radius = 16 × RMS bound. These do not
