@@ -1,9 +1,9 @@
 # Reading notes: Otter Weather
 
 Architecture questions recorded on 13 October 2026. These notes refer to the saved
-[deterministic ICLR 2026 paper](../archive/Otter_ICLR2026.pdf), especially Figure 2 and Section 3.2,
+[deterministic ICLR 2026 paper](<../archive/Otter Weather: Highly Skillful Medium-Range Weather Forecasting on a Single GPU.pdf>), especially Figure 2 and Section 3.2,
 and the [local model configuration](../../otter-main/otter/experiment/config/base.yaml).
-On 13 October 2026, the [June 2026 preprint](../Otter.pdf) replaced the main reading
+On 13 October 2026, the [June 2026 preprint](<../Otter Weather: Skillful and Computationally Efficient Medium-Range Weather Forecasting.pdf>) replaced the main reading
 PDF. It includes probabilistic variants. Earlier architecture notes used the
 archived ICLR paper; the local source code remains unchanged.
 
@@ -248,13 +248,13 @@ single-map output into a useful forecast distribution.
 “Expanded paper” in earlier answers meant the separate later preprint
 [Otter Weather: Skillful and Computationally Efficient Medium-Range Weather Forecasting](https://arxiv.org/abs/2606.26421),
 submitted on 24 June 2026. At the time of those answers it was an online reference.
-It is now the local [Otter.pdf](../Otter.pdf), replaced on 13 October 2026. Earlier
+It is now the local [Otter Weather: Skillful and Computationally Efficient Medium-Range Weather Forecasting.pdf](<../Otter Weather: Skillful and Computationally Efficient Medium-Range Weather Forecasting.pdf>), replaced on 13 October 2026. Earlier
 answers should have named the source explicitly before introducing its additional variants.
 
 | Work | What it covers |
 |---|---|
-| Archived [ICLR paper](../archive/Otter_ICLR2026.pdf): **Otter Weather: Highly Skillful Medium-Range Weather Forecasting on a Single GPU**, ICLR 2026 | Deterministic Otter, Swin U-Net architecture, training/component comparisons, rollout fine-tuning and a larger patch-size-one variant called Otter-PS1 |
-| Main [Otter.pdf](../Otter.pdf): **arXiv:2606.26421v1**, June 2026 | The same core Swin U-Net approach, updated deterministic results, probabilistic CRPS variants, checkpoint ensembles, scaled Otter-XL variants and an additional acoustic-wave experiment |
+| Archived [ICLR paper](<../archive/Otter Weather: Highly Skillful Medium-Range Weather Forecasting on a Single GPU.pdf>): **Otter Weather: Highly Skillful Medium-Range Weather Forecasting on a Single GPU**, ICLR 2026 | Deterministic Otter, Swin U-Net architecture, training/component comparisons, rollout fine-tuning and a larger patch-size-one variant called Otter-PS1 |
+| Main [Otter Weather: Skillful and Computationally Efficient Medium-Range Weather Forecasting.pdf](<../Otter Weather: Skillful and Computationally Efficient Medium-Range Weather Forecasting.pdf>): **arXiv:2606.26421v1**, June 2026 | The same core Swin U-Net approach, updated deterministic results, probabilistic CRPS variants, checkpoint ensembles, scaled Otter-XL variants and an additional acoustic-wave experiment |
 
 The older paper cites probabilistic research but does not present the later paper's
 Otter CRPS experiments. Both versions are now saved, with the newer preprint as
@@ -514,7 +514,7 @@ combines several trained checkpoints.
 Replacing the paper does not install this training/sampling procedure in our saved
 Otter code. See the implementation distinction above before running experiments.
 
-Evidence: [new local preprint](../Otter.pdf), Section 4.2 and Appendix B.3.5;
+Evidence: [new local preprint](<../Otter Weather: Skillful and Computationally Efficient Medium-Range Weather Forecasting.pdf>), Section 4.2 and Appendix B.3.5;
 [online version](https://arxiv.org/html/2606.26421v1#S4.SS2).
 
 ### Small distinction to remember
@@ -583,4 +583,4 @@ weights. Dropout changes internal activity; it does not replace input temperatur
 readings. The next reading step is Section 4.1: compare which design changes
 improve forecast skill and how much computation they cost.
 
-Source: [main Otter PDF](../Otter.pdf), Section 3.2, Figure 2 and Section 4.2.
+Source: [main Otter PDF](<../Otter Weather: Skillful and Computationally Efficient Medium-Range Weather Forecasting.pdf>), Section 3.2, Figure 2 and Section 4.2.

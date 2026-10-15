@@ -3,7 +3,7 @@
 Notes recorded on 14 October 2026. The saved paper is arXiv:1710.06081v3,
 22 March 2018, by Dong and colleagues.
 
-[Local PDF](../BoostingAdversarialAttacksWithMomentum.pdf) ·
+[Local PDF](<../Boosting Adversarial Attacks with Momentum.pdf>) ·
 [Paper reference](https://arxiv.org/abs/1710.06081)
 
 ## The idea behind MI-FGSM

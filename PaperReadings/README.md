@@ -6,15 +6,17 @@ The toy experiments connect these ideas on a small temperature grid. The longer-
 question is whether similar input changes affect a larger model such as Otter,
 including forecasts with several variables, repeated forecast steps and extreme events.
 
-The collection contains the five distinct works originally recommended, plus
-Otter, the momentum-attack paper and a weather-variable reference sheet. The six original links represent
+The collection contains eleven distinct research works: the five originally recommended,
+Otter, the momentum-attack paper and four weather-specific works suggested by Rich.
+There are twelve research PDFs because an earlier Otter paper is also archived,
+plus a separate weather-variable reference sheet. The six original links represent
 five works because the predictability paper has both a preprint and a journal
 publication. The local PDFs include existing personal annotations. Detailed
 questions and corrections are stored in `notes/` and linked below.
 
 ## How Deep Learning Sees the World: attacks and defenses
 
-[Local PDF](<How Deep Learning Sees the World- A Survey on Adversarial Attacks & Defenses.pdf>) ·
+[Local PDF](<How Deep Learning Sees the World: A Survey on Adversarial Attacks & Defenses.pdf>) ·
 [2023 preprint](https://arxiv.org/abs/2305.10862) ·
 [Our reading notes](notes/HowDeepLearningSeesTheWorld.md)
 
@@ -49,7 +51,7 @@ material remains useful for later work, when the attack itself is well understoo
 
 ## Boosting Adversarial Attacks with Momentum: remembering earlier directions
 
-[Local PDF](BoostingAdversarialAttacksWithMomentum.pdf) ·
+[Local PDF](<Boosting Adversarial Attacks with Momentum.pdf>) ·
 [2018 preprint, v3](https://arxiv.org/abs/1710.06081) ·
 [Our reading notes](notes/BoostingAdversarialAttacksWithMomentum.md)
 
@@ -77,7 +79,7 @@ toy-weather code; they are not methods evaluated by this momentum paper.
 
 ## Otter Weather: the forecasting model we may eventually attack
 
-[Main local PDF](Otter.pdf) ·
+[Main local PDF](<Otter Weather: Skillful and Computationally Efficient Medium-Range Weather Forecasting.pdf>) ·
 [June 2026 preprint](https://arxiv.org/abs/2606.26421) ·
 [Our reading notes](notes/Otter.md) ·
 [Local preparation and code discussion](../OTTER_PREPARATION.md)
@@ -117,14 +119,14 @@ is distinct from deliberately changing the observed input in an attack.
 The main PDF was replaced on 13 October 2026. The earlier **Otter Weather: Highly
 Skillful Medium-Range Weather Forecasting on a Single GPU**, the deterministic
 ICLR 2026 paper, is preserved with its annotations in
-[archive/Otter_ICLR2026.pdf](archive/Otter_ICLR2026.pdf). Our saved `otter-main/`
+[archive/Otter Weather: Highly Skillful Medium-Range Weather Forecasting on a Single GPU.pdf](<archive/Otter Weather: Highly Skillful Medium-Range Weather Forecasting on a Single GPU.pdf>). Our saved `otter-main/`
 source code has not been updated merely by replacing the paper. The
 [version comparison](notes/Otter.md#follow-up-output-representation-training-relationship-and-paper-versions)
 separates the papers' claims from what the local code currently supports.
 
 ## Atmospheric Predictability Beyond 30 Days: changing the starting weather
 
-[Annotated local preprint](PredictabilityBeyond30Days.pdf) ·
+[Annotated local preprint](<Atmospheric Predictability Beyond 30 Days with Machine Learning.pdf>) ·
 [Preprint reference](https://arxiv.org/abs/2504.20238) ·
 [Journal publication](https://journals.ametsoc.org/view/journals/aies/aop/AIES-D-26-0009.1/AIES-D-26-0009.1.xml) ·
 [Our reading notes](notes/PredictabilityBeyond30Days.md)
@@ -197,7 +199,7 @@ the initial-condition optimisation in the predictability study.
 
 ## Aardvark: the wider path from observations to forecasts
 
-[Local PDF](AardvarkWeather.pdf) ·
+[Local PDF](<End-to-end data-driven weather prediction.pdf>) ·
 [Nature publication](https://www.nature.com/articles/s41586-025-08897-0)
 
 **End-to-end data-driven weather prediction** describes Aardvark, a pipeline that
@@ -218,7 +220,7 @@ named `ML_WP.pdf`.
 
 ## Adversarial Attacks and Defences: the foundational vocabulary
 
-[Local PDF](<Adversarial Attacks and Defences- A Survey.pdf>) ·
+[Local PDF](<Adversarial Attacks and Defences: A Survey.pdf>) ·
 [2018 preprint](https://arxiv.org/abs/1810.00069)
 
 This earlier survey organises attacks by what the attacker knows, what can be
@@ -235,25 +237,139 @@ during evaluation. The survey largely concerns classification, so our numerical
 forecast scores replace wrong-label counts. It complements the newer survey as a
 source of basic terminology, rather than a complete account of later methods.
 
-## Reading log: notes and questions as we go
+## Weather-specific adversarial studies suggested by Rich
 
-The detailed notes preserve the explanations developed while reading, including
-corrections and distinctions between published experiments and our proposed work.
-The newer survey notes cover weather adaptations, attack limits, method families,
-evaluation and defenses. The Otter notes cover architecture, evaluation, paper
-versions, dropout and probabilistic forecasting through the Section 3.2 checkpoint.
-The predictability notes explain input optimisation and its use of “epoch.”
-Otter reading is currently paused; Aurora connects most directly to the proposed
-multi-variable and extreme-weather experiments.
+All four suggested works are present locally, checked on 15 October 2026. The
+saved FABLE paper is April 2026 v2, extending the original 2025 preprint; its author
+list includes Jack Gunn. The ECMWF-hosted report lists Mahendran, Schmidt and
+Benn-Maksimovic in that order. Filenames now follow the titles printed in the PDFs,
+including subtitles. Renaming preserves the PDF contents and annotations.
 
-| Paper | Detailed notes |
+### Adversarial Observations in Weather Forecasting
+
+[Local PDF](<Adversarial Observations in Weather Forecasting.pdf>) ·
+[Source](https://arxiv.org/abs/2504.15942) ·
+[Notes and questions](notes/AdversarialObservations.md)
+
+Imgrund, Eisenhofer and Rieck attack GenCast, a probabilistic model that samples
+possible future weather maps. Their method adjusts initial weather inputs using
+gradients through a cheaper approximation of the diffusion forecasting process,
+with momentum and constraints on perturbation statistics. The objectives include
+fabricating and concealing extreme events. Although the motivation concerns
+compromised observations, the demonstrated attack changes assimilated ERA5 grids.
+This distinction matters: a change to an ERA5 cell is not automatically a change
+that could be produced by editing a particular satellite measurement before assimilation.
+
+### FABLE: A Localized, Targeted Adversarial Attack on Weather Forecasting Models
+
+[Local PDF](<FABLE: A Localized, Targeted Adversarial Attack on Weather Forecasting Models.pdf>) ·
+[Source](https://arxiv.org/abs/2505.12167) · [Notes and questions](notes/FABLE.md)
+
+FABLE aims to produce chosen forecast changes at selected places and times. It
+changes wavelet components, which describe patterns at different spatial and
+temporal scales, and reconstructs an input bounded by an Linf limit. The experiments
+use deterministic CLCRN and adapted FourCastNet models with gridded NLDAS and ERA5
+data. A chosen output region and an allowed input region are separate parts of
+an attack. The work connects to regional targets and comparisons of disturbance
+patterns in our CNN; its plausibility measures should not be described as proof
+of complete physical consistency.
+
+### Forecasting Fails: Unveiling Evasion Attacks in Weather Prediction Models
+
+[Local PDF](<Forecasting Fails: Unveiling Evasion Attacks in Weather Prediction Models.pdf>) ·
+[Source](https://arxiv.org/abs/2512.08832) · [Notes and questions](notes/ForecastingFails.md)
+
+Arif and colleagues attack FourCastNet through processed ERA5 initial fields.
+Their WAAPO method combines gradient updates with selected-variable, geographical,
+amplitude and smoothness restrictions. The underlying forecaster is deterministic;
+averaging forecasts from different perturbed initial conditions is a separate
+ensemble experiment. This is directly relevant to comparing unrestricted cell
+patterns with geographically limited or smooth changes in our CNN. Changing only
+some variable channels is different from limiting the total number of changed cells.
+
+### Explainability and Adversarial Vulnerability in AI-Based Weather Forecasting Systems
+
+[Local PDF](<Explainability and Adversarial Vulnerability in AI-Based Weather Forecasting Systems.pdf>) ·
+[ECMWF source](https://www.ecmwf.int/en/elibrary/81717-explainability-and-adversarial-vulnerability-ai-based-weather-forecasting-systems) ·
+[Notes and questions](notes/ExplainabilityAndAdversarialVulnerability.md)
+
+This February 2026 report discusses explanation methods, attack assumptions and
+trust in weather systems. It reviews existing work, including the GenCast attack,
+rather than presenting a new attack experiment. It helps distinguish a gradient
+picture, which shows sensitivity, from an actual experiment demonstrating forecast
+damage. Its discussions cover several model types and input stages, so it has no
+single deterministic/probabilistic label or single attacked dataset.
+
+## The presentation and its connection to the CNN experiments
+
+The planned presentation brings together a brief understanding of each paper,
+the evidence supporting its claims and the questions it leaves open. Each paper
+can be described through the same set of distinctions:
+
+| Part of the account | What it establishes |
 |---|---|
-| How Deep Learning Sees the World | [Questions, corrections and attack catalogue](notes/HowDeepLearningSeesTheWorld.md) |
-| Boosting Adversarial Attacks with Momentum | [Momentum updates and sparse-attack distinctions](notes/BoostingAdversarialAttacksWithMomentum.md) |
-| Otter Weather | [Architecture, evaluation, versions and probabilistic output](notes/Otter.md) |
-| Atmospheric Predictability Beyond 30 Days | [Input updates and optimisation epochs](notes/PredictabilityBeyond30Days.md) |
+| Main idea | The problem studied and the paper's contribution, in everyday terms. |
+| Forecasting model and output | Which model is used; whether it returns one forecast or samples possible futures. |
+| Input actually changed | Raw observation, processed weather state such as ERA5, or no attack experiment. |
+| Attack objective | General forecast damage, a chosen regional outcome, or no attack objective. |
+| Attack procedure and limits | How changes are chosen; allowed variables, locations, sizes and computational effort. |
+| Evidence and limitations | What the reported experiments support and what remains untested. |
+| Open questions and CNN connection | Questions raised by the reading and a small experiment that could examine them. |
 
-[WeatherVariablesAndMetrics.pdf](WeatherVariablesAndMetrics.pdf) is an additional
-reference sheet for weather-variable names and metrics, not a research paper.
-Together, the collection explains the attack methods, the forecasting models,
-the role of initial conditions and the evaluation choices behind our project.
+A deterministic forecaster returns the same map for the same input and fixed
+settings. A probabilistic forecaster represents multiple possible futures, often
+through sampled maps. A group of deterministic forecasts made from different
+initial conditions should be described separately from randomness inside the model.
+ERA5 is a reanalysis: an estimated atmospheric state reconstructed from observations
+and a physical model. It is not a folder of raw satellite or station readings.
+
+| Work | Input or attack location | Forecast type / role |
+|---|---|---|
+| How Deep Learning Sees the World | Multiple image-attack settings; no single weather experiment | Survey; no single weather forecast type |
+| Adversarial Attacks and Defences | Multiple attack settings; no single weather experiment | Survey; basic attack vocabulary |
+| Boosting Adversarial Attacks with Momentum | Image classifier inputs | Classification attack, not weather forecasting |
+| Otter, newer paper | Processed atmospheric states; no attack study | Deterministic and probabilistic variants |
+| Otter, archived paper | Processed atmospheric states; no attack study | Deterministic |
+| Atmospheric Predictability Beyond 30 Days with Machine Learning | Initial processed weather states; changes reduce error | Deterministic GraphCast; transfer to Pangu-Weather |
+| A foundation model for the Earth system | Processed Earth-system states; no attack study | Reported weather setup is deterministic |
+| End-to-end data-driven weather prediction | Observation-based forecasting pipeline; no attack study | Reported setup is deterministic |
+| Adversarial Observations in Weather Forecasting | Assimilated ERA5 grids; observation compromise is the motivation | Probabilistic GenCast |
+| FABLE | Processed NLDAS and ERA5 input histories | Deterministic CLCRN and adapted FourCastNet |
+| Forecasting Fails | Processed ERA5 initial states | Deterministic FourCastNet; perturbed-input ensembles also examined |
+| Explainability and Adversarial Vulnerability | Review of several input stages and attack settings | Report, not one new model experiment |
+
+The completed CNN work supplies a small practical comparison: clean forecasts,
+random changes, one-step gradient attacks, PGD, momentum updates and sparse changes.
+Validation data select attack settings before evaluation on the test period.
+[Attack experiments](../toy_weather/ATTACK_EXPERIMENTS.md) record the actual results;
+a paper-inspired proposal is kept separate from an experiment already completed.
+Possible extensions include a chosen geographical target, a mask restricting input
+changes, smooth disturbances and attacks evaluated over repeated forecast steps.
+These remain proposed extensions unless the experiment record says otherwise.
+
+## Reading notes as the discussion develops
+
+Notes explain the subject directly, using descriptive prose. They distinguish
+paper claims, checked interpretations, unresolved questions and proposed CNN
+experiments. New questions and their explanations belong in the relevant paper's
+notes, with version or section references where they matter. Open questions below
+are starting points for reading, not claims that every paper has already been read.
+
+| Paper | Notes |
+|---|---|
+| How Deep Learning Sees the World | [Attack methods, definitions and weather adaptations](notes/HowDeepLearningSeesTheWorld.md) |
+| Adversarial Attacks and Defences | [Attack assumptions and vocabulary](notes/AdversarialAttacksAndDefences.md) |
+| Boosting Adversarial Attacks with Momentum | [Momentum and sparse attacks](notes/BoostingAdversarialAttacksWithMomentum.md) |
+| Otter, both versions | [Architecture, training and forecast uncertainty](notes/Otter.md) |
+| Atmospheric Predictability Beyond 30 Days with Machine Learning | [Input optimisation](notes/PredictabilityBeyond30Days.md) |
+| A foundation model for the Earth system | [Aurora and extreme-weather evaluation](notes/Aurora.md) |
+| End-to-end data-driven weather prediction | [Aardvark and observation-based forecasting](notes/Aardvark.md) |
+| Adversarial Observations in Weather Forecasting | [GenCast attack, input stage and open questions](notes/AdversarialObservations.md) |
+| FABLE | [Targeted forecasts, wavelets and open questions](notes/FABLE.md) |
+| Forecasting Fails | [Location, smoothness and variable constraints](notes/ForecastingFails.md) |
+| Explainability and Adversarial Vulnerability | [Sensitivity, attacks and operational trust](notes/ExplainabilityAndAdversarialVulnerability.md) |
+
+[WeatherVariablesAndMetrics.pdf](WeatherVariablesAndMetrics.pdf) is a reference
+sheet rather than a research paper, so its existing descriptive filename remains.
+All four works Rich listed are present. This check establishes completeness against
+that list, not against every weather-adversarial paper in the wider literature.

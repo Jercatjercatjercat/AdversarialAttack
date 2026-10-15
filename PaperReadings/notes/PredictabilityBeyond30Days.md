@@ -26,5 +26,5 @@ one case's initial weather, rather than train weights on many cases. Both use
 gradients, but the object being changed is different. Our adversarial attacks
 also change inputs with fixed weights, aiming to increase rather than reduce error.
 
-Source: [annotated local preprint](../PredictabilityBeyond30Days.pdf), Optimization
+Source: [annotated local preprint](<../Atmospheric Predictability Beyond 30 Days with Machine Learning.pdf>), Optimization
 section; [paper reference](https://arxiv.org/abs/2504.20238).

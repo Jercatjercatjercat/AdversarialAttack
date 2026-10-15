@@ -1,11 +1,10 @@
 # Reading notes: How Deep Learning Sees the World
 
-First notes recorded on 12 October 2026. These incorporate the user's selections
-and questions, with checked interpretations and proposed weather applications.
+First notes recorded on 12 October 2026. These explain the main concepts, checked interpretations and proposed weather applications.
 They do not claim that the additional attacks, metrics or defenses have been
 implemented. Continue adding questions and dated notes here as reading progresses.
 
-Sources: the saved [May 2023 arXiv v1 PDF](<../How Deep Learning Sees the World- A Survey on Adversarial Attacks & Defenses.pdf>)
+Sources: the saved [May 2023 arXiv v1 PDF](<../How Deep Learning Sees the World: A Survey on Adversarial Attacks & Defenses.pdf>)
 and its [searchable text](https://arxiv.org/html/2305.10862v1).
 Section numbers below refer to that version. This is a computer-vision survey,
 not a weather-robustness study or a complete catalogue of methods developed since 2023.
@@ -300,7 +299,7 @@ a reference/human interpretation changes; they are not standalone named algorith
 
 ## 9. Next reading and open project decisions
 
-Read [Otter.pdf](../Otter.pdf) next: Sections 2–3, the Rollout Fine-tuning paragraph
+Read [Otter Weather: Skillful and Computationally Efficient Medium-Range Weather Forecasting.pdf](<../Otter Weather: Skillful and Computationally Efficient Medium-Range Weather Forecasting.pdf>) next: Sections 2–3, the Rollout Fine-tuning paragraph
 and Appendix B.3. Write down the input fields/history, output fields/time, loss,
 normalization and repeated-forecast training. Use [OTTER_PREPARATION.md](../../OTTER_PREPARATION.md)
 for the checked explanation. Then read the predictability study's methods to compare

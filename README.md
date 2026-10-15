@@ -30,7 +30,7 @@ error than random changes in these runs; this has not yet been demonstrated on O
   rules prevent these temporary files from being added to future commits.
 - Renamed `toy_weather/archive/first_iteration/irrelevant_testings.py` to `toy_weather/archive/first_iteration/inspect_weights.py`;
   its useful learned-weight inspection remains available.
-- Renamed `PaperReadings/ML_WP.pdf` to `PaperReadings/AardvarkWeather.pdf` without
+- Renamed `PaperReadings/ML_WP.pdf` to `PaperReadings/End-to-end data-driven weather prediction.pdf` without
   modifying its content, and moved the existing variable/metric reference sheet to
   `PaperReadings/WeatherVariablesAndMetrics.pdf`.
 - Preserved the trained models, weather subsets, experiment history, annotated
@@ -61,9 +61,9 @@ now records the first survey questions, corrections and next reading. Its
 [survey notes](PaperReadings/notes/HowDeepLearningSeesTheWorld.md) include weather
 definitions, proposed metrics, defense bookmarks and the paper's attack catalogue.
 
-The main [Otter PDF](PaperReadings/Otter.pdf) is now the June 2026 preprint
+The main [Otter PDF](<PaperReadings/Otter Weather: Skillful and Computationally Efficient Medium-Range Weather Forecasting.pdf>) is now the June 2026 preprint
 (arXiv:2606.26421v1), covering deterministic and probabilistic forecasting. The
-older annotated ICLR paper is kept in [the archive](PaperReadings/archive/Otter_ICLR2026.pdf).
+older annotated ICLR paper is kept in [the archive](<PaperReadings/archive/Otter Weather: Highly Skillful Medium-Range Weather Forecasting on a Single GPU.pdf>).
 Our [Otter reading notes](PaperReadings/notes/Otter.md) explain the architecture,
 evaluation and differences between the two versions.
 
