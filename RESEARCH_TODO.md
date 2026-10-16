@@ -23,3 +23,4 @@
 - Define physical-plausibility criteria — *Atmospheric Predictability Beyond 30 Days*; *Forecasting Fails*.
 - Investigate IE/NE alongside MSE/ACC — *Atmospheric Predictability Beyond 30 Days*.
 - Attack probabilistic forecasts using CRPS; separate accuracy and diversity terms — *Otter Weather*.
+- Check input gradients through the encoder–processor–decoder cascade for observation attacks — *Aardvark*.

@@ -1,13 +1,27 @@
-# End-to-end data-driven weather prediction
+# End-to-end data-driven weather prediction: Aardvark
 
-[Source](https://www.nature.com/articles/s41586-025-08897-0)
+Read and notes: 16 October 2026.
 
-Aardvark describes a system that starts from observations, estimates a weather state, forecasts its evolution and produces local station forecasts. The reported setup produces deterministic forecasts. It is a forecasting paper, not an attack study.
+## Main idea
 
-Its observation inputs are important for locating an attack within the wider pipeline. Raw measurements, an estimated gridded state and a predicted future are different objects. Our current CNN experiment changes the estimated ERA5 state supplied to a forecaster; it does not change raw station readings or satellite measurements.
+- Replace conventional assimilation, forecasting and local post-processing with learned modules—not skip state estimation. Competitive results against specified baselines do not show universal superiority over NWP.
+- **Deterministic pipeline:** observations → encoder → initial gridded state → processor → 24-hour forecast, repeated autoregressively → decoder → local station predictions.
+- Modular ERA5 pretraining is followed by observational training and joint fine-tuning for selected downstream tasks.
+- **Architecture:** ViT encoder and processor; lightweight convolutional decoder.
 
-## Questions to develop while reading
+## Inputs and outputs
 
-- Which observation types are used, and what processing occurs before they enter the network?
-- Would changing an observation have the same effect as changing a reconstructed weather-state cell?
-- Which stages could reduce or amplify a disturbance?
+- **Inputs:** four main satellite-data sources, plus stations, ships and radiosondes; temporal and topographic features. Remote-sensing inputs are pre-gridded, so “raw observations” does not mean no preprocessing.
+- **Global outputs:** U/V winds, humidity, geopotential and temperature at 200/500/700/850 hPa; 10-m U/V winds, T2m and mean sea-level pressure.
+- **Local outputs:** station T2m and 10-m wind speed.
+
+## Attack questions
+
+- **State reconstruction:** can allowed observation changes make the encoder reproduce a chosen adversarial weather state? Some states may be unreachable.
+- **End-to-end attack:** which observation changes most damage forecasts through the encoder → processor → decoder, with all weights fixed?
+- The modules already form a cascade and support joint training; an attack still needs verified input gradients and realistic observation constraints.
+
+## Bookmarks
+
+- Figure 1: pipeline and inputs; Extended Data Tables 1–2: variables and sources.
+- Methods: module training and joint fine-tuning. Potential bridge from our ERA5-state attacks to observation-level attacks.
