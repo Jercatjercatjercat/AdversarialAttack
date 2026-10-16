@@ -62,6 +62,107 @@ a cell already at its cap in the outward direction is skipped so other cells can
 compete. More updates may be needed to distribute the available budget. This is
 one chosen projected-ascent heuristic, not an exhaustive L1 attack evaluation.
 
+## Worked example: what the gradient, step and radius represent
+
+The fixed trained network is g(i, w), where i is an input weather example and w
+is its saved weights. The true future o is a fixed reference, not the network's
+prediction. The forecast is g(i, w), and its error is the mean of
+(o - g(i, w)) squared across the selected forecast cells. Training changes w to
+reduce error. Our attack holds w and o fixed and changes an allowed part of i to
+increase error. Equivalently, it optimises a change delta in g(i_original + delta, w).
+The original recorded weather remains untouched; only a working copy changes.
+
+Sensitivity means how a small input change affects the loss locally. For example,
+a derivative +2 at a cell means that a sufficiently small +0.01 change in that
+input coordinate is predicted to increase loss by about 0.02, keeping all other
+coordinates fixed. This is a first-order approximation, not a guarantee for large
+changes. In our code the coordinates and MSE are normalized. A derivative of loss
+is not the same as a derivative of an individual forecast value.
+`requires_grad_(True)` permits gradient calculation; it does not itself calculate
+a gradient or change the input. `torch.autograd.grad` calculates it.
+
+For one small 2-by-2 example, these arrays illustrate the selected input channel:
+
+```text
+original:       candidate:       delta = candidate - original:
+[[280, 281],    [[280.3, 281.4],  [[0.3, 0.4],
+ [282, 283]]     [282.0, 283.0]]   [0.0, 0.0]]
+```
+
+The numbers above are physical temperatures in Kelvin and differences in Kelvin.
+Delta is the accumulated change from the ORIGINAL input, not only the latest step.
+The gradient is another map of the same shape, but contains loss derivatives,
+not temperatures. Suppose the gradient is:
+
+```text
+gradient = [[3, 4], [0, 0]]
+L2 length = sqrt(3^2 + 4^2) = 5
+direction = gradient / 5 = [[0.6, 0.8], [0, 0]]
+```
+
+The direction has L2 length one. Dividing removes overall magnitude while keeping
+the relative 3-to-4 preference. A step size alpha = 0.5 produces a step
+[[0.3, 0.4], [0, 0]], whose L2 length is 0.5. The radius R is a separate limit
+on the TOTAL accumulated delta. If R = 0.4, this candidate exceeds the limit,
+so L2 projection multiplies all changes by 0.4/0.5 = 0.8:
+
+```text
+projected delta = [[0.24, 0.32], [0, 0]]
+L2 length = sqrt(0.24^2 + 0.32^2) = 0.4
+```
+
+If delta already fits, projection leaves it unchanged. The next PGD step
+recalculates the gradient at the changed input, adds another step, and enforces
+the radius again. Alpha controls one move; R controls distance from the original.
+These examples assume physical coordinates for clarity. The implementation divides
+physical limits and step sizes by the selected variable's training standard
+deviation before calling `perturbations.py`, which operates in normalized units.
+
+Linf projection is different. `delta.clamp(-radius, radius)` limits EACH cell
+independently. With radius 0.4, [[0.3, 0.4], [0, 0]] is allowed by Linf, even
+though its L2 size is 0.5. The same variable name `radius` describes different
+geometries in the two branches; equal numbers do not impose the same restriction.
+
+For the actual 16-by-16 map, 256 cells are changed at most. L2 size is the square
+root of the SUM of squared changes. RMS size is the square root of their MEAN.
+Consequently RMS = L2/16. Our command-line `--budget 0.1` means L2 radius 1.6 K
+under L2 but per-cell radius 0.1 K under Linf. Changing all 256 cells by 0.1 K
+uses L2 size 1.6 K. A single 1.6 K change would have the same L2 size, but our
+additional 1 K cell cap forbids it. Linf 0.1 K would forbid any cell above 0.1 K.
+
+## Which candidates are retained, and which dates are attacked
+
+Keeping the highest-loss candidate happens INSIDE one attack method, for one
+example and one fixed setting. For example, a PGD run might encounter losses
+0.10 (clean), 0.14 (step 1), 0.13 (step 2) and 0.16 (step 3). It returns the
+step-3 input. If later steps score worse, the earlier best input is retained.
+Additional starts compete within that same run. The code compares per-example
+MSE on the selected objective; for one variable and fixed scaling, its ordering
+matches RMSE. It does not merge FGSM, PGD, momentum and random results into one
+winner. Their separate scores remain in the results and plots. Random baselines
+are measured directly rather than retained only when they beat the clean input.
+
+The completed `tuned_attacks_steps` comparison attacks ALL 1,458 eligible examples
+in the 2022 test period, not only a few displayed dates. Each example contains
+weather six hours ago, weather now and a true future six hours ahead. All three
+timestamps must lie in 2022. The first example uses 1 January 00:00 and 06:00 UTC
+to forecast 12:00; the last uses 31 December 06:00 and 12:00 to forecast 18:00.
+Current times therefore run every six hours from 1 January 06:00 to 31 December
+12:00 UTC. For EACH example, a fresh disturbance is optimised on its current
+temperature map (input channel 5 in the default 14-channel layout). Its older
+temperature map, other variables, clock channels and future target stay fixed.
+The true temperature at t+6h is used to calculate attack loss. This is a
+retrospective white-box evaluation with a known future reference, not a claim
+that an operational attacker already knows tomorrow's weather. Changes to one
+example are not carried into the next example. This is not an attack on one
+continuous year-long autoregressive forecast.
+
+The attack-settings sweep used 32 evenly spaced 2021 validation examples. Choosing
+update counts on validation is separate from optimising the disturbance for each
+2022 test example under those fixed settings. Test RMSE pools squared errors over
+all tested cases and cells before taking the square root; a few displayed examples
+do not constitute the whole test evaluation.
+
 ## How step sizes and step counts are compared
 
 An explicit step factor sets:
