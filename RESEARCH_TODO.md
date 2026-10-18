@@ -16,7 +16,7 @@
 
 - Compare attacks at matched limits — our CNN results; *How Deep Learning Sees the World*.
 - Test regional and smooth attacks — *FABLE*; *Forecasting Fails*.
-- Target a region/outcome: fabricate, conceal or redirect extreme-weather forecasts — *How Deep Learning Sees the World*; *Explainability and Adversarial Vulnerability*, §5.2.3; *Adversarial Observations*, §4.
+- Target a region/outcome: fabricate, conceal or redirect extreme-weather forecasts — *How Deep Learning Sees the World*; *Explainability and Adversarial Vulnerability*, §5.2.3; *Adversarial Observations*, §4; *FABLE*.
 - Compare longer-range and one-step 6-hour error — *Atmospheric Predictability Beyond 30 Days*.
 - Inspect perturbation patterns with Otter — *Atmospheric Predictability Beyond 30 Days*.
 - Test attack transfer between models — *Atmospheric Predictability Beyond 30 Days*; *Boosting Adversarial Attacks with Momentum*.
@@ -24,3 +24,6 @@
 - Investigate IE/NE alongside MSE/ACC — *Atmospheric Predictability Beyond 30 Days*.
 - Attack probabilistic forecasts using CRPS; separate accuracy and diversity terms — *Otter Weather*.
 - Check input gradients through the encoder–processor–decoder cascade for observation attacks — *Aardvark*.
+- Reread attack criteria and spatial/temporal realism — *FABLE*, §III.
+- Compare direct targeted optimisation with wavelet attacks on our CNN, then Otter — *FABLE*, §IV.
+- Test a five-day state as a shorter-lead attack target — *Forecasting Fails*.

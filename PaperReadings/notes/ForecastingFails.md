@@ -1,24 +1,27 @@
 # Forecasting Fails: Unveiling Evasion Attacks in Weather Prediction Models
 
-[Source](https://arxiv.org/abs/2512.08832)
+Read and notes: 18 October 2026; December 2025 v1.
 
-Checked against the local December 2025 v1 PDF on 15 October 2026. The experiments attack FourCastNet using ERA5 initial weather fields.
+## Setting and goal
 
-## What is changed, and how
+- White-box WAAPO attack on deterministic FourCastNet using processed, gridded ERA5 inputs. Figure 1 gives the high-level attack pipeline.
+- **Objective:** change initial conditions to push forecasts toward a chosen extreme-weather outcome. **Constraints:** restrict affected channels/region and encourage realistic magnitudes and smoothness.
+- The tested ensemble mean stays close to the control under small Gaussian input noise; this does not establish robustness to every random disturbance or individual ensemble member. Crafted changes cause larger effects.
 
-The attack changes processed gridded weather inputs, not raw observing-platform messages. FourCastNet is a deterministic forecasting model. The paper also averages forecasts produced from perturbed initial conditions; that ensemble experiment does not make the underlying network a probabilistic diffusion model.
+## Method and novelty
 
-Weather Adaptive Adversarial Perturbation Optimization (WAAPO) changes initial weather fields to influence later forecasts. Its objective combines the desired forecast effect with penalties. Its constraints include which variable channels may change, a geographical mask, per-variable amplitude limits and spatial smoothness. Gradient-based updates are followed by constraint enforcement; Algorithm 1 gives the procedure. Channel sparsity means changing only selected variables, which is different from our L0 constraint that counts changed cells.
+- Solve for the initial disturbance δ with model weights fixed: minimise target-forecast squared error plus **L∞ and total-variation penalties**.
+- **Three-term loss:** target matching + magnitude penalty + spatial roughness penalty. In the equations, the latter two apply to forecast states along the trajectory, not simply to δ. They are soft penalties, not hard guarantees.
+- **Hard restrictions:** spatial mask and selected-channel mask after each update. Channel sparsity limits variables, not the number of changed cells.
+- Implementation uses Adam, gradient clipping and learning-rate scheduling. Smoothness encourages gradual transitions; it does not prove compliance with atmospheric physics or undetectability.
+- Localised patches induce changes, but the paper notes difficulty matching the target temperature profile exactly.
 
-The experiments include targeted temperature changes and examine how changes propagate through forecasts. Smoothness limits abrupt differences between neighbouring perturbations. Smoothness and small amplitude are useful checks, but do not establish that winds, temperature, humidity and pressure jointly satisfy atmospheric physics.
+## Target choice and project connection
 
-## Connection to the CNN experiments
+- An example makes a **24-hour forecast resemble a state from 120 hours (five days)**. This differs from attacking the error of a five-day forecast.
+- Compare input masks, selected variables and trajectory-smoothness penalties on our CNN. Test future-state-derived targets separately from longer forecast horizons.
 
-This is a close match for adding a geographical mask and comparing rough changes against smooth changes at explicitly reported sizes. A regional or later-forecast objective would extend our current whole-map, one-step temperature-error experiments.
+## Bookmarks
 
-## Questions to resolve while reading
-
-- How are the amplitude and smoothness limits chosen in physical units?
-- Which quantities are hard constraints and which are penalties that can be traded against attack success?
-- Does the attack alter just the initial state or also later inputs?
-- How much forecast damage remains when maximum cell change and RMS change are matched to random noise?
+- **Figure 1:** overview; **Algorithm 1:** loss, gradient updates and masks.
+- **Experimental Discussion:** five-day target, optimisation settings and limits of patch-based targeting.
