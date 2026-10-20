@@ -1,74 +1,30 @@
 # Boosting Adversarial Attacks with Momentum
 
-Notes recorded on 14 October 2026. The saved paper is arXiv:1710.06081v3,
-22 March 2018, by Dong and colleagues.
+Notes: 14 and 20 October 2026; March 2018 v3.
 
-[Local PDF](<../Boosting Adversarial Attacks with Momentum.pdf>) ·
-[Paper reference](https://arxiv.org/abs/1710.06081)
+## Method
 
-## The idea behind MI-FGSM
-
-FGSM makes one gradient-sign update. An ordinary iterative sign attack recalculates
-the gradient at each step and uses the latest direction. Momentum Iterative Fast
-Gradient Sign Method (MI-FGSM) keeps a running memory of gradient directions, so
-one new direction does not immediately erase what earlier steps suggested.
-
-Section 3.1, Algorithm 1 and Equations 6–7 describe the method. Starting with
-momentum g=0, each step calculates the loss gradient at the changed input, divides
-it by its L1 magnitude, combines it with the previous momentum, and updates the
-input using the sign of that combined value:
+- **Momentum memory**, not autoregressive weather forecasting: combine the previous accumulator with the current normalized input gradient.
 
 ```text
-g = mu * g + gradient / sum(abs(gradient))
-changed_input = changed_input + step_size * sign(g)
+g = μg + gradient / sum(abs(gradient))
+x = x + α sign(g)
 ```
 
-The decay factor mu controls the memory. Zero removes the memory; one accumulates
-normalised directions without decay. A zero gradient needs safe handling when
-implementing the division. The L1 division normalises each gradient's contribution;
-it does NOT make MI-FGSM an L1-constrained attack. The main algorithm constrains
-the final disturbance with Linf and uses step size epsilon / number_of_steps.
-A weather implementation would explicitly enforce the physical input budget.
+- L1 normalization balances gradient contributions; the main attack uses an **L∞ disturbance budget**, with α = ε / steps.
+- μ controls memory: 0 gives ordinary iterative sign updates; 1 accumulates without decay. The paper commonly uses μ = 1, so memory need not decay.
 
-The authors report improved transfer between image classifiers. Momentum does not
-guarantee a stronger attack on every model or weather case. Section 3.3 also gives
-an L2 momentum extension, using a unit-L2 momentum direction rather than its sign.
+## Important findings
 
-For our forecast adaptation, the classification loss would be replaced by a stated
-forecast-error objective. Trained weights and true future maps stay fixed while
-inputs change. The first understandable comparison would alter current T2m only,
-with the same limits, test examples and forecast objective as FGSM/PGD. MI-FGSM is now implemented in the second iteration, with the
-[attack-setting experiment](../../toy_weather/ATTACK_EXPERIMENTS.md) documenting
-its validation sweep and forecast-loss adaptation.
+- **Transferability:** attacks are constructed white-box and tested on unseen models without their gradients. Iterating more can overfit the source model; momentum improves transfer in the reported classifier experiments.
+- **Ensemble attacks:** combine several source models; the paper compares combination strategies and favours combining logits. Weather needs its own forecast-loss formulation.
+- **Extensions:** targeted objectives and L2 momentum attacks. Classification results do not guarantee weather robustness findings.
 
-## Sparse attacks and thresholding: a separate proposed experiment
+## Our experiments
 
-Sparse describes the disturbance: only a few input entries are changed. It is not
-one unique algorithm and is not the same idea as momentum. For current T2m there
-are 256 cells; an L0 budget of k=4 permits at most four changed temperature entries.
-L0 is a nonzero-entry count, conventionally called a norm. It needs a separate
-amplitude cap, such as 0.5 K per changed cell. Otherwise four cells could change
-by arbitrarily large amounts.
+- MI-FGSM is implemented with forecast loss and fixed CNN weights. The selected one-step run equals FGSM, so it demonstrates no momentum advantage.
+- Sparse top-k attacks are a separate idea, not this paper's contribution.
 
-A proposed educational approach calculates gradients, chooses k sensitive cells,
-updates them and retains at most k nonzero changes, subject to the amplitude cap.
-Choosing cells by absolute gradient is a local heuristic, not a guarantee that the
-chosen set gives the best finite attack. A random-k-cell baseline with the same
-amplitude cap separates deliberate location choice from sparse random noise.
+## Bookmarks
 
-Thresholding is one way to obtain sparsity. A fixed threshold on gradient magnitude
-keeps cells exceeding that value, but the number retained varies by example.
-Top-k selection instead keeps exactly k candidates (unless fewer are nonzero),
-so it directly enforces a changed-cell-count budget.
-
-For an iterative L0 attack, the total accumulated change must stay within k cells.
-Choosing k new cells on each step could eventually change many more than k. One
-feasible projection is to clip candidate changes to the per-cell cap and keep only
-the k largest absolute changes, resetting every other entry to its ORIGINAL value.
-This is hard thresholding of the change map, distinct from selecting cells using
-the gradient. It provides a feasible sparse candidate, not a globally optimal attack.
-
-L1 projection can also zero small entries using soft thresholding; an L1 budget
-controls total absolute magnitude, not an exact number of changed cells. These L0/L1 educational methods are now implemented; their
-[setup and exploratory evidence](../../toy_weather/ATTACK_EXPERIMENTS.md) distinguish
-our heuristics from the classification methods in the paper.
+- Section 3.1 / Algorithm 1: update; Section 3.2 / Algorithm 2: ensembles; Section 3.3: extensions.
