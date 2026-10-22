@@ -8,6 +8,7 @@
 - L0, L1, L2 and L∞ limits.
 - Random-noise and no-change baselines.
 - Attack steps, sizes and restarts.
+- 6/24/72h attack losses; error through five days — *Beyond 30 Days*.
 - Validation selection and test evaluation.
 - Weather and adversarial paper readings.
 - Otter architecture and training.
@@ -17,7 +18,7 @@
 - Compare attacks at matched limits — our CNN results; *How Deep Learning Sees the World*.
 - Test regional and smooth attacks — *FABLE*; *Forecasting Fails*.
 - Target a region/outcome: fabricate, conceal or redirect extreme-weather forecasts — *How Deep Learning Sees the World*; *Explainability and Adversarial Vulnerability*, §5.2.3; *Adversarial Observations*, §4; *FABLE*.
-- Compare longer-range and one-step 6-hour error — *Atmospheric Predictability Beyond 30 Days*.
+- Improve clean multi-day skill before extending rollout attacks — *Atmospheric Predictability Beyond 30 Days*.
 - Inspect perturbation patterns with Otter — *Atmospheric Predictability Beyond 30 Days*.
 - Test attack transfer between models — *Atmospheric Predictability Beyond 30 Days*; *Boosting Adversarial Attacks with Momentum*.
 - Define physical-plausibility criteria — *Atmospheric Predictability Beyond 30 Days*; *Forecasting Fails*.
@@ -27,3 +28,4 @@
 - Reread attack criteria and spatial/temporal realism — *FABLE*, §III.
 - Compare direct targeted optimisation with wavelet attacks on our CNN, then Otter — *FABLE*, §IV.
 - Test a five-day state as a shorter-lead attack target — *Forecasting Fails*.
+- Compare two-stage state-to-observation matching with direct encoder–processor attacks — *Aardvark* (later work).

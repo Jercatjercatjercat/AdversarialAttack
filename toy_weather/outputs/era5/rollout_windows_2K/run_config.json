@@ -1,0 +1,30 @@
+{
+  "data": "/Users/jerrymeng/Library/Mobile Documents/com~apple~CloudDocs/CodeAndStudy/AdversarialAttack/toy_weather/local_data/era5_five_variables.npz",
+  "checkpoint_dir": "/Users/jerrymeng/Library/Mobile Documents/com~apple~CloudDocs/CodeAndStudy/AdversarialAttack/toy_weather/outputs/era5",
+  "results_dir": "outputs/era5/rollout_windows_2K",
+  "horizon_hours": 120,
+  "loss_windows": [
+    6,
+    24,
+    72
+  ],
+  "budget": 2.0,
+  "norm": "linf",
+  "variable": "t2m",
+  "attack_steps": [
+    10,
+    20
+  ],
+  "step_factors": [
+    1.0,
+    2.0
+  ],
+  "validation_samples": 32,
+  "test_samples": 0,
+  "batch_size": 32,
+  "random_trials": 3,
+  "cell_cap": 2.0,
+  "damage_threshold": 0.05,
+  "settings": null,
+  "device": "cpu"
+}

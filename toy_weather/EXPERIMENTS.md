@@ -160,7 +160,8 @@ more than a one-step attack. L2 permits larger individual changes than Linf at
 the matched RMS setting, so the two columns do not have equal maximum-cell limits.
 
 This is an attack demonstration on the new model, not a completed study of
-physical plausibility, extreme events, multi-step error growth or Otter robustness.
+physical plausibility, extreme events or Otter robustness. Multi-step error growth
+is now evaluated separately below.
 A claim that the new model is more robust than the old model would also require
 matched attack objectives and access to the same input times/variables. Better
 clean accuracy alone does not establish adversarial robustness.
@@ -173,3 +174,44 @@ It targets temperature forecast error rather than the combined output loss above
 The new results live in `attack_tuning_steps/` and `tuned_attacks_steps/`; they do
 not replace the older tables. Their interpretation includes the different norm
 budgets, the separate amplitude cap, validation subset and selection rule.
+
+## Longer forecasts and attack objectives — 21 October 2026
+
+The same frozen CNN now runs autoregressively: feed its predicted weather back
+in every six hours. [ROLLOUT_EXPERIMENTS.md](ROLLOUT_EXPERIMENTS.md) documents
+6/24/72h attack losses, matched ±0.1 K starting-temperature limits and evaluation
+through 120h on 1,439 complete 2022 cases. It includes FGSM, PGD and random noise.
+
+PGD with a 72h loss leaves **+0.244 K** extra temperature RMSE at 120h, versus
+**+0.008 K** for a 6h loss. However, clean 120h RMSE is **4.269 K**, worse than
+**2.984 K** from no change. Longer-window attack effects persist here, but this
+one-step-trained CNN is not a strong multi-day forecast model. No retraining or
+change to the original one-step results was needed.
+
+## Fixed-step attack comparison — 21 October 2026
+
+The earlier validation-selected PGD/MI-FGSM settings used one update, making them
+identical to FGSM. A separate full-test comparison now runs both at 5/10/20/40
+updates under the same ±0.1 K limit, with matched step sizes and clean starts.
+At 40 updates, temperature RMSE is **0.854795 K** for PGD and **0.854772 K** for
+MI-FGSM, versus **0.854726 K** for FGSM. The extra effect of repetition is tiny;
+momentum gives no advantage over PGD here. The new
+[figure](outputs/era5/fixed_step_attacks/step_comparison.png) shows an overall scale
+and a clearly labelled zoom; [the attack guide](ATTACK_EXPERIMENTS.md#fixed-step-comparison--21-october-2026)
+records all settings, commands and scores. No model retraining was performed.
+
+## Looser limits — 21 October 2026
+
+A validation pilot retained every ±0.25/0.5/1/2 K result and chose **±2 K** for a
+shared demonstration. This is **20 times the original input limit**. In the
+fixed-step test, FGSM gives **2.399 K**, PGD40 **2.430 K**, and MI-FGSM40 **2.415 K**:
+repetition helps modestly, while momentum remains weaker than ordinary PGD here.
+
+The method gap grows for longer objectives. With a 72h loss, pooled window RMSE
+is **4.069 K for FGSM** versus **4.923 K for PGD**. At 120h, the same two attacks
+give **6.912 K** and **9.022 K**, respectively. Clean 120h RMSE remains 4.269 K,
+worse than predicting no change (2.984 K). These are exploratory, retrospective
+attacks on a one-step-trained CNN; input limits alone do not prove realism.
+[LOOSER_BOUND_EXPERIMENTS.md](LOOSER_BOUND_EXPERIMENTS.md) explains the pilot rule,
+all settings, both test-case sets, plots, checks and limitations. The original
+±0.1 K results remain preserved.

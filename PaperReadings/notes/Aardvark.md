@@ -21,6 +21,15 @@ Read and notes: 16 October 2026.
 - **End-to-end attack:** which observation changes most damage forecasts through the encoder → processor → decoder, with all weights fixed?
 - The modules already form a cascade and support joint training; an attack still needs verified input gradients and realistic observation constraints.
 
+## Later research directions
+
+- **Two-stage attack:** attack the processor's initial state, then search for bounded observation changes whose encoded state approximates that target. The encoder is not generally invertible; many observation sets may match, or the target may be unreachable.
+- **Direct joint attack:** optimise forecast error through the frozen encoder and processor, optionally the station decoder; compare with the two-stage method.
+- **Restricted observations:** select a few stations, one instrument type or one platform; measure required changes relative to uncertainty, not raw gradient size alone.
+- **Availability and persistence:** test missing/delayed reports and consistent biases across observation times, where supported by the input pipeline.
+- **Stage comparison:** compare direct-state attacks with observation-level attacks to see which disturbances the encoder suppresses or amplifies. An encoded-state change that is small on average may still matter to the forecast.
+- **Presentation placement:** keep these as later discussion questions, after the basic state-input attacks. These are proposed experiments, not results from the paper.
+
 ## Bookmarks
 
 - Figure 1: pipeline and inputs; Extended Data Tables 1–2: variables and sources.

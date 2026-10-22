@@ -1,0 +1,101 @@
+{
+  "samples": 1439,
+  "validation_samples": 32,
+  "first_initial_time": "2022-01-01T06:00:00.000000000",
+  "last_initial_time": "2022-12-26T18:00:00.000000000",
+  "variable": "t2m",
+  "unit": "K",
+  "horizon_hours": 120,
+  "loss_windows": [
+    6,
+    24,
+    72
+  ],
+  "initial_channel": 5,
+  "objective": "Mean normalized MSE over ALL six-hour leads inside the chosen loss window",
+  "attack_duration": [
+    {
+      "condition": "random",
+      "threshold_rmse_increase": 0.05,
+      "first_lead_above_hours": null,
+      "last_lead_above_hours": null,
+      "continuous_from_start_hours": 0,
+      "leads_above_threshold": 0,
+      "still_above_at_last_lead": false,
+      "max_rmse_increase": 0.004653190374588334,
+      "max_increase_at_hours": 6
+    },
+    {
+      "condition": "pgd_w006h",
+      "threshold_rmse_increase": 0.05,
+      "first_lead_above_hours": 6,
+      "last_lead_above_hours": 6,
+      "continuous_from_start_hours": 6,
+      "leads_above_threshold": 1,
+      "still_above_at_last_lead": false,
+      "max_rmse_increase": 0.06668502730448722,
+      "max_increase_at_hours": 6
+    },
+    {
+      "condition": "one_step_w006h",
+      "threshold_rmse_increase": 0.05,
+      "first_lead_above_hours": 6,
+      "last_lead_above_hours": 6,
+      "continuous_from_start_hours": 6,
+      "leads_above_threshold": 1,
+      "still_above_at_last_lead": false,
+      "max_rmse_increase": 0.06662129660254434,
+      "max_increase_at_hours": 6
+    },
+    {
+      "condition": "pgd_w024h",
+      "threshold_rmse_increase": 0.05,
+      "first_lead_above_hours": 12,
+      "last_lead_above_hours": 78,
+      "continuous_from_start_hours": 0,
+      "leads_above_threshold": 12,
+      "still_above_at_last_lead": false,
+      "max_rmse_increase": 0.08198196252430723,
+      "max_increase_at_hours": 24
+    },
+    {
+      "condition": "one_step_w024h",
+      "threshold_rmse_increase": 0.05,
+      "first_lead_above_hours": 12,
+      "last_lead_above_hours": 78,
+      "continuous_from_start_hours": 0,
+      "leads_above_threshold": 12,
+      "still_above_at_last_lead": false,
+      "max_rmse_increase": 0.08146189418787975,
+      "max_increase_at_hours": 24
+    },
+    {
+      "condition": "pgd_w072h",
+      "threshold_rmse_increase": 0.05,
+      "first_lead_above_hours": 24,
+      "last_lead_above_hours": 120,
+      "continuous_from_start_hours": 0,
+      "leads_above_threshold": 17,
+      "still_above_at_last_lead": true,
+      "max_rmse_increase": 0.26133316282253816,
+      "max_increase_at_hours": 96
+    },
+    {
+      "condition": "one_step_w072h",
+      "threshold_rmse_increase": 0.05,
+      "first_lead_above_hours": 24,
+      "last_lead_above_hours": 120,
+      "continuous_from_start_hours": 0,
+      "leads_above_threshold": 17,
+      "still_above_at_last_lead": true,
+      "max_rmse_increase": 0.24267553882859172,
+      "max_increase_at_hours": 96
+    }
+  ],
+  "limitations": [
+    "One checkpoint/seed; previously inspected 2022 is exploratory.",
+    "Known future references used to construct attacks; not an operational claim.",
+    "Descriptive duration threshold is not statistical significance or a physical predictability limit.",
+    "CNN was trained one-step; long-horizon error can include substantial model drift."
+  ]
+}

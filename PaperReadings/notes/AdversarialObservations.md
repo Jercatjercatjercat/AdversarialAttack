@@ -19,6 +19,9 @@ Read and notes: 16 October 2026; April 2025 v1.
 
 The objective combines **S**, a region selector, with **V**, a variable-specific objective. It need not be distance to a complete target map.
 
+- **Targeted ≠ target-map matching:** fabrication can maximise a quantity, concealment minimise it, and redirection combine two location-based objectives; no complete desired future state is required.
+- **Locality:** objectives concern selected forecast regions/locations, but input perturbations may be geographically distributed. Unlike FABLE, the attack does not generally require forecasts outside the target region to remain unchanged.
+
 | Goal | Forecast objective |
 |---|---|
 | Fabricate | Increase regional wind, temperature or precipitation toward extreme values. |
@@ -26,6 +29,13 @@ The objective combines **S**, a region selector, with **V**, a variable-specific
 | Redirect | Reduce wind at the original landfall and increase it at a chosen alternative location. |
 
 These change predicted weather, not the actual event. They motivate targeted regional attacks beyond whole-map RMSE.
+
+## S/V examples
+
+- **Fabricate:** S selects London; minimise V = negative minimum forecast wind speed there (paper example).
+- **Conceal:** S selects a cyclone region; minimise V = mean forecast rainfall (illustrative aggregation).
+- **Redirect:** S selects old and chosen landfall sites; minimise V = wind(old) − wind(chosen).
+- Extreme-event anomalies are deviations from local seasonal expectations, assessed against a 99th-percentile criterion. This differs from detecting the attack through a noise-variance test.
 
 ## Detection — Section 5
 

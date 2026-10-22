@@ -90,7 +90,7 @@ def forecast_loss(prediction, target, objective_index=None):
 
 def change_input(model, x, y, channel, radius, method, norm='linf', steps=10,
                  generator=None, step_size=None, restarts=1, k=4, cell_cap=None,
-                 momentum=1.0, objective_index=None):
+                 momentum=1.0, objective_index=None, loss_fn=None):
     """x [B,input,H,W], y [B,C,H,W] -> changed x with identical shape.
 
     Only channel changes. Budgets/step_size/cell_cap are normalized units. Explicit
@@ -110,6 +110,12 @@ def change_input(model, x, y, channel, radius, method, norm='linf', steps=10,
         raise ValueError('Use top_k for an L0 gradient attack.')
     if norm=='l0' and not 1 <= k <= x.shape[-2]*x.shape[-1]:
         raise ValueError('Invalid changed-cell count.')
+    # A custom function maps an input [B,input,H,W] to one loss per case [B].
+    # This lets PGD differentiate through several forecasts without duplicating
+    # the attack algorithm. The usual one-step objective remains the default.
+    def input_loss(candidate):
+        return loss_fn(candidate) if loss_fn is not None else forecast_loss(model(candidate), y, objective_index)
+
     original = x.detach()
     if radius == 0:
         return original.clone()
@@ -119,7 +125,7 @@ def change_input(model, x, y, channel, radius, method, norm='linf', steps=10,
         changed[:, channel:channel+1] += sample_change(selected, radius, norm, generator, k, cell_cap)
         return changed
     with torch.no_grad():
-        best_loss = forecast_loss(model(original), y, objective_index)
+        best_loss = input_loss(original)
     best = original.clone()
     iterations = 1 if method=='one_step' else steps
     for restart in range(1 if method=='one_step' else restarts):
@@ -128,14 +134,14 @@ def change_input(model, x, y, channel, radius, method, norm='linf', steps=10,
         if restart:
             candidate[:, channel:channel+1] += sample_change(selected, radius, norm, generator, k, cell_cap)
             with torch.no_grad():
-                loss = forecast_loss(model(candidate), y, objective_index)
+                loss = input_loss(candidate)
                 better = loss > best_loss
                 best = torch.where(better[:, None, None, None], candidate, best)
                 best_loss = torch.maximum(best_loss, loss)
         remembered = torch.zeros_like(selected)
         for step in range(iterations):
             candidate = candidate.detach().requires_grad_(True)
-            loss = forecast_loss(model(candidate), y, objective_index)
+            loss = input_loss(candidate)
             gradient = torch.autograd.grad(loss.sum(), candidate)[0][:, channel:channel+1]
             if method=='mi_fgsm':
                 # L1 gradient normalization is NOT an L1 disturbance limit.
@@ -162,7 +168,7 @@ def change_input(model, x, y, channel, radius, method, norm='linf', steps=10,
             # Reproject ACCUMULATED change: k new cells per step is not an L0 budget.
             candidate[:, channel:channel+1] += project(delta, radius, norm, k, cell_cap)
             with torch.no_grad():
-                loss = forecast_loss(model(candidate), y, objective_index)
+                loss = input_loss(candidate)
                 better = loss > best_loss
                 best = torch.where(better[:, None, None, None], candidate, best)
                 best_loss = torch.maximum(best_loss, loss)

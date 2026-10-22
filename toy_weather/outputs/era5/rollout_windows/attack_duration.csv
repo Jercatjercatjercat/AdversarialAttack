@@ -1,0 +1,8 @@
+condition,threshold_rmse_increase,first_lead_above_hours,last_lead_above_hours,continuous_from_start_hours,leads_above_threshold,still_above_at_last_lead,max_rmse_increase,max_increase_at_hours
+random,0.05,,,0,0,False,0.004653190374588334,6
+pgd_w006h,0.05,6,6,6,1,False,0.06668502730448722,6
+one_step_w006h,0.05,6,6,6,1,False,0.06662129660254434,6
+pgd_w024h,0.05,12,78,0,12,False,0.08198196252430723,24
+one_step_w024h,0.05,12,78,0,12,False,0.08146189418787975,24
+pgd_w072h,0.05,24,120,0,17,True,0.26133316282253816,96
+one_step_w072h,0.05,24,120,0,17,True,0.24267553882859172,96

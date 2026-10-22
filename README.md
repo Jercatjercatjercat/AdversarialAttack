@@ -9,6 +9,8 @@ learned weights fixed.
 |---|---|
 | [toy_weather/README.md](toy_weather/README.md) | Second iteration: five variables, two input times and correction forecasting |
 | [toy_weather/EXPERIMENTS.md](toy_weather/EXPERIMENTS.md) | Second-iteration validation and measured findings |
+| [toy_weather/ROLLOUT_EXPERIMENTS.md](toy_weather/ROLLOUT_EXPERIMENTS.md) | Five-day errors and attacks using 6/24/72-hour loss windows |
+| [toy_weather/LOOSER_BOUND_EXPERIMENTS.md](toy_weather/LOOSER_BOUND_EXPERIMENTS.md) | Larger input limits: fixed-step attacks and FGSM/PGD forecast windows |
 | [toy_weather/archive/first_iteration/README.md](toy_weather/archive/first_iteration/README.md) | Setup and the learning sequence |
 | [toy_weather/archive/first_iteration/EXPERIMENTS.md](toy_weather/archive/first_iteration/EXPERIMENTS.md) | Completed experiment setup, explained terms, numerical findings and limits |
 | [toy_weather/archive/first_iteration/OUTPUTS.md](toy_weather/archive/first_iteration/OUTPUTS.md) | Guide to models, plots and result tables |

@@ -287,3 +287,85 @@ FGSM's one-update semantics, zero-momentum equivalence, random starts, the near-
 effort selector and validation-to-test handoff. A selection labelled as test-derived
 is rejected. The existing third-party NetCDF/NumPy import warning remains, while
 the NetCDF/Zarr value-agreement test passes. No CNN retraining was needed.
+
+## Longer-window objectives
+
+The new [rollout comparison](ROLLOUT_EXPERIMENTS.md) differentiates 6/24/72h
+mean temperature losses through repeated CNN predictions, then tests each initial
+attack through 120h. It reuses `perturbations.py` via a custom per-example loss.
+Existing one-step comparisons above remain separate.
+
+## Fixed-step comparison — 21 October 2026
+
+The earlier selection chose one update for PGD/MI-FGSM, making their Linf results
+identical to FGSM. To expose what repetition actually changes, the next comparison
+reports **every predeclared setting**, rather than selecting a near-best winner:
+FGSM once; PGD and MI-FGSM at **5, 10, 20 and 40 updates**.
+
+All use the same 1,458 test cases, frozen CNN, temperature-only six-hour objective,
+clean starting input, and ±0.1 K limit on current temperature. Earlier weather and
+other channels stay fixed. Both repeated methods use **α = 0.1 / updates K**:
+
+| Updates | Per-update step size α (K) |
+|---:|---:|
+| 5 | 0.0200 |
+| 10 | 0.0100 |
+| 20 | 0.0050 |
+| 40 | 0.0025 |
+
+Thus the nominal total step length is fixed; more updates make smaller, more
+frequently recomputed moves. Projection still limits the accumulated change.
+MI-FGSM uses momentum 1. There is one clean-start attempt, no random restarts.
+These settings are not selected using test error. This comparison couples update
+count and step size; it does not isolate update count at fixed α or establish the
+strongest possible attack.
+
+```bash
+# From toy_weather/. Choose a different results directory for a repeat run.
+python compare_attacks.py --results-dir outputs/era5/fixed_step_attacks \
+  --variable t2m --objective t2m --budget 0.1 --norm linf \
+  --methods random one_step pgd mi_fgsm --steps 5 10 20 40 \
+  --step-factor 1 --restarts 1 --cell-cap 1 --random-trials 3 --split test
+python plot_attack_steps.py
+```
+
+`fixed_step_attacks/results.csv` records exact errors, measured input changes and
+runtime. `step_comparison.png` shows the full error scale alongside a **zoomed**
+attack comparison. Random trials are pooled in squared-error space before taking
+the root. The older `one_step_attack_comparison.png` remains a record of the
+validation-selected comparison; use the new figure to inspect repeated updates.
+
+Completed results (temperature RMSE in K; FGSM = **0.854726092 K**):
+
+| Updates | PGD | MI-FGSM |
+|---:|---:|---:|
+| 5 | 0.854780866 | 0.854764801 |
+| 10 | 0.854789131 | 0.854769043 |
+| 20 | 0.854793771 | 0.854770596 |
+| 40 | 0.854795015 | 0.854771921 |
+
+The repeated attacks now have genuinely different settings and scores. However,
+40-update PGD adds only **0.000069 K** over FGSM; MI-FGSM adds **0.000046 K**.
+Both are tiny beside FGSM's approximately **0.067 K** increase over clean error.
+Momentum does not outperform PGD in this comparison. More iterations have little
+additional effect for this checkpoint, objective and small input budget; this
+is not a general result about the methods or proof of a globally optimal attack.
+The right plot deliberately zooms the y-axis to reveal these small differences.
+
+The ±0.1 K limit is a plausible contributor: FGSM already moves each cell to
+one edge of its allowed interval, so later updates cannot simply make larger
+changes. They can still improve the pattern by changing which direction cells
+move. A small budget may keep useful gradient directions similar, but the bound
+does not force all methods to be equally effective. Testing several budgets is
+needed to establish how much of this result is caused by the chosen limit.
+
+All 1,458 cases and measured input bounds were checked; checkpoint and prepared
+data fingerprints remained unchanged. The earlier one-update comparison remains
+preserved, rather than being relabelled as a multi-update experiment.
+
+## Looser input limits
+
+The [budget follow-up](LOOSER_BOUND_EXPERIMENTS.md) records every validation pilot
+at ±0.25/0.5/1/2 K, selects a shared demonstration limit before test scoring, and
+repeats the fixed-step and forecast-window comparisons. The chosen **±2 K** is
+**20 times the original limit**; it is not a physical-plausibility claim.

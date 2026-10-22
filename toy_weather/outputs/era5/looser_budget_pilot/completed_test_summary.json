@@ -1,0 +1,152 @@
+{
+  "selected_budget_K": 2.0,
+  "multiplier_over_original": 20.0,
+  "fixed_samples": 1458,
+  "rollout_samples": 1439,
+  "fixed_scores": [
+    {
+      "method": "one_step",
+      "steps": 1,
+      "rmse_K": 2.399101958113472,
+      "difference_from_fgsm_K": 0.0
+    },
+    {
+      "method": "pgd",
+      "steps": 5,
+      "rmse_K": 2.422305285828674,
+      "difference_from_fgsm_K": 0.02320332771520217
+    },
+    {
+      "method": "pgd",
+      "steps": 10,
+      "rmse_K": 2.426208316971845,
+      "difference_from_fgsm_K": 0.027106358858373092
+    },
+    {
+      "method": "pgd",
+      "steps": 20,
+      "rmse_K": 2.42846397535057,
+      "difference_from_fgsm_K": 0.02936201723709786
+    },
+    {
+      "method": "pgd",
+      "steps": 40,
+      "rmse_K": 2.4297319862677678,
+      "difference_from_fgsm_K": 0.03063002815429572
+    },
+    {
+      "method": "mi_fgsm",
+      "steps": 5,
+      "rmse_K": 2.411383227895397,
+      "difference_from_fgsm_K": 0.012281269781925008
+    },
+    {
+      "method": "mi_fgsm",
+      "steps": 10,
+      "rmse_K": 2.413306429162506,
+      "difference_from_fgsm_K": 0.014204471049033884
+    },
+    {
+      "method": "mi_fgsm",
+      "steps": 20,
+      "rmse_K": 2.4145451616896274,
+      "difference_from_fgsm_K": 0.015443203576155362
+    },
+    {
+      "method": "mi_fgsm",
+      "steps": 40,
+      "rmse_K": 2.415165611559362,
+      "difference_from_fgsm_K": 0.01606365344588978
+    }
+  ],
+  "rollout_scores": [
+    {
+      "condition": "pgd_w006h",
+      "method": "pgd",
+      "window_hours": 6,
+      "steps": 10,
+      "step_size_K": 0.4,
+      "window_rmse_K": 2.4457002880578833,
+      "clean_window_rmse_K": 0.7889091498685794,
+      "rmse_at_120h_K": 4.842051543355925,
+      "clean_rmse_at_120h_K": 4.268806751833437
+    },
+    {
+      "condition": "one_step_w006h",
+      "method": "one_step",
+      "window_hours": 6,
+      "steps": 1,
+      "step_size_K": null,
+      "window_rmse_K": 2.400067740723808,
+      "clean_window_rmse_K": 0.7889091498685794,
+      "rmse_at_120h_K": 4.818041174957051,
+      "clean_rmse_at_120h_K": 4.268806751833437
+    },
+    {
+      "condition": "pgd_w024h",
+      "method": "pgd",
+      "window_hours": 24,
+      "steps": 20,
+      "step_size_K": 0.2,
+      "window_rmse_K": 2.916009993612825,
+      "clean_window_rmse_K": 1.2364355550731683,
+      "rmse_at_120h_K": 5.995003470099587,
+      "clean_rmse_at_120h_K": 4.268806751833437
+    },
+    {
+      "condition": "one_step_w024h",
+      "method": "one_step",
+      "window_hours": 24,
+      "steps": 1,
+      "step_size_K": null,
+      "window_rmse_K": 2.719369440644218,
+      "clean_window_rmse_K": 1.2364355550731683,
+      "rmse_at_120h_K": 5.637999911406169,
+      "clean_rmse_at_120h_K": 4.268806751833437
+    },
+    {
+      "condition": "pgd_w072h",
+      "method": "pgd",
+      "window_hours": 72,
+      "steps": 20,
+      "step_size_K": 0.2,
+      "window_rmse_K": 4.922973000987211,
+      "clean_window_rmse_K": 2.2960898794329263,
+      "rmse_at_120h_K": 9.021733555764154,
+      "clean_rmse_at_120h_K": 4.268806751833437
+    },
+    {
+      "condition": "one_step_w072h",
+      "method": "one_step",
+      "window_hours": 72,
+      "steps": 1,
+      "step_size_K": null,
+      "window_rmse_K": 4.069327349051888,
+      "clean_window_rmse_K": 2.2960898794329263,
+      "rmse_at_120h_K": 6.912346194233438,
+      "clean_rmse_at_120h_K": 4.268806751833437
+    }
+  ],
+  "paired_scores": [
+    {
+      "window_hours": 6,
+      "pgd_minus_fgsm_window_rmse_K": 0.04563254733407529,
+      "pgd_minus_fgsm_120h_rmse_K": 0.024010368398874604,
+      "fraction_cases_pgd_higher_window_mse": 0.8241834607366226
+    },
+    {
+      "window_hours": 24,
+      "pgd_minus_fgsm_window_rmse_K": 0.19664055296860727,
+      "pgd_minus_fgsm_120h_rmse_K": 0.3570035586934184,
+      "fraction_cases_pgd_higher_window_mse": 1.0
+    },
+    {
+      "window_hours": 72,
+      "pgd_minus_fgsm_window_rmse_K": 0.8536456519353228,
+      "pgd_minus_fgsm_120h_rmse_K": 2.1093873615307164,
+      "fraction_cases_pgd_higher_window_mse": 0.9986101459346769
+    }
+  ],
+  "checks": "Same cases and clean forecasts as original; unchanged weights/data; input limits checked.",
+  "note": "Known future targets; exploratory 2022; large budget is not physical-plausibility evidence."
+}

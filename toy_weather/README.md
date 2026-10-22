@@ -77,8 +77,9 @@ and 64 features give about 122,000 parameters, still small enough to inspect loc
 The model does not use dropout and produces one deterministic forecast.
 
 Clock features use known calendar time, not future measurements. Two input states
-provide recent trends; they are not an autoregressive rollout. Every forecast here
-is a single six-hour step.
+provide recent trends. Each CNN call predicts a single six-hour step; the new
+[longer-window experiment](ROLLOUT_EXPERIMENTS.md) feeds its predictions back in
+to forecast several days ahead.
 
 ## Dates, scaling and fair evaluation
 
@@ -213,7 +214,26 @@ PGD keeps the highest-loss candidate per example, includes the clean and one-ste
 candidates, and has no random restarts. Attack results are separate from clean
 forecast results. The model stays fixed during all changes. The second iteration
 has not implemented physically coupled changes, extreme-event selection, training
-data poisoning or multiple future forecast steps.
+data poisoning. Multiple future steps are evaluated separately below.
+
+## Longer forecasts and attack loss windows
+
+```bash
+python compare_rollouts.py --loss-windows 6 24 72 --horizon-hours 120
+```
+
+This uses the saved CNN without retraining. Every six hours, its five predicted
+maps become the next input weather; calendar features advance using known time.
+Future ERA5 weather is used only to measure error and construct retrospective
+attacks. Random noise, FGSM and PGD change the starting temperature map only.
+The attack can differentiate through 6, 24 or 72 hours of forecasts; all are
+then evaluated through 120 hours on the same complete test cases.
+
+[ROLLOUT_EXPERIMENTS.md](ROLLOUT_EXPERIMENTS.md) explains the loss, exact command,
+saved plots, results and limits. `rollouts.py` builds trajectories;
+`rollout_evaluation.py` scores and attacks them; `compare_rollouts.py` runs the
+comparison; `plot_rollouts.py` draws the figures. The existing one-step commands
+and their saved results remain available.
 
 ## Files and checks
 
@@ -244,3 +264,15 @@ change, L2 uses RMS and Linf uses the largest cell change. Actual changes and ev
 variable's forecast error are saved separately. Equal numerical limits across
 these restrictions are not equal disturbance allowances. The older saved attack
 results remain intact with their original combined-output objective.
+
+The fixed-step follow-up in `outputs/era5/fixed_step_attacks/` compares FGSM
+with PGD/MI-FGSM at 5/10/20/40 updates, without selecting a winner. Its
+`step_comparison.png` distinguishes genuine repeated attacks from the earlier
+one-update selections. `python plot_attack_steps.py` redraws it from saved scores;
+the [experiment guide](ATTACK_EXPERIMENTS.md#fixed-step-comparison--21-october-2026)
+records the complete command and step sizes.
+
+The [looser-bound follow-up](LOOSER_BOUND_EXPERIMENTS.md) keeps all validation
+pilot results at ±0.25/0.5/1/2 K, then compares the validation-selected ±2 K limit
+on test weather. It includes fixed-step FGSM/PGD/MI-FGSM and both FGSM/PGD
+6/24/72-hour loss windows. These new results are separate from the ±0.1 K runs.

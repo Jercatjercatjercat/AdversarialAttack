@@ -27,6 +27,11 @@ Read and notes: 17–18 October 2026; April 2026 v2.
 - Band weights control where changes are cheaper. Lower penalties on high-frequency bands allow more change there; exact weights are experimental choices, not a universal hierarchy. Figure 6 tests alternatives, including excluding LLL from the penalty in configurations 1–4.
 - Wavelets organise spatial/temporal changes; clipping enforces the amplitude bound. Wavelet penalties do not themselves prohibit changes outside a geographical region.
 
+## Small wavelet example
+
+- 1D Haar: [2, 4] → L = 6/√2, H = −2/√2; inverse transform restores [2, 4]. FABLE applies the idea across time and two spatial axes.
+- LLL captures broad structure; HHH captures fine differences along all three axes. Larger penalty weights discourage changes in a band; smaller weights permit them. This encourages closeness and pattern preservation, rather than proving physical consistency.
+
 ## Project plan and bookmarks
 
 - First minimise target-forecast MSE/RMSE directly over input changes under an explicit norm bound; then compare with FABLE at matched limits.

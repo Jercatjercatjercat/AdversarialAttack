@@ -373,3 +373,23 @@ are starting points for reading, not claims that every paper has already been re
 sheet rather than a research paper, so its existing descriptive filename remains.
 All four works Rich listed are present. This check establishes completeness against
 that list, not against every weather-adversarial paper in the wider literature.
+
+## PhysMetrics.Weather: An Evaluation Framework for Physical Consistency in ML Weather Models
+
+[Local PDF](<PhysMetrics.Weather- An Evaluation Framework for Physical Consistency in ML Weather Models.pdf>) ·
+[Paper](https://arxiv.org/abs/2606.10642) · [Reading notes](notes/PhysMetricsWeather.md)
+
+An evaluation toolkit for existing forecasts: mass/energy budgets, spatial-scale
+energy and balances between atmospheric variables. It complements RMSE and may
+help compare physical consistency before and after our attacks. Some diagnostics
+require global coverage and vertical variables absent from the current toy CNN.
+Reading started 22 October 2026.
+
+Variable coverage: [PhysMetrics vs Otter](figures/physmetrics_otter_venn.png) ·
+[PhysMetrics vs Aardvark](figures/physmetrics_aardvark_venn.png).
+The diagrams compare core diagnostic fields with gridded forecast fields;
+vertical coverage and derived surface pressure still affect which checks apply.
+
+![PhysMetrics versus Otter: variable coverage](figures/physmetrics_otter_venn.png)
+
+![PhysMetrics versus Aardvark: variable coverage](figures/physmetrics_aardvark_venn.png)

@@ -1,0 +1,19 @@
+{
+  "split": "validation",
+  "budgets_K": [
+    0.25,
+    0.5,
+    1.0,
+    2.0
+  ],
+  "samples": 32,
+  "fixed_steps": 40,
+  "fixed_step_factor": 1.0,
+  "rollout_window_hours": 72,
+  "rollout_steps": 20,
+  "rollout_step_factor": 2.0,
+  "fixed_gap_K": 0.005,
+  "rollout_gap_K": 0.01,
+  "criterion": "Smallest budget satisfying both gaps; largest tested budget if none qualifies, explicitly labelled.",
+  "note": "Visibility criterion, not statistical significance. Test scores never select the budget."
+}
